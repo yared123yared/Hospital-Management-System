@@ -7,16 +7,4 @@ The system will be global system that interconnect all the kebeles in the city f
 
 for example: when some one tries to take identification card from his kebele the system first check he haven't taken from other kebels.
 
-# Feature of the project:
-our system will have the follwoing features:
-                # register different kebele.
-                # assighn admin for the kebele
-                # Register All the Kebele's People by grouping in family.
-                # while registering include all the necessary information like birthdate,school(if he/she is student),workplace(if          she/he is worker),housenumber....etc
-                # user will have thier own account to get access from the system
-                # user can send any complain to the kebele's admin directly.
-                # user can take identification card from the kebele using thise system with out exiting physically.because they will do all the registration process at their home.
-                # user can finish all the thigs regarding family issue like inheritance easily with these system.
-                # user can take birth cirtificate and family death cirtificate too.
-                # users get announcements on immediate actions like cleaning the environment,volunter activities and other, from the admin.
-                # if any one want to work on kebele there will be job applicant't plat form so he/she can apply.
+
