@@ -18,5 +18,5 @@ our system will have the follwoing features:
                 # user can take identification card from the kebele using thise system with out exiting physically.because they will do all the registration process at their home.
                 # user can finish all the thigs regarding family issue like inheritance easily with these system.
                 # user can take birth cirtificate and family death cirtificate too.
-                # the system will post immediate notificationes on its home like remind the youthes to clean the kebele and also other immediate announcements.
+                # users get announcements on immediate actions like cleaning the environment,volunter activities and other, from the admin.
                 # if any one want to work on kebele there will be job applicant't plat form so he/she can apply.
