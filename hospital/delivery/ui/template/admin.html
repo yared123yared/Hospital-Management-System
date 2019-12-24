@@ -1,0 +1,59 @@
+{{define index.html}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+
+</head>
+<body>
+   
+       <nav class=" navbar navbar-expand-lg navbar-light bg-primary justify-content-end" id="nav1">
+                      <!-- / <a class="navbar-brand justify-content-center nav-link  text-white " href="#"> Hospital Managment System</a>
+ -->
+        <ul class="nav navbar " > 
+                <li class="nav-item  nav2"><a class="nav-link  text-white bg-secondary" href="#" > Admin Panel</a></li>
+                <li class="nav-item nav2"><a class="nav-link text-white bg-secondary" href="#"> Select Language</a></li>
+                <li class="nav-item nav2" ><a class="nav-link text-white bg-secondary" href="#"> Account</a></li>
+                   </ul>
+           
+
+       </nav>
+       <div class="container-fluid">
+            <div class="row">
+              <div class="col-2 bg-primary">
+                    <nav class=" navbar navbar-expand-lg navbar-light bg-primary justify-content-end " id="nav1">
+                            <ul class="nav navbar-nav flex-column justify-content-center"> 
+                                    <li class="nav-item"><a class="nav-link  text-white bg-secondary" href="#" >DashBoard</a></li>
+                                    <li class="nav-item"><a class="nav-link text-white bg-secondary" href="#"> Doctor</a></li>
+                                    <li class="nav-item"><a class="nav-link text-white bg-secondary" href="#"> Patient</a></li>
+                                    <li class="nav-item"><a class="nav-link text-white bg-secondary" href="#"> pharmacy</a></li>
+                                    <li class="nav-item"><a class="nav-link text-white bg-secondary" href="#"> laboratorist</a></li>
+                                                            </ul>
+                           
+                
+                       </nav>
+              </div>
+              <div class="col bg-white    ">
+                    <nav class=" navbar navbar-expand-lg navbar-light bg-info justify-content-end" id="nav1">
+                            <a class="navbar-brand justify-content-center nav-link  text-white " href="#"> {{.}}</a>
+     
+             <ul class="nav navbar "> 
+                     <li class="nav-item"><a class="nav-link  text-white bg-secondary" href="#" > Admin Panel</a></li>
+                     <li class="nav-item"><a class="nav-link text-white bg-secondary" href="#"> Select Language</a></li>
+                     <li class="nav-item"><a class="nav-link text-white bg-secondary" href="#"> Account</a></li>
+                        </ul>
+                
+     
+            </nav>
+              </div>
+            </div>
+           
+          </div>
+</body>
+</html>
+{{end}}
