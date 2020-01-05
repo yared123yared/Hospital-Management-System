@@ -1,7 +1,7 @@
                   Hospital Management system 
 First there will be the following users to the system.
     1. Admin
-    2. Doctorr
+    2. Doctorrr
     3. Laboratories
     4. Pharmacist
     5. Registrar
