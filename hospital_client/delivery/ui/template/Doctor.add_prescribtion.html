@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  
+
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,12 +13,20 @@
 
   <!-- Custom fonts for this template -->
   <!-- Custom styles for this template -->
-
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/css/all.min.css">
-
+  <link rel="stylesheet" href="../assets/css/dashboard.css">
   <!-- Custom styles for this template-->
   <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
   <link href="../assets/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="../assets/css/datepicker/daterangepicker.css">
+  
+  <link rel="stylesheet" href="../assets/css/datepicker/moment.min.css">
+
+  <!--  -->
+  <link href="../assets/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+  <link href="../assets/css/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" media="all">
+
 
 
 
@@ -35,8 +43,8 @@
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-user-md"></i>
-        
+          <i class="fas fa-user-md"></i>
+
         </div>
         <div class="sidebar-brand-text mx-3">Doctors<sup></sup></div>
       </a>
@@ -61,25 +69,25 @@
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item text-white">
-          <a class="nav-link" href="tables.html">
-              <i class="fas fa-user-injured text-white"></i>
-            <span>Patients</span></a>
-        </li>
-        <li class="nav-item">
-              <a class="nav-link" href="tables.html">
-                  <i class="fa fa-calendar text-white"></i>
-                <span> Appointment</span></a>
-            </li>
-          <li class="nav-item">
-                  <a class="nav-link" href="tables.html">
-                      <i class="fas fa-file-prescription text-white"></i>
-                    <span>Prescribtion</span></a>
-                </li>
-          <li class="nav-item">
-                      <a class="nav-link" href="tables.html">
-                          <i class="fas fa-diagnoses text-white"></i> 
-                           <span>Diagonosis</span></a>
-          </li>
+        <a class="nav-link" href="patient.html">
+          <i class="fas fa-user-injured text-white"></i>
+          <span>Patients</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="appointment.html">
+          <i class="fa fa-calendar text-white"></i>
+          <span> Appointment</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="prescribtion.html">
+          <i class="fas fa-file-prescription text-white"></i>
+          <span>Prescribtion</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="checkUp.html">
+          <i class="fas fa-diagnoses text-white"></i>
+          <span>Diagonosis</span></a>
+      </li>
       <!-- Divider -->
       <hr class="sidebar-divider d-none d-md-block">
 
@@ -148,17 +156,17 @@
                 </a>
                 {{range .}}
                 <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                        <i class="fas fa-file-alt text-white"></i>
-                      </div>
+                  <div class="mr-3">
+                    <div class="icon-circle bg-primary">
+                      <i class="fas fa-file-alt text-white"></i>
                     </div>
-                    <div>
-                      <div class="small text-gray-500">December 12, 2019</div>
-                      <span class="font-weight-bold">.notification</span>
-                    </div>
-                  </a>
-                  
+                  </div>
+                  <div>
+                    <div class="small text-gray-500">December 12, 2019</div>
+                    <span class="font-weight-bold">.notification</span>
+                  </div>
+                </a>
+
                 {{end}}
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
@@ -173,8 +181,8 @@
                 <span class="badge badge-danger badge-counter">7</span>
               </a>
               <!-- Dropdow <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <link rel="stylesheet" href="../assets/css/dashboard.css">
-  Custom styles for this template-->
+      <link rel="stylesheet" href="../assets/css/dashboard.css">
+    Custom styles for this template-->
               <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="messagesDropdown">
@@ -204,9 +212,10 @@
                   </div>
                 </a>
                 {{end}}
-                
+
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
-              </div>            </li>
+              </div>
+            </li>
 
             <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -256,183 +265,76 @@
 
             </div>
 
-            <div  style="margin-top: 2%;margin-left: 62%;">
-              <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                  <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                    aria-label="Search" aria-describedby="basic-addon2">
-                  <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                      <i class="fas fa-search fa-sm"></i>
-                    </button>
-                  </div>
-                </div>
-              </form>
-            </div>
-            <div style="display: flex;">
+
+
+
+            <div style="display: flex; margin-top: 2%;">
               <div style="width: 18%;" class="justify-content-center">
-                  <a class=" container  nav-link  bg-primary text-light" href="tables.html" style="width: auto; margin-right: 5%; margin-left: 10%;">Patients list</a>
-        
+                <a class=" container  nav-link  bg-primary text-light" href="patient.html"
+                  style="width: auto; margin-right: 5%; margin-left: 10%;">Patients list</a>
+
               </div>
-                 <div style="width: 18%;">
-                    <a class=" container  nav-link  bg-primary text-light" href="add_patient.html" style="width: auto; margin-right: 5%;">Add Patients</a>
-           
-                 </div>
-                  
-                    
-              
-               
+              <div style="width: 18%;">
+                <a class=" container  nav-link  bg-primary text-light" href="add_patient.html"
+                  style="width: auto; margin-right: 5%;">Add Patients</a>
+
+              </div>
+
+
+
+
             </div>
-        
-           
-          
-              
-                   
-            
             <div class="card-body ">
-              <div class="table-responsive">
-                      <table class="table table-striped bg-light text-dark" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr class="text-dark">
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th>Password</th>
-                      <th>Address</th>
-                      <th>Phone</th>
-                      <th>Sex</th>
-                      <th>Birth Date</th>
-                      <th>Age</th>
-                      <th>Blood Group</th>
-                      <th>options</th>
-                    </tr>
-                  </thead>
+              <div class="container col-8">
+                <form class="bg-secondary col col-8 text-white">
+                  <div class="form-row">
+                    <div class="form-group col-md-4">
+                      <label for="inputEmail4">First Name</label>
+                      <input type="email" class="form-control bg-dark text-white" id="inputEmail4" placeholder="yared">
+                    </div>
+                    <div class="form-group col-md-4 ">
+                      <label for="inputEmail4">Last Name</label>
+                      <input type="email" class="form-control bg-dark text-white" id="inputEmail4" placeholder="solomon">
+                    </div>
+
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputPassword4">Password</label>
+                    <input type="password" class="form-control bg-dark text-white" id="inputPassword4" placeholder="Password">
+                  </div>
+                  <div class="form-group col-md-9">
+                    <label for="inputAddress">Email</label>
+                    <input type="text" class="form-control bg-dark text-white" id="inputAddress" placeholder="yaredyaya16@gmail.com" >
+                  </div>
+                  <div class="form-group col-md-8">
+                    <label for="inputAddress2">Address</label>
+                    <input type="text" class="form-control bg-dark text-white" id="inputAddress2"
+                      placeholder="Apartment, studio, or floor">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputAddress2">phone number</label>
+                    <input type="phone" class="form-control bg-dark text-white" id="inputAddress2" placeholder="phone">
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="inputState">Gender</label>
+                    <select id="inputState" class="form-control bg-dark text-white">
+                      <option selected>Choose...</option>
+                      <option>male</option>
+                      <option>female</option>
+                      <option>other</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group col-md-5">
+                      <label for="inputState">Birth Date</label>
+                    <input class="input--style-1 js-datepicker form-control bg-dark text-white" type="text" placeholder="Birth date" name="birthday">
+                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                  </div>
+
+
                  
-                  <tbody>
-                    <tr>
-                        <td>Yared solomon</td>
-                        <td>yaredyaya16@gmail.com</td>
-                        <td>yared123</td>
-                        <td>Ethiopia/dessie</td>
-                        <td>0916897173</td>
-                        <td>Male</td>
-                        <td>1991</td>
-                        <td>21</td>
-                        <td>unknown</td>
-                        <td>
-                           
-                          <a href="#" class="fas fa-edit"></a>
-                              <span>
-                                  <a href="#" class="fas fa-trash-alt text-danger"></a>
-                              </span>
-                        </td>
-
-                       
-                    </tr>
-                    <tr>
-                        <td>Yared solomon</td>
-                        <td>yaredyaya16@gmail.com</td>
-                        <td>yared123</td>
-                        <td>Ethiopia/dessie</td>
-                        <td>0916897173</td>
-                        <td>Male</td>
-                        <td>1991</td>
-                        <td>21</td>
-                        <td>unknown</td>
-                        <td>
-                           
-                          <a href="#" class="fas fa-edit"></a>
-                              <span>
-                                  <a href="#" class="fas fa-trash-alt text-danger"></a>
-                              </span>
-                        </td>
-
-                       
-                    </tr>
-                    <tr>
-                        <td>Yared solomon</td>
-                        <td>yaredyaya16@gmail.com</td>
-                        <td>yared123</td>
-                        <td>Ethiopia/dessie</td>
-                        <td>0916897173</td>
-                        <td>Male</td>
-                        <td>1991</td>
-                        <td>21</td>
-                        <td>unknown</td>
-                        <td>
-                           
-                          <a href="#" class="fas fa-edit"></a>
-                              <span>
-                                  <a href="#" class="fas fa-trash-alt text-danger"></a>
-                              </span>
-                        </td>
-
-                       
-                    </tr>
-                    <tr>
-                        <td>Yared solomon</td>
-                        <td>yaredyaya16@gmail.com</td>
-                        <td>yared123</td>
-                        <td>Ethiopia/dessie</td>
-                        <td>0916897173</td>
-                        <td>Male</td>
-                        <td>1991</td>
-                        <td>21</td>
-                        <td>unknown</td>
-                        <td>
-                           
-                          <a href="#" class="fas fa-edit"></a>
-                              <span>
-                                  <a href="#" class="fas fa-trash-alt text-danger"></a>
-                              </span>
-                        </td>
-
-                       
-                    </tr>
-                    <tr>
-                        <td>Yared solomon</td>
-                        <td>yaredyaya16@gmail.com</td>
-                        <td>yared123</td>
-                        <td>Ethiopia/dessie</td>
-                        <td>0916897173</td>
-                        <td>Male</td>
-                        <td>1991</td>
-                        <td>21</td>
-                        <td>unknown</td>
-                        <td>
-                           
-                          <a href="#" class="fas fa-edit"></a>
-                              <span>
-                                  <a href="#" class="fas fa-trash-alt text-danger"></a>
-                              </span>
-                        </td>
-
-                       
-                    </tr>
-                    <!-- files from the database -->
-                    <!-- {{range.}}
-                    <tr>
-                        <td>.name</td>
-                        <td>.email</td>
-                        <td>.password</td>
-                        <td>.address</td>
-                        <td>.phone</td>
-                        <td>.sex</td>
-                        <td>.bdate</td>
-                        <td>.age</td>
-                        <td>.bldgrp</td>
-                        <td style="margin-left: 2%;">
-                            <a href="#"  class="fas fa-edit"></a>
-                              <span>
-                                  <a href="#" class="fas fa-trash-alt text-danger"></a>
-                              </span>
-                        </td>
-
-                       
-                    </tr>
-                    {{end}} -->
-
-                  </tbody>
-                </table>
+                  <button type="submit" class="btn btn-primary">submit</button>
+                </form>
               </div>
             </div>
           </div>
@@ -485,24 +387,26 @@
   </div>
 
   <!-- Bootstrap core JavaScript-->
- <!-- Bootstrap core JavaScript-->
- <script src="../assets/jquery/jquery.min.js"></script>
- <script src="../assets/js/bootstrap.bundle.min.js.map"></script>
+  <!-- Bootstrap core JavaScript-->
+  <script src="../assets/jquery/jquery.min.js"></script>
+  <script src="../assets/js/bootstrap.bundle.min.js.map"></script>
 
- <!-- Core plugin JavaScript-->
- <script src="../assets/jquery-easing/jquery.easing.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="../assets/jquery-easing/jquery.easing.min.js"></script>
 
- <!-- Custom scripts for all pages-->
- <script src="../assets/js/sb-admin-2.min.js"></script>
+  <!-- Custom scripts for all pages-->
+  <script src="../assets/js/sb-admin-2.min.js"></script>
 
- <!-- Page level plugins -->
- <script src="vendor/chart.js/Chart.min.js"></script>
+  <!-- Page level plugins -->
+  <script src="vendor/chart.js/Chart.min.js"></script>
 
- <!-- Page level custom scripts -->
- <script src="js/demo/chart-area-demo.js"></script>
- <script src="js/demo/chart-pie-demo.js"></script>
-
-
+  <!-- Page level custom scripts -->
+  <script src="js/demo/chart-area-demo.js"></script>
+  <script src="js/demo/chart-pie-demo.js"></script>
+  <script src="../assets/jquery/jquery.min.js"></script>
+  <script src="../assets/css/select2/select2.min.js"></script>
+  <script src="../assets/css/datepicker/moment.min.js"></script>
+  <script src="../assets/css/datepicker/daterangepicker.js"></script>
 
 </body>
 
