@@ -1,0 +1,67 @@
+{{define "patient.view.doctor"}}
+    {{template "patient.navbar".}}
+    {{template "patient.view.doctor.content".}}
+    {{template "patient.footer".}}
+{{end}}
+
+{{define "patient.view.doctor.content"}}
+        <div class="container-fluid">
+            <h1 class="mt-4">Doctors</h1>
+            <div class="container">
+                <table class="datatable table table-bordered table-striped"  style="width:100%;" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Doctor Name</th>
+                        <th>Department</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+                        <th>#</th>
+                        <th>Doctor Name</th>
+                        <th>Department</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Tiger Nixon</td>
+                        <td>System Architect</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Garrett Winters</td>
+                        <td>Accountant</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+
+                        <td>Ashton Cox</td>
+                        <td>Junior Technical Author</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+
+                        <td>Cedric Kelly</td>
+                        <td>Senior Javascript Developer</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+
+                        <td>Airi Satou</td>
+                        <td>Accountant</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Hello Satou</td>
+                        <td>Integration Specialist</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+    </div>
+{{end}}

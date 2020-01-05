@@ -1,0 +1,66 @@
+{{define "patient.view.prescription"}}
+    {{template "patient.navbar".}}
+    {{template "patient.view.prescription.content".}}
+    {{template "patient.footer".}}
+{{end}}
+
+{{define "patient.view.prescription.content"}}
+    <div class="container-fluid">
+        <h1 class="mt-4">Prescription</h1>
+        <div class="container">
+            <table class="datatable table table-bordered table-striped"  style="width:100%;" cellspacing="0">
+                <thead class="bg-white">
+                <tr>
+                    <th>No.</th>
+                    <th>Date</th>
+                    <th>Prescribed By</th>
+                    <th>Department</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Prescribed By</th>
+                    <th>Department</th>
+                    <th>Description</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>Tiger Nixon</td>
+                    <td>System Architect</td>
+                    <td>Edinburgh</td>
+                    <td>somern rernenme  erekrkerkj</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Garrett Winters</td>
+                    <td>Accountant</td>
+                    <td>Tokyo</td>
+                    <td>somern rernenme  erekrkerkj</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Ashton Cox</td>
+                    <td>Junior Technical Author</td>
+                    <td>San Francisco</td>
+                    <td>somern rernenme  erekrkerkj</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Cedric Kelly</td>
+                    <td>Senior Javascript Developer</td>
+                    <td>Edinburgh</td>
+                    <td>somern rernenme  erekrkerkj</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- /#wrapper -->
+    </div>
+    </div>
+{{end}}

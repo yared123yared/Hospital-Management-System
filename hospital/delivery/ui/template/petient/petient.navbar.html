@@ -1,0 +1,153 @@
+{{define "patient.navbar"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>Patient Page</title>
+  <!-- Bootstrap core CSS -->
+
+
+  <link rel="stylesheet" href="../../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../../assets/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/dashboard.css">
+  <!-- Custom styles for this template-->
+  <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../assets/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+
+  <!--  -->
+  <link href="../../assets/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+  <link href="../../assets/css/fontawesome-free/css/fontawesome.min.css" rel="stylesheet" media="all">
+{{/*  Adddddddddddddddddddd*/}}
+  <link href="../../assets/css/dataTables.bootstrap4.css" rel="stylesheet">
+
+
+</head>
+
+<body id="page-top">
+
+<!-- Page Wrapper -->
+<div id="wrapper">
+
+  <!-- Sidebar -->
+  <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
+      <div class="sidebar-brand-icon rotate-n-15">
+        <i class="fas fa-fw fa-hospital-symbol"></i>
+        <span class="nav-brand- mx-3">Hospital<sup>++</sup></span>
+
+      </div>
+    </a>
+
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+
+{{/*    <!-- Nav Item - Dashboard -->*/}}
+{{/*    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">*/}}
+{{/*      <div class="sidebar-brand-icon">*/}}
+{{/*        <i class="fas fa-fw fa-tachometer-alt"></i>*/}}
+{{/*        <div class="sidebar-brand-text mx-3">Dashboard<sup></sup></div>*/}}
+{{/*      </div>*/}}
+{{/*    </a>*/}}
+
+    <!-- Divider -->
+    <hr class="sidebar-divider"/>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+            <a class="nav-link" href="doctors">
+              <i class="fas fa-user-md"></i>
+              <span>Doctors</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="appointment">
+      <i class="fa fa-calendar text-white"></i>
+      <span> Appointment</span></a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="prescription">
+        <i class="fas fa-prescription-bottle-alt text-white"></i>
+        <span>Prescribtion</span></a>
+    </li>
+  <li class="nav-item">
+        <a class="nav-link" href="request">
+          <i class="fas fa-user-plus text-white"></i>
+          <span>Request</span></a>
+      </li>
+
+    <li class="nav-item">
+      <a class="nav-link" href="profile">
+        <i class="fa fa-user"></i>
+        <span>Profile</span>
+        </a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider d-none d-md-block"/>
+
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+      <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+  </ul>
+  <!-- End of Sidebar -->
+
+  <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+      <!-- Topbar -->
+      <nav class="navbar navbar-expand navbar-light bg-light topbar mb-4 static-top shadow">
+
+        <!-- Sidebar Toggle (Topbar) -->
+        <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <!-- Topbar Search -->
+        <div class="sidebar-brand-text mx-3" style="font:2.5em bold">Hospital<sup>++</sup></div>
+
+        <!-- Topbar Navbar -->
+        <ul class="navbar-nav ml-auto">
+
+          <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+{{/*          <li class="nav-item dropdown no-arrow d-sm-none">*/}}
+{{/*            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown"*/}}
+{{/*               aria-haspopup="true" aria-expanded="false">*/}}
+{{/*              <i class="fas fa-search fa-fw"></i>*/}}
+{{/*            </a>*/}}
+{{/*            <!-- Dropdown - Messages -->*/}}
+{{/*          </li>*/}}
+
+          <!-- Nav Item - Alerts -->
+          <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <i class="fas fa-bell fa-fw"></i>
+              <!-- Counter - Alerts -->
+              <span class="badge badge-danger badge-counter">3+</span>
+            </a>
+            <!-- Dropdown - Alerts -->
+          </li>
+          <li class="nav-item dropdown no-arrow">
+            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+               aria-haspopup="true" aria-expanded="false">
+              <span class="d-none d-inline text-gray-600 small">Log Out</span>
+              <img src="/assets/img/{{if .Image}} {{.Image}} {{else }}{{"doctor.jpg"}}{{end}}" class="rounded-circle img-profile  d-lg-inline"/>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <!-- Nav Item - Messages -->
+      <!-- End of Topbar -->
+      <!-- Begin Page Content -->
+      <div class="container-fluid">
+        <!-- DataTales Example -->
+   </div>
+
+        {{end}}
