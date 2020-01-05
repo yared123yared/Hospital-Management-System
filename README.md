@@ -18,7 +18,7 @@ So our system will do the following functionalities
         ◦ Full name
         ◦ Age
         ◦ Place of residence 
-        ◦ Phone number
+        ◦ Phone numberb
         ◦ Email/if they have
     3. Patients
     • Can look who have been assigned for different categories like(eye,kideney,bone and different specialization)
