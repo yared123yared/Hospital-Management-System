@@ -4,7 +4,6 @@ package repository
 
 import (
 	"github.com/jinzhu/gorm"
-
 	"github.com/yaredsolomon/webProgram1/hospital/entity"
 	"github.com/yaredsolomon/webProgram1/hospital/request"
 )

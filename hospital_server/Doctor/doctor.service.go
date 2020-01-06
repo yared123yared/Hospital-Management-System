@@ -16,3 +16,10 @@ type PatientService interface {
 
 // RoleService speifies application user role related services
 
+type AppointmentService interface {
+	Appointments() ([]entity.Doctor, []error)
+	Appointment(id uint) (*entity.Doctor, []error)
+	UpdateAppointment(user *entity.Doctor) (*entity.Doctor, []error)
+	DeleteAppointment(id uint) (*entity.Doctor, []error)
+
+}
