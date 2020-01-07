@@ -138,35 +138,28 @@ func main() {
 	// router.DELETE("/v1/admin/comments/:id", adminCommentHandler.DeleteComment)
 	//
 	// patient registeration
-	/*
-		patientRepo := repository.NewPatientGormRepo(dbconn)
-		patientSrv := service.NewPatientService(patientRepo)
 
-		doctorPatientHandler := handler.NewDoctorPatientHandler(patientSrv)
-
-		router := httprouter.New()
-
-		router.GET("/v1/admin/users/", doctorPatientHandler.GetSinglePatient)
-		router.GET("/v1/admin/users", doctorPatientHandler.GetPatients)
-		router.PUT("/v3/admin/users/:id", doctorPatientHandler.PutPatient)
-		router.POST("/v1/admin/users", doctorPatientHandler.PostPatient)
-		router.DELETE("/v2/admin/users/:id", doctorPatientHandler.DeletePatient)
-
-		http.ListenAndServe(":8980", router)
-	*/
-
+	// doctor petient information
+	patientRepo := repository.NewPatientGormRepo(dbconn)
+	patientSrv := service.NewPatientService(patientRepo)
+	doctorPatientHandler := handler.NewDoctorPatientHandler(patientSrv)
+	// thise is the general doctor information
 	appointmentRepo := repository.NewAppointmentGormRepo(dbconn)
 	appointmentSrv := service.NewAppointmentService(appointmentRepo)
-
 	doctorAppointmentHandler := handler.NewDoctorAppointmentHandler(appointmentSrv)
 
 	router := httprouter.New()
 
+	router.GET("/v1/admin/users/", doctorPatientHandler.GetSinglePatient)
+	router.GET("/v1/admin/users", doctorPatientHandler.GetPatients)
+	router.PUT("/v3/admin/users/:id", doctorPatientHandler.PutPatient)
+	router.POST("/v1/admin/users", doctorPatientHandler.PostPatient)
+	router.DELETE("/v2/admin/users/:id", doctorPatientHandler.DeletePatient)
+	//
 	router.GET("/v1/doctor/appointments/:id ", doctorAppointmentHandler.GetSingleAppointment)
 	router.GET("/v1/doctor/appointments", doctorAppointmentHandler.GetAppointments)
 	router.PUT("/v1/doctor/appointments/:id", doctorAppointmentHandler.PutAppointment)
-
 	router.DELETE("/v1/doctor/appointments/:id", doctorAppointmentHandler.DeleteAppointment)
 
-	http.ListenAndServe(":8980", router)
+	http.ListenAndServe(":8480", router)
 }
