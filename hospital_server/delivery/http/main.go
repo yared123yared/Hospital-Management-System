@@ -6,7 +6,7 @@ import(
 	//
 
 	"github.com/yaredsolomon/webProgram1/hospital/entity"
-	
+
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
@@ -34,21 +34,21 @@ func main(){
 	errs=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("laboratorist_Id","laboratorists(Id)","cascade","cascade").GetErrors()
 	errs=dbconn.CreateTable(&entity.Medicine{}).AddForeignKey("added_By","pharmacists(Id)","cascade","cascade").GetErrors()
 	errs=dbconn.CreateTable(&entity.Request{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("approved_By","admins(Id)","cascade","cascade").GetErrors()
-						
-						
-						
-						
-						
-						
-						
-						
-						
+
+
+
+
+
+
+
+
+
 	if errs!=nil {
 		panic(errs)
-	   
+
 	}
-	 
-	 
+
+
 
 }
 
@@ -57,25 +57,27 @@ func main(){
 
 */
 
-
 package main
 
 import (
+	"github.com/monday271/hospital_server/Doctor/repository"
+	"github.com/monday271/hospital_server/Doctor/service"
+	"github.com/monday271/hospital_server/delivery/http/handler"
 	"net/http"
 	/*
-	*/
+	 */
 
-	"github.com/julienschmidt/httprouter"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
+	"github.com/julienschmidt/httprouter"
 	//"github.com/yaredsolomon/webProgram1/hospital/Registeration/repository"
 	//"github.com/yaredsolomon/webProgram1/hospital/Registeration/service"
-	"github.com/yaredsolomon/webProgram1/hospital/request/repository"
-	"github.com/yaredsolomon/webProgram1/hospital/request/service"
-	"github.com/yaredsolomon/webProgram1/hospital/delivery/http/handler"
-	 _"github.com/yaredsolomon/webProgram1/sathurday18/comment/repository"
-	 _"github.com/yaredsolomon/webProgram1/sathurday18/comment/service"
-	_"github.com/yaredsolomon/webProgram1/hospital/entity"
+	//"github.com/yaredsolomon/webProgram1/hospital/request/repository"
+	//"github.com/yaredsolomon/webProgram1/hospital/request/service"
+	//"github.com/yaredsolomon/webProgram1/hospital/delivery/http/handler"
+	// _"github.com/yaredsolomon/webProgram1/sathurday18/comment/repository"
+	// _"github.com/yaredsolomon/webProgram1/sathurday18/comment/service"
+	//_"github.com/yaredsolomon/webProgram1/hospital/entity"
 )
 
 func main() {
@@ -90,7 +92,7 @@ func main() {
 	// errs:=dbconn.CreateTable(&entity.Profile{}).GetErrors()
 	// if errs!=nil {
 	// 	panic(errs)
-		
+
 	// }
 
 	//petients
@@ -98,7 +100,7 @@ func main() {
 	// if errs!=nil {
 	// 	panic(errs)
 	// }
-	
+
 	// errs1:=dbconn.CreateTable(&entity.PetientHistory{}).AddForeignKey("patient_Id","petients(uuid)","cascade","cascade").GetErrors()
 	// if errs1!=nil {
 	// 	panic(errs1)
@@ -108,7 +110,7 @@ func main() {
 	// if errs1!=nil {
 	// 	panic(errs1)uint  `gorm:"not null"`
 	// }
-	
+
 	//
 	// errs1:=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").GetErrors()
 	// if errs1!=nil {
@@ -121,7 +123,6 @@ func main() {
 	// }
 
 	//errs:=dbconn.CreateTable(&entity.Cate{}).GetErrors()
-	
 
 	// commentRepo := comment.repository.NewCommentGormRepo(dbconn)
 	// commentSrv := service.NewCommentService(commentRepo)
@@ -135,23 +136,23 @@ func main() {
 	// router.PUT("/v1/admin/comments/:id", adminCommentHandler.PutComment)
 	// router.POST("/v1/admin/comments", adminCommentHandler.PostComment)
 	// router.DELETE("/v1/admin/comments/:id", adminCommentHandler.DeleteComment)
-	// 
-	// patient registeration 
+	//
+	// patient registeration
 	/*
-	patientRepo := repository.NewPatientGormRepo(dbconn)
-	patientSrv := service.NewPatientService(patientRepo)
+		patientRepo := repository.NewPatientGormRepo(dbconn)
+		patientSrv := service.NewPatientService(patientRepo)
 
-	doctorPatientHandler := handler.NewDoctorPatientHandler(patientSrv)
+		doctorPatientHandler := handler.NewDoctorPatientHandler(patientSrv)
 
-	router := httprouter.New()
+		router := httprouter.New()
 
-	router.GET("/v1/admin/users/", doctorPatientHandler.GetSinglePatient)
-	router.GET("/v1/admin/users", doctorPatientHandler.GetPatients)
-	router.PUT("/v3/admin/users/:id", doctorPatientHandler.PutPatient)
-	router.POST("/v1/admin/users", doctorPatientHandler.PostPatient)
-	router.DELETE("/v2/admin/users/:id", doctorPatientHandler.DeletePatient)
+		router.GET("/v1/admin/users/", doctorPatientHandler.GetSinglePatient)
+		router.GET("/v1/admin/users", doctorPatientHandler.GetPatients)
+		router.PUT("/v3/admin/users/:id", doctorPatientHandler.PutPatient)
+		router.POST("/v1/admin/users", doctorPatientHandler.PostPatient)
+		router.DELETE("/v2/admin/users/:id", doctorPatientHandler.DeletePatient)
 
-	http.ListenAndServe(":8980", router)
+		http.ListenAndServe(":8980", router)
 	*/
 
 	appointmentRepo := repository.NewAppointmentGormRepo(dbconn)
@@ -164,7 +165,7 @@ func main() {
 	router.GET("/v1/doctor/appointments/:id ", doctorAppointmentHandler.GetSingleAppointment)
 	router.GET("/v1/doctor/appointments", doctorAppointmentHandler.GetAppointments)
 	router.PUT("/v1/doctor/appointments/:id", doctorAppointmentHandler.PutAppointment)
-	
+
 	router.DELETE("/v1/doctor/appointments/:id", doctorAppointmentHandler.DeleteAppointment)
 
 	http.ListenAndServe(":8980", router)

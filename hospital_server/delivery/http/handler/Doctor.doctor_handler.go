@@ -1,25 +1,25 @@
 package handler
 
 import (
-	"fmt"
 	"encoding/json"
-	_"fmt"
+	"fmt"
+	_ "fmt"
+	"github.com/monday271/hospital_server/Doctor"
+	"github.com/yaredsolomon/webProgram1/hospital/request"
 	"net/http"
 	"strconv"
 
 	//"github.com/betsegawlemma/restaurant-rest/comment"
 	"github.com/julienschmidt/httprouter"
-	_"github.com/yaredsolomon/webProgram1/hospital/entity"
-	"github.com/yaredsolomon/webProgram1/hospital/request"
+	_ "github.com/yaredsolomon/webProgram1/hospital/entity"
+	//"github.com/yaredsolomon/webProgram1/hospital/request"
 )
 
-	//"github.com/yaredsolomon/webProgram1/sathurday18/entity"
-	
-
+//"github.com/yaredsolomon/webProgram1/sathurday18/entity"
 
 // DoctorAppointmentHandler handles appointment related http requests
 type DoctorAppointmentHandler struct {
-	appointmentService  request.AppointmentService
+	appointmentService Doctor.AppointmentService
 }
 
 // NewDoctorAppointmentHandler returns new DoctorAppointmentHandler object
@@ -56,8 +56,7 @@ func (dah *DoctorAppointmentHandler) GetAppointments(w http.ResponseWriter,
 // GetSingleAppointment handles GET /v1/doctor/appointments/:id request
 func (dah *DoctorAppointmentHandler) GetSingleAppointment(w http.ResponseWriter,
 	r *http.Request, ps httprouter.Params) {
-		fmt.Println(" i am about to get single value")
-		
+	fmt.Println(" i am about to get single value")
 
 	id, err := strconv.Atoi(ps.ByName("id"))
 
@@ -88,8 +87,6 @@ func (dah *DoctorAppointmentHandler) GetSingleAppointment(w http.ResponseWriter,
 	w.Write(output)
 	return
 }
-
-
 
 // PutAppointment handles PUT /v1/doctor/appointments/:id request
 func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
