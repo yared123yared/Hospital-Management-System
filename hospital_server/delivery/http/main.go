@@ -81,58 +81,7 @@ func main() {
 		panic(err)
 	}
 
-	// defer dbconn.Close()
-	// errs:=dbconn.CreateTable(&entity.Profile{}).GetErrors()
-	// if errs!=nil {
-	// 	panic(errs)
-
-	// }
-
-	//petients
-	// errs:=dbconn.CreateTable(&entity.Petient{}).AddForeignKey("Uuid","profiles(Id)","cascade","cascade").GetErrors()
-	// if errs!=nil {
-	// 	panic(errs)
-	// }
-
-	// errs1:=dbconn.CreateTable(&entity.PetientHistory{}).AddForeignKey("patient_Id","petients(uuid)","cascade","cascade").GetErrors()
-	// if errs1!=nil {
-	// 	panic(errs1)
-	// }
-	//
-	// errs1:=dbconn.CreateTable(&entity.Prescription{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").GetErrors()
-	// if errs1!=nil {
-	// 	panic(errs1)uint  `gorm:"not null"`
-	// }
-
-	//
-	// errs1:=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").GetErrors()
-	// if errs1!=nil {
-	// 	panic(errs1)
-	// }
-	//
-	// errs1:=dbconn.CreateTable(&entity.Appointment{}).s.GetErrors()
-	// if errs1!=nil {
-	// 	panic(errs1)
-	// }
-
-	//errs:=dbconn.CreateTable(&entity.Cate{}).GetErrors()
-
-	// commentRepo := comment.repository.NewCommentGormRepo(dbconn)
-	// commentSrv := service.NewCommentService(commentRepo)
-
-	// adminCommentHandler := handler.NewAdminCommentHandler(commentSrv)
-
-	// router := httprouter.New()
-
-	// router.GET("/v1/admin/comments/:id", adminCommentHandler.GetSingleComment)
-	// router.GET("/v1/admin/comments", adminCommentHandler.GetComments)
-	// router.PUT("/v1/admin/comments/:id", adminCommentHandler.PutComment)
-	// router.POST("/v1/admin/comments", adminCommentHandler.PostComment)
-	// router.DELETE("/v1/admin/comments/:id", adminCommentHandler.DeleteComment)
-	//
-	// patient registeration
-
-	// doctor petient information
+	defer dbconn.Close()
 
 	petientRepo := peRepo.NewPetientGormRepo(dbconn)
 	petientServ := peServ.NewPetientService(petientRepo)
@@ -140,7 +89,7 @@ func main() {
 	adminPetientHandler := handler.NewAdminPetientHandler(petientServ)
 	router := httprouter.New()
 	router.GET("/v1/admin/petients", adminPetientHandler.GetPetients)
-	router.GET("/v1/admin/petient/:id", adminPetientHandler.GetSinglePetient)
+	router.GET("/v1/admin/petients/:id", adminPetientHandler.GetSinglePetient)
 
 	router.PUT("/v1/admin/petients/:id", adminPetientHandler.PutPetient)
 	router.POST("/v1/admin/petients", adminPetientHandler.PostPetient)
@@ -151,7 +100,7 @@ func main() {
 
 	adminRequestHandler := handler.NewAdminRequestHandler(requestServ)
 	router.GET("/v1/admin/requests", adminRequestHandler.GetRequests)
-	router.GET("/v1/admin/request/:id", adminRequestHandler.GetSingleRequest)
+	router.GET("/v1/admin/requests/:id", adminRequestHandler.GetSingleRequest)
 	router.PUT("/v1/admin/requests/:id", adminRequestHandler.PutRequest)
 	router.POST("/v1/admin/requests", adminRequestHandler.PostRequest)
 	router.DELETE("/v1/admin/requests/:id", adminRequestHandler.DeleteRequest)
@@ -161,7 +110,7 @@ func main() {
 
 	adminAppointmentHandler := handler.NewAdminAppointmentHandler(appointmentServ)
 	router.GET("/v1/admin/appointments", adminAppointmentHandler.GetAppointments)
-	router.GET("/v1/admin/appointment/:id", adminAppointmentHandler.GetSingleAppointment)
+	router.GET("/v1/admin/appointments/:id", adminAppointmentHandler.GetSingleAppointment)
 	router.PUT("/v1/admin/appointments/:id", adminAppointmentHandler.PutAppointment)
 	router.POST("/v1/admin/appointments", adminAppointmentHandler.PostAppointment)
 	router.DELETE("/v1/admin/appointments/:id", adminAppointmentHandler.DeleteAppointment)
@@ -171,7 +120,7 @@ func main() {
 
 	adminPrescriptiontHandler := handler.NewAdminPrescriptionHandler(prescriptionServ)
 	router.GET("/v1/admin/prescriptions", adminPrescriptiontHandler.GetPrescriptions)
-	router.GET("/v1/admin/prescription/:id", adminPrescriptiontHandler.GetSinglePrescription)
+	router.GET("/v1/admin/prescriptions/:id", adminPrescriptiontHandler.GetSinglePrescription)
 	router.PUT("/v1/admin/prescriptions/:id", adminPrescriptiontHandler.PutPrescription)
 	router.POST("/v1/admin/prescriptions", adminPrescriptiontHandler.PostPrescription)
 	router.DELETE("/v1/admin/prescriptions/:id", adminPrescriptiontHandler.DeletePrescription)
