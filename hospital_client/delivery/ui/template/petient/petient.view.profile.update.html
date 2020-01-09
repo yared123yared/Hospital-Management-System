@@ -4,101 +4,110 @@
     {{template "patient.footer".}}
 {{end}}
 {{define "patient.view.profile.update.content"}}
-        <div class="container-fluid">
-            <h2 class="mt-4">Manage Profile</h2>
-            <form class="needs-validation" action="/patient/profile/update" novalidate>
-                <hr>
-                <div class="form-row">
-                    <div class="col-6 align-content-end">
-                        <img src="/assets/img/{{.Image}}" class="rounded col-8 d-block" alt="User Image"/>
-                        <input type="file" class="form-control-file" name="profile_image">Upload Image</input>
-                    </div>
-                    <div class="col-6 align-content-center">
+    <div class="container-fluid">
+        <h2 class="mt-4">Manage Profile</h2>
+
+        <form content="multipart/form-data"  method="post" action="/profile/update">
+            <hr>
+            <input type="hidden" value="{{.ID}}" name="id">
+            {{with .Profile}}
+            <div class="form-row">
+                <div class="col-6 align-content-end">
+                    <input type="hidden" value="{{.Image}}" name="image">
+                    <img src="/assets/img/{{.Image}}" class="rounded col-8 d-block"/>
+                    <label for="image">Upload Image</label>
+                    <input type="file" class="form-control-file" name="profile_image" id="image"/>
+                </div>
+                <div class="col-6 align-content-center">
                     <div class="form-row">
                         <div class="form-row">
-                        <div class="col-md-6  mb-3">
+                            <div class="col-md-6  mb-3">
                                 <label for="first_name">First Name</label>
-                                <input type="text" class="form-control" id="first_name" placeholder="First Name" name="first_name" value="{{.FirstName}}" required>
+                                <input type="text" class="form-control" id="first_name" placeholder="First Name" name="full_name" value="{{.FullName}}" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
                             </div>
                             <div class="col-md-6  mb-3">
                                 <label for="last_name">Last Name</label>
-                                <input type="text" class="form-control" id="last_name" placeholder="last Name" name="last_name" value="{{.LastName}}" required>
+                                <input type="text" class="form-control" id="last_name" placeholder="last Name" name="last_name" value="{{.FullName}}" required>
                                 <div class="valid-feedback">
                                     Looks good!
                                 </div>
-                    </div>
-                </div>
-                </div>
-                <div class="form-row">
-                    <div class="col-md-6 mb-3">
-                        <label for="address">Address</label>
-                        <input type="email" class="form-control" id="address" placeholder="e.g Addis Ababa, Bole" name="address" value="{{.Address}}" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid Address.
+                            </div>
                         </div>
                     </div>
+                    <div class="form-row">
+                        <div class="col-md-6 mb-3">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="e.g Addis Ababa, Bole" name="address" value="{{.Address}}" required>
 
-                    <div class="col-md-6  mb-3">
-                        <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="your email" name="email" value="{{.Email}}" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid Email.
                         </div>
+                        <div class="col-md-6  mb-3">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" placeholder="your email" name="email" value="{{.Email}}" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6  mb-3">
+                            <label for="phone">Phone</label>
+                            <input type="tel" class="form-control" id="phone" placeholder="your phone number"  name="phone" value="{{.Phone}}" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="b_date">Birth Date</label>
+                            <input type="datetime-local"  class="form-control daterangepicker_input" id="b_date" placeholder="your birth date"  name="birth_date" value="{{.BirthDate}}" required>
+                        </div>
+                        <button class="btn btn-primary d-block float-right my-3" type="submit">Update Profile</button>
+
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="col-md-6  mb-3">
-                      <label for="phone">Phone</label>
-                        <input type="tel" class="form-control" id="phone" placeholder="your phone number"  name="phone" value="{{.Phone}}" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid Phone.
-                        </div>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                      <label for="b_date">Birth Date</label>
-                        <input type="date" class="form-control" id="b_date" placeholder="your birth date"  name="birth_date" value="{{.BirthDate}}" required>
-                        <div class="invalid-feedback">
-                            Please provide a valid Phone.
-                        </div>
-                    </div>
-                    <button class="btn btn-primary d-block float-right my-3" type="submit">Update Profile</button>
 
+            </div>
+        </form>
+        {{end}}
+
+        <hr>
+        <h2>Change Password</h2>
+        <hr class="text-danger">
+        <form class="needs-validation" method="post" action="/patient/password/update" novalidate>
+            <div class="form-row mx-lg-12">
+                <div class="col-md-3 mr-2 mb-3">
+                    <label for="password">Current Password</label>
+                    <input type="password" class="form-control" id="password" placeholder="Current Password" name="password" required>
+                    <div class="invalid-feedback">
+                        Please provide a strong Password.
+                    </div>
+                </div>
+                <div class="col-md-3 mr-1 mb-3">
+                    <label for="password">Enter New Password</label>
+                    <input type="password" data-validate="password" class="form-control" id="password" placeholder="New Password" name="password" required>
+                    {{/*  <div class="invalid-feedback">
+                            Please provide a strong Password.
+                        </div>*/}}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="password2">Re-Enter Password</label>
+                    <input type="password" class="form-control" id="password2" placeholder="Re-Type Password" name="password2" required>
+                    <div class="invalid-feedback">
+                        Please provide a strong Password.
+                    </div>
                 </div>
             </div>
+            <div class="col-md-3 mb-3">
+                <input type="checkbox" onclick="myFunction()">Show Password
 
-                </div>
-            </form>
-            <hr>
-            <h2>Change Password</h2>
-            <hr class="text-danger">
-            <form class="needs-validation" action="/patient/password/update" novalidate>
-                <div class="form-row mx-lg-12">
-                    <div class="col-md-3 mr-2 mb-3">
-                        <label for="password">Current Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="Current Password" name="password" required>
-                        <div class="invalid-feedback">
-                            Please provide a strong Password.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mr-1 mb-3">
-                        <label for="password">Enter New Password</label>
-                        <input type="password" class="form-control" id="password" placeholder="New Password" name="password" required>
-                        <div class="invalid-feedback">
-                            Please provide a strong Password.
-                        </div>
-                    </div>
-                    <div class="col-md-3 mb-3">
-                        <label for="password2">Re-Enter Password</label>
-                        <input type="password" class="form-control" id="password2" placeholder="Re-Type Password" name="password2" required>
-                        <div class="invalid-feedback">
-                            Please provide a strong Password.
-                        </div>
-                    </div>
-                </div>
-                <button  class="btn btn-primary mr-lg-5" type="submit">Update Password</button>
+                <script>
+                    function myFunction() {
+                        var x = document.getElementById("password");
+                        if (x.type === "password") {
+                            x.type = "text";
+                        } else {
+                            x.type = "password";
+                        }
+                    }
+                </script>
+            </div>
+            <button  class="btn btn-primary mr-lg-5" type="submit">Update Password</button>
         </form>
-        </div>
+    </div>
 {{end}}

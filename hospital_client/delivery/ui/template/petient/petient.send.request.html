@@ -12,20 +12,14 @@
                 <tr>
                     <th>ID</th>
                     <th>Petient ID</th>
-                    <th>Doctor ID</th>
-                    <th>Description</th>
                     <th>Approve status</th>
-                    <th>Date</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
                     <th>ID</th>
                     <th>Petient ID</th>
-                    <th>Doctor ID</th>
-                    <th>Description</th>
                     <th>Approve status</th>
-                    <th>Date</th>
                 </tr>
                 </tfoot>
                 <tbody>
@@ -33,15 +27,15 @@
                     <tr>
                         <td>{{ .ID}}</td>
                         <td>{{ .PatientId}}</td>
-                        <td>{{ .DoctorId}}</td>
-                        <td>{{ .Description}}</td>
                         <td>{{ .ApproveStatus}}</td>
-                        <td>{{ .Date}}</td>
                     </tr>
                 {{end}}
                 </tbody>
             </table>
-            <a href="#" class="btn btn-primary btn--pill">New Request</a>
+            <form action="/request/new" method="post">
+                <input type="hidden" name="id" value="{{.ID}}">
+                <button class="btn btn-primary btn-pill">New Request</button>
+            </form>
         </div>
     </div>
     <!-- /#wrapper -->
@@ -49,28 +43,3 @@
     </div>
 {{end}}
 
-       {{/* <!-- Button to Open the Modal -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-            Open modal
-        </button>
-        <!-- The Modal -->
-        <div class="modal" id="myModal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                        <h4 class="modal-title">Modal Heading</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="modal-body">
-                        Modal body..
-                    </div>
-                    <!-- Modal footer -->
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    </div>
-                </div>
-            </div>
-        </div>
- {{end}}*/}}

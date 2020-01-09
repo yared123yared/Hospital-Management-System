@@ -3,7 +3,6 @@
     {{template "patient.view.prescription.content".}}
     {{template "patient.footer".}}
 {{end}}
-
 {{define "patient.view.prescription.content"}}
     <div class="container-fluid">
         <h1 class="mt-4">Prescription</h1>
@@ -11,51 +10,39 @@
             <table class="datatable table table-bordered table-striped"  style="width:100%;" cellspacing="0">
                 <thead class="bg-white">
                 <tr>
-                    <th>No.</th>
-                    <th>Date</th>
-                    <th>Prescribed By</th>
-                    <th>Department</th>
+                    <th>ID</th>
+                    <th>Petient ID</th>
+                    <th>Doctor ID</th>
+                    <th>Pharmacist ID</th>
+                    <th>Medicine Name</th>
                     <th>Description</th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tfoot>
                 <tr>
-                    <th>#</th>
-                    <th>Date</th>
-                    <th>Prescribed By</th>
-                    <th>Department</th>
+                    <th>ID</th>
+                    <th>Petient ID</th>
+                    <th>Doctor ID</th>
+                    <th>Pharmacist ID</th>
+                    <th>Medicine Name</th>
                     <th>Description</th>
+                    <th>Date</th>
+
                 </tr>
                 </tfoot>
                 <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Tiger Nixon</td>
-                    <td>System Architect</td>
-                    <td>Edinburgh</td>
-                    <td>somern rernenme  erekrkerkj</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Garrett Winters</td>
-                    <td>Accountant</td>
-                    <td>Tokyo</td>
-                    <td>somern rernenme  erekrkerkj</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Ashton Cox</td>
-                    <td>Junior Technical Author</td>
-                    <td>San Francisco</td>
-                    <td>somern rernenme  erekrkerkj</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Cedric Kelly</td>
-                    <td>Senior Javascript Developer</td>
-                    <td>Edinburgh</td>
-                    <td>somern rernenme  erekrkerkj</td>
-                </tr>
+                {{range .Prescription}}
+                    <tr>
+                        <td>{{ .ID}}</td>
+                        <td>{{ .PatientId}}</td>
+                        <td>{{ .DoctorId}}</td>
+                        <td>{{ .PhrmacistId}}</td>
+                        <td>{{ .MedicineName}}</td>
+                        <td>{{ .Description}}</td>
+                        <td>{{ .Date}}</td>
+                    </tr>
+                {{end}}
                 </tbody>
             </table>
         </div>

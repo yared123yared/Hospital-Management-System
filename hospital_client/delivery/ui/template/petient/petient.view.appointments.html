@@ -5,68 +5,44 @@
 {{end}}
 
 {{define "patient.view.appointment.content"}}
-<div class="container-fluid">
-    <h1 class="mt-4">Appointments</h1>
-    <div class="container">
-        <table class="datatable table table-bordered table-striped"  style="width:100%;" cellspacing="0">
-            <thead>
-            <tr>
-                <th>#</th>
-                <th>Date</th>
-                <th>Doctor</th>
-                <th>Department</th>
-            </tr>
-            </thead>
-            <tfoot>
-            <tr>
-                <th>#</th>
-                <th>Date</th>
-                <th>Doctor</th>
-                <th>Department</th>
-            </tr>
-            </tfoot>
-            <tbody>
-            <tr>
-                <td>1</td>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-            </tr>
-            <tr>
-                <td>2</td>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-            </tr>
-            <tr>
-                <td>4</td>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-            </tr>
-            <tr>
-                <td>5</td>
-                <td>Airi Satou</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-            </tr>
-            <tr>
-                <td>6</td>
-                <td>Brielle Williamson</td>
-                <td>Integration Specialist</td>
-                <td>New York</td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="container-fluid">
+        <h1 class="mt-4">Appointments</h1>
+        <div class="container">
+            <table class="datatable table table-bordered table-striped"  style="width:100%;" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Patient Id</th>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Department</th>
+                </tr>
+                </thead>
+                <tfoot>
+                <tr>
+                    <th>Id</th>
+                    <th>Patient Id</th>
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Department</th>
+                </tr>
+                </tfoot>
+                <tbody>
+                {{range .Appointment}}
+                    <tr>
+                        <td>{{.ID}}</td>
+                        <td>{{.PatientId}}</td>
+                        <td>{{.Date}}</td>
+                        <td>{{.DoctorId}}</td>
+                        {{/*                <td>{{.ID}}</td>*/}}
+
+                    </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-<!-- /#wrapper -->
-</div>
-</div>
+    <!-- /#wrapper -->
+    </div>
+    </div>
 {{end}}
