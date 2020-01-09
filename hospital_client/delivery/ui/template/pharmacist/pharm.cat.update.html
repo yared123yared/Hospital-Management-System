@@ -1,0 +1,132 @@
+{{define "pharm.cat.update.layout"}}
+    {{template "pharm.nav.layout"}}
+    {{template "pharm.cat.update.content"}}
+    {{template "pharm.footer.layout"}}
+{{end}}
+
+{{define "pharm.cat.update.content"}}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+                
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <!-- Custom styles for this template-->
+    <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+        </head>
+    <body>
+
+ <!-- Begin Page Content -->
+ <div class="container-fluid bg-light">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">update Medicine</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4 bg-light">
+    <div class="m-5">
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="form-group row">
+            <label for="name" class="ml-3 col-sm-2 col-form-label">Medicine Name</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" name="Medname" id="Medname" placeholder="Medicine Name">
+            </div>
+          </div>
+            <div class="form-group row">
+              <label for="name" class="ml-3 col-sm-2 col-form-label">Category Name</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" name="catname" id="catname" placeholder="Category Name">
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="description" class="ml-3 col-sm-2 col-form-label">Description</label>
+              <div class="col-sm-7">
+                <textarea class="form-control" name="catdescription" id="catdescription" rows="3"></textarea>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="description" class="ml-3 col-sm-2 col-form-label">Expired Date</label>
+              <div class="col-sm-7">
+                <input type="date" class="form-class icon-th" name="dateAdded" id="dateAdded" placeholder="eg. 20-12-2022" rows="3"/>
+                <span class="add-on"><i class="icon-th"></i></span>
+              </div>
+            </div>
+            <div class="form-group row">
+              <label for="description" class="ml-3 col-sm-2 col-form-label">Amount</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-class icon-th" name="amount" id="amount" placeholder="eg. 123" rows="3"/>
+                <span class="add-on"><i class="icon-th"></i></span>
+              </div>
+            </div>
+            
+            <div class="form-group row">
+              <div class="col-sm-10">
+                <a type="submit" href="/cat" class="btn btn-primary float-right">Update Medicine</a>
+              </div>
+            </div>
+          </form>
+          
+    </div>
+
+   
+   
+    
+
+    
+  </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+<div class="container my-auto">
+  <div class="copyright text-center my-auto">
+    <span>Copyright &copy; Your Website 2019</span>
+  </div>
+</div>
+</footer>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+<div class="modal-footer">
+  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  <a class="btn btn-primary" href="login.html">Logout</a>
+</div>
+</div>
+</div>
+</div>
+<script src="../assets/jquery/jquery.js"></script>
+    </body>
+    </html>
+
+{{end}}
