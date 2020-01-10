@@ -5,7 +5,7 @@ import (
 	"fmt"
 	_ "fmt"
 	"github.com/monday271/hospital_server/Doctor"
-	"github.com/yaredsolomon/webProgram1/hospital/request"
+	//"github.com/yaredsolomon/webProgram1/hospital/request"
 	"net/http"
 	"strconv"
 
@@ -23,7 +23,7 @@ type DoctorAppointmentHandler struct {
 }
 
 // NewDoctorAppointmentHandler returns new DoctorAppointmentHandler object
-func NewDoctorAppointmentHandler(aptService request.AppointmentService) *DoctorAppointmentHandler {
+func NewDoctorAppointmentHandler(aptService Doctor.AppointmentService) *DoctorAppointmentHandler {
 	return &DoctorAppointmentHandler{appointmentService: aptService}
 }
 
@@ -56,11 +56,14 @@ func (dah *DoctorAppointmentHandler) GetAppointments(w http.ResponseWriter,
 // GetSingleAppointment handles GET /v1/doctor/appointments/:id request
 func (dah *DoctorAppointmentHandler) GetSingleAppointment(w http.ResponseWriter,
 	r *http.Request, ps httprouter.Params) {
-	fmt.Println(" i am about to get single value")
-
+	fmt.Println(" i am about to get single Doctor value")
+	fmt.Println(ps.ByName("id"))
 	id, err := strconv.Atoi(ps.ByName("id"))
+	//id, err := strconv.Atoi(ps.ByName("id"))
+	fmt.Println(id)
 
 	if err != nil {
+		fmt.Println("ERRRRRRRRRRRR")
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
@@ -90,8 +93,9 @@ func (dah *DoctorAppointmentHandler) GetSingleAppointment(w http.ResponseWriter,
 
 // PutAppointment handles PUT /v1/doctor/appointments/:id request
 func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-
+	fmt.Println(" I am at the put method")
 	id, err := strconv.Atoi(ps.ByName("id"))
+	fmt.Println(id)
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
@@ -105,6 +109,7 @@ func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *ht
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
+	fmt.Println(" i have get single value")
 
 	l := r.ContentLength
 
