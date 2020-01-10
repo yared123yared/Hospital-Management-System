@@ -2,73 +2,79 @@ package handler
 
 import (
 	"fmt"
-	entity "github.com/getach1/web1/Project/entities"
-	"github.com/getach1/web1/Project/entities/data"
+	entity2 "github.com/getach1/web1/web1_group_project/hospital_client/delivery/entity"
+	"github.com/getach1/web1/web1_group_project/hospital_client/delivery/http/data"
 	"html/template"
 	"strconv"
 	"time"
-
 	"net/http"
 )
 
-var tmpl = template.Must(template.ParseGlob("template/*"))
+type AdminPatientHandler struct {
+	tmpl        *template.Template
+}
 
-func Profile(w http.ResponseWriter, _ *http.Request) {
+
+func NewPatientHandler(T *template.Template) *AdminPatientHandler {
+	return &AdminPatientHandler{tmpl: T}
+}
+
+
+func (ph *AdminPatientHandler)Profile(w http.ResponseWriter, _ *http.Request) {
 	//petient:=Petient{1 ,"Getachew","Tebikew","prescription.png","Addis Ababa","xy@z.com","+1113444",time.Now()}
-	petient := entity.Petient{}
+	petient := entity2.Petient{}
 	var err error
 	petient, err = data.FetchPetient(11)
 	data.CheckErr(err)
-	err = tmpl.ExecuteTemplate(w, "patient.view.profile.update", petient)
+	err = ph.tmpl.ExecuteTemplate(w, "patient.view.profile.update", petient)
 	data.CheckErr(err)
 }
 
-func Doctors(w http.ResponseWriter, _ *http.Request) {
-	doctors := []entity.Doctor{}
+func (ph *AdminPatientHandler)Doctors(w http.ResponseWriter, _ *http.Request) {
+	doctors := []entity2.Doctor{}
 	doctors, _ = data.FetchDoctors()
-	err := tmpl.ExecuteTemplate(w, "patient.view.doctor", doctors)
+	err := ph.tmpl.ExecuteTemplate(w, "patient.view.doctor", doctors)
 	data.CheckErr(err)
 }
-func Appointment(w http.ResponseWriter, _ *http.Request) {
-	petient := entity.Petient{}
+func (ph *AdminPatientHandler) Appointment(w http.ResponseWriter, _ *http.Request) {
+	petient := entity2.Petient{}
 	petient, _ = data.FetchPetient(11)
-	err := tmpl.ExecuteTemplate(w, "patient.view.appointment", petient)
+	err := ph.tmpl.ExecuteTemplate(w, "patient.view.appointment", petient)
 	data.CheckErr(err)
 }
-func Prescription(w http.ResponseWriter, _ *http.Request) {
-	petient := entity.Petient{}
+func (ph *AdminPatientHandler) Prescription(w http.ResponseWriter, _ *http.Request) {
+	petient := entity2.Petient{}
 	petient, _ = data.FetchPetient(11)
-	err := tmpl.ExecuteTemplate(w, "patient.view.prescription", petient)
+	err := ph.tmpl.ExecuteTemplate(w, "patient.view.prescription", petient)
 	fmt.Println(petient.Appointment)
 	data.CheckErr(err)
 }
 
-func Request(w http.ResponseWriter, r *http.Request) {
-	petient := entity.Petient{}
-
+func (ph *AdminPatientHandler) Request(w http.ResponseWriter, r *http.Request) {
+	petient := entity2.Petient{}
 	petient, _ = data.FetchPetient(11)
-	err := tmpl.ExecuteTemplate(w, "patient.view.request", petient)
+	err := ph.tmpl.ExecuteTemplate(w, "patient.view.request", petient)
 	data.CheckErr(err)
 }
-func SendRequest(w http.ResponseWriter, r *http.Request) {
+func (ph *AdminPatientHandler) SendRequest(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		idRaw := r.URL.Query().Get("id")
 		fmt.Println("hello")
 		id, err := strconv.Atoi(idRaw)
 		data.CheckErr(err)
-		user := entity.Petient{}
+		user := entity2.Petient{}
 		user, err = data.FetchPetient(id)
 		data.CheckErr(err)
 		user, _ = data.FetchPetient(id)
-		err = tmpl.ExecuteTemplate(w, "patient.view.request", user)
+		err = ph.tmpl.ExecuteTemplate(w, "patient.view.request", user)
 		data.CheckErr(err)
 	} else if r.Method == http.MethodPost {
-		user := entity.Petient{}
+		user := entity2.Petient{}
 		id, _ := strconv.Atoi(r.FormValue("id"))
 		var err error
 		user, err = data.FetchPetient(id)
 		data.CheckErr(err)
-		request := entity.Request{
+		request := entity2.Request{
 			ID:            1,
 			DoctorId:      1,
 			PatientId:     uint(user.ID),
@@ -87,17 +93,17 @@ func SendRequest(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "/request", http.StatusSeeOther)
 	}
 }
-func Update(w http.ResponseWriter, r *http.Request) {
+func (ph *AdminPatientHandler) Update(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodGet {
 		idRaw := r.URL.Query().Get("id")
 		id, err := strconv.Atoi(idRaw)
 		data.CheckErr(err)
 		user, err := data.FetchPetient(id)
 		data.CheckErr(err)
-		err = tmpl.ExecuteTemplate(w, "admin.user.update.layout", user)
+		err = ph.tmpl.ExecuteTemplate(w, "admin.user.update.layout", user)
 		data.CheckErr(err)
 	} else if r.Method == http.MethodPost {
-		user := entity.Petient{}
+		user := entity2.Petient{}
 		id, _ := strconv.Atoi(r.FormValue("id"))
 		var err error
 		user, err = data.FetchPetient(id)

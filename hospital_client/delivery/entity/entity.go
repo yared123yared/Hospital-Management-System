@@ -1,5 +1,4 @@
-package  entity
-
+package entity
 import "time"
 
 // Category represents Food Menu Category
@@ -116,3 +115,4 @@ type Error struct {
 	Code    int
 	Message string
 }
+

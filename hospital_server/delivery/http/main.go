@@ -1,75 +1,19 @@
-/*
-
-func main(){
-
-
-	dbconn, err := gorm.Open("postgres", "postgres://postgres:P@$$w0rDd@localhost/hospital4?sslmode=disable")
-
-	if err != nil {
-		panic(err)
-	}
-
-	defer dbconn.Close()
-	errs:=dbconn.CreateTable(&entity.Profile{}).GetErrors()
-	errs=dbconn.CreateTable(&entity.Pharmacist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Petient{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Admin{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Doctor{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Laboratorist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Prescription{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("phrmacist_Id","pharmacists(Id)","cascade","cascade").GetErrors()
-
-	errs=dbconn.CreateTable(&entity.Appointment{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("patient_uname","profiles(full_name)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("laboratorist_Id","laboratorists(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Medicine{}).AddForeignKey("added_By","pharmacists(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Request{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("approved_By","admins(Id)","cascade","cascade").GetErrors()
-
-
-
-
-
-
-
-
-
-	if errs!=nil {
-		panic(errs)
-
-	}
-
-
-
-}
-
-
-
-
-*/
-
 package main
 
 import (
-	prescsrepo "github.com/getach1/web1/hospital/prescribtion/repository"
-	prescserv "github.com/getach1/web1/hospital/prescribtion/service"
-	peRepo "github.com/getach1/web1/web1_group_project/hospital_server/petient/repository"
-	peServ "github.com/getach1/web1/web1_group_project/hospital_server/petient/service"
-	"github.com/jinzhu/gorm"
-
 	aptrepo "github.com/getach1/web1/hospital/Appointment/repository"
 	aptserv "github.com/getach1/web1/hospital/Appointment/service"
 	"github.com/getach1/web1/hospital/delivery/http/handler"
+	prescsrepo "github.com/getach1/web1/hospital/prescribtion/repository"
+	prescserv "github.com/getach1/web1/hospital/prescribtion/service"
 	reqRepo "github.com/getach1/web1/hospital/request/repository"
 	reqServ "github.com/getach1/web1/hospital/request/service"
+	peRepo "github.com/getach1/web1/web1_group_project/hospital_server/petient/repository"
+	peServ "github.com/getach1/web1/web1_group_project/hospital_server/petient/service"
+	"github.com/jinzhu/gorm"
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
 	"net/http"
-	//"github.com/yaredsolomon/webProgram1/hospital/Registeration/repository"
-	//"github.com/yaredsolomon/webProgram1/hospital/Registeration/service"
-	//"github.com/yaredsolomon/webProgram1/hospital/request/repository"
-	//"github.com/yaredsolomon/webProgram1/hospital/request/service"
-	//"github.com/yaredsolomon/webProgram1/hospital/delivery/http/handler"
-	// _"github.com/yaredsolomon/webProgram1/sathurday18/comment/repository"
-	// _"github.com/yaredsolomon/webProgram1/sathurday18/comment/service"
-	//_"github.com/yaredsolomon/webProgram1/hospital/entity"
 )
 
 func main() {
@@ -83,6 +27,87 @@ func main() {
 
 	defer dbconn.Close()
 
+	//CREATE TABLES
+/*
+	errs:=dbconn.CreateTable(&entity.Profile{}).GetErrors()
+	errs=dbconn.CreateTable(&entity.Pharmacist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Petient{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Admin{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Doctor{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Laboratorist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Prescription{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("phrmacist_Id","pharmacists(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Appointment{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("laboratorist_Id","laboratorists(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Medicine{}).AddForeignKey("added_By","pharmacists(Id)","cascade","cascade").GetErrors()
+	errs=dbconn.CreateTable(&entity.Request{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("approved_By","admins(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+	if errs!=nil {
+		panic(errs)
+
+	}*/
+
+
+
+//INSERT TO TABLES
+/*
+petient:=entity.Petient{
+	ID:           0,
+	Uuid:         1,
+	Profile:      entity.Profile{},
+	BloodGroup:   "AB",
+	Age:          30,
+	Prescription: nil,
+	Diagnosis:    nil,
+	Appointment:  nil,
+	Request:      nil,
+}
+dbconn.Debug().Save(&petient)
+*/
+/*
+profile:=entity.Profile{
+	ID:          0,
+	FullName:    "abebe hello",
+	Password:    "12345FSDFDJ",
+	Email:       "GETACHEW@G.COM",
+	Phone:       "12343jkdskj439434",
+	Address:     "adama ABABA",
+	Image:       "doctor.png",
+	Sex:         "MALE",
+
+	Role:        "PETIENT",
+	BirthDate:   time.Time{},
+	Description: "INPETIENT IN THIS HOSPITAL",
+}
+
+dbconn.Debug().Save(&profile)
+*/
+
+/*doctor:=entity.Doctor{
+	ID:           0,
+	Profile:      entity.Profile{},
+	Uuid:         3,
+	Department:   "surgery",
+	Prescription: nil,
+	Diagnosis:    nil,
+	Appointment:  nil,
+}
+parma:=entity.Pharmacist{
+	ID:           0,
+	Uuid:         1,
+	Profile:      entity.Profile{},
+	Medicine:     nil,
+	Prescription: nil,
+}
+lab:=entity.Laboratorist{
+	ID:        0,
+	Uuid:      1,
+	Profile:   entity.Profile{},
+	Diagnosis: nil,
+}
+dbconn.Save(&doctor)
+dbconn.Save(&parma)
+dbconn.Save(&lab)
+
+*/
 	petientRepo := peRepo.NewPetientGormRepo(dbconn)
 	petientServ := peServ.NewPetientService(petientRepo)
 

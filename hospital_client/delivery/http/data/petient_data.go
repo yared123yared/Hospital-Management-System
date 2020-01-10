@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	entity "github.com/getach1/web1/Project/entities"
+	entity2 "github.com/getach1/web1/web1_group_project/hospital_client/delivery/entity"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -21,7 +21,7 @@ var doctorURL = "http://localhost:8100/v1/admin/doctors/"
 
 //var requestURL="http://localhost:8100/v1/admin/requests/"
 
-func FetchPetient(id int) (entity.Petient, error) {
+func FetchPetient(id int) (entity2.Petient, error) {
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s%d", baseURL, id)
 	req, _ := http.NewRequest("GET", URL, nil)
@@ -29,23 +29,23 @@ func FetchPetient(id int) (entity.Petient, error) {
 	//res, err := client.Get(URL)
 	if err != nil {
 		CheckErr(err)
-		return entity.Petient{}, err
+		return entity2.Petient{}, err
 	}
-	userdata := entity.Petient{}
+	userdata := entity2.Petient{}
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		CheckErr(err)
-		return entity.Petient{}, err
+		return entity2.Petient{}, err
 	}
 	err = json.Unmarshal(body, &userdata)
 	if err != nil {
 		CheckErr(err)
-		return entity.Petient{}, err
+		return entity2.Petient{}, err
 	}
 	return userdata, nil
 }
 
-func UpdateProfile(petient entity.Petient) {
+func UpdateProfile(petient entity2.Petient) {
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s%d", baseURL, petient.ID)
 	output, err := json.MarshalIndent(petient, "", "\t\t")
@@ -55,7 +55,7 @@ func UpdateProfile(petient entity.Petient) {
 
 }
 
-func FetchDoctors() ([]entity.Doctor, error) {
+func FetchDoctors() ([]entity2.Doctor, error) {
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s%d", doctorURL, nil)
 	req, _ := http.NewRequest("GET", URL, nil)
@@ -63,18 +63,18 @@ func FetchDoctors() ([]entity.Doctor, error) {
 	//res, err := client.Get(URL)
 	if err != nil {
 		CheckErr(err)
-		return []entity.Doctor{}, err
+		return []entity2.Doctor{}, err
 	}
-	doctordata := []entity.Doctor{}
+	doctordata := []entity2.Doctor{}
 	body, err := ioutil.ReadAll(res.Body)
 	if err != nil {
 		CheckErr(err)
-		return []entity.Doctor{}, err
+		return []entity2.Doctor{}, err
 	}
 	err = json.Unmarshal(body, &doctordata)
 	if err != nil {
 		CheckErr(err)
-		return []entity.Doctor{}, err
+		return []entity2.Doctor{}, err
 	}
 	return doctordata, nil
 }

@@ -1,19 +1,24 @@
 package main
 
 import (
-	"github.com/getach1/web1/Project/entities/handler"
+	"github.com/getach1/web1/web1_group_project/hospital_client/delivery/http/handler"
+	"html/template"
 	"net/http"
 )
 
+
 func main() {
+	tmpl := template.Must(template.ParseGlob("../ui/template/petient/*"))
+	patientHandler:=handler.NewPatientHandler(tmpl)
+
 	fs := http.FileServer(http.Dir("assets"))
 	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	http.HandleFunc("/", handler.Appointment)
-	http.HandleFunc("/profile", handler.Profile)
-	http.HandleFunc("/doctors", handler.Doctors)
-	http.HandleFunc("/prescription", handler.Prescription)
-	http.HandleFunc("/request", handler.Request)
-	http.HandleFunc("/request/new", handler.SendRequest)
-	http.HandleFunc("/profile/update", handler.Update)
+	http.HandleFunc("/", patientHandler.Appointment)
+	http.HandleFunc("/profile", patientHandler.Profile)
+	http.HandleFunc("/doctors", patientHandler.Doctors)
+	http.HandleFunc("/prescription", patientHandler.Prescription)
+	http.HandleFunc("/request", patientHandler.Request)
+	http.HandleFunc("/request/new", patientHandler.SendRequest)
+	http.HandleFunc("/profile/update", patientHandler.Update)
 	_ = http.ListenAndServe(":8000", nil)
 }
