@@ -28,86 +28,84 @@ func main() {
 	defer dbconn.Close()
 
 	//CREATE TABLES
-/*
-	errs:=dbconn.CreateTable(&entity.Profile{}).GetErrors()
-	errs=dbconn.CreateTable(&entity.Pharmacist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Petient{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Admin{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Doctor{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Laboratorist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Prescription{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("phrmacist_Id","pharmacists(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Appointment{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("laboratorist_Id","laboratorists(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Medicine{}).AddForeignKey("added_By","pharmacists(Id)","cascade","cascade").GetErrors()
-	errs=dbconn.CreateTable(&entity.Request{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("approved_By","admins(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
-	if errs!=nil {
-		panic(errs)
+	/*
+		errs:=dbconn.CreateTable(&entity.Profile{}).GetErrors()
+		errs=dbconn.CreateTable(&entity.Pharmacist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Petient{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Admin{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Doctor{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Laboratorist{}).AddForeignKey("uuid","profiles(Id)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Prescription{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("phrmacist_Id","pharmacists(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Appointment{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Diagnosis{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("laboratorist_Id","laboratorists(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Medicine{}).AddForeignKey("added_By","pharmacists(Id)","cascade","cascade").GetErrors()
+		errs=dbconn.CreateTable(&entity.Request{}).AddForeignKey("patient_Id","petients(Id)","cascade","cascade").AddForeignKey("doctor_Id","doctors(Id)","cascade","cascade").AddForeignKey("approved_By","admins(Id)","cascade","cascade").AddForeignKey("patient_name","profiles(full_name)","cascade","cascade").GetErrors()
+		if errs!=nil {
+			panic(errs)
 
-	}*/
+		}*/
 
+	//INSERT TO TABLES
+	/*
+	   petient:=entity.Petient{
+	   	ID:           0,
+	   	Uuid:         1,
+	   	Profile:      entity.Profile{},
+	   	BloodGroup:   "AB",
+	   	Age:          30,
+	   	Prescription: nil,
+	   	Diagnosis:    nil,
+	   	Appointment:  nil,
+	   	Request:      nil,
+	   }
+	   dbconn.Debug().Save(&petient)
+	*/
+	/*
+	   profile:=entity.Profile{
+	   	ID:          0,
+	   	FullName:    "abebe hello",
+	   	Password:    "12345FSDFDJ",
+	   	Email:       "GETACHEW@G.COM",
+	   	Phone:       "12343jkdskj439434",
+	   	Address:     "adama ABABA",
+	   	Image:       "doctor.png",
+	   	Sex:         "MALE",
 
+	   	Role:        "PETIENT",
+	   	BirthDate:   time.Time{},
+	   	Description: "INPETIENT IN THIS HOSPITAL",
+	   }
 
-//INSERT TO TABLES
-/*
-petient:=entity.Petient{
-	ID:           0,
-	Uuid:         1,
-	Profile:      entity.Profile{},
-	BloodGroup:   "AB",
-	Age:          30,
-	Prescription: nil,
-	Diagnosis:    nil,
-	Appointment:  nil,
-	Request:      nil,
-}
-dbconn.Debug().Save(&petient)
-*/
-/*
-profile:=entity.Profile{
-	ID:          0,
-	FullName:    "abebe hello",
-	Password:    "12345FSDFDJ",
-	Email:       "GETACHEW@G.COM",
-	Phone:       "12343jkdskj439434",
-	Address:     "adama ABABA",
-	Image:       "doctor.png",
-	Sex:         "MALE",
+	   dbconn.Debug().Save(&profile)
+	*/
 
-	Role:        "PETIENT",
-	BirthDate:   time.Time{},
-	Description: "INPETIENT IN THIS HOSPITAL",
-}
+	/*doctor:=entity.Doctor{
+	  	ID:           0,
+	  	Profile:      entity.Profile{},
+	  	Uuid:         3,
+	  	Department:   "surgery",
+	  	Prescription: nil,
+	  	Diagnosis:    nil,
+	  	Appointment:  nil,
+	  }
+	  parma:=entity.Pharmacist{
+	  	ID:           0,
+	  	Uuid:         1,
+	  	Profile:      entity.Profile{},
+	  	Medicine:     nil,
+	  	Prescription: nil,
+	  }
+	  lab:=entity.Laboratorist{
+	  	ID:        0,
+	  	Uuid:      1,
+	  	Profile:   entity.Profile{},
+	  	Diagnosis: nil,
+	  }
+	  dbconn.Save(&doctor)
+	  dbconn.Save(&parma)
+	  dbconn.Save(&lab)
 
-dbconn.Debug().Save(&profile)
-*/
-
-/*doctor:=entity.Doctor{
-	ID:           0,
-	Profile:      entity.Profile{},
-	Uuid:         3,
-	Department:   "surgery",
-	Prescription: nil,
-	Diagnosis:    nil,
-	Appointment:  nil,
-}
-parma:=entity.Pharmacist{
-	ID:           0,
-	Uuid:         1,
-	Profile:      entity.Profile{},
-	Medicine:     nil,
-	Prescription: nil,
-}
-lab:=entity.Laboratorist{
-	ID:        0,
-	Uuid:      1,
-	Profile:   entity.Profile{},
-	Diagnosis: nil,
-}
-dbconn.Save(&doctor)
-dbconn.Save(&parma)
-dbconn.Save(&lab)
-
-*/
+	*/
 	petientRepo := peRepo.NewPetientGormRepo(dbconn)
 	petientServ := peServ.NewPetientService(petientRepo)
 
@@ -152,26 +150,33 @@ dbconn.Save(&lab)
 
 	http.ListenAndServe(":8100", router)
 	/*
-		patientRepo := repository.NewPatientGormRepo(dbconn)
-		patientSrv := service.NewPatientService(patientRepo)
-		doctorPatientHandler := handler.NewDoctorPatientHandler(patientSrv)
-		// thise is the general doctor information
-		appointmentRepo := repository.NewAppointmentGormRepo(dbconn)
-		appointmentSrv := service.NewAppointmentService(appointmentRepo)
-		doctorAppointmentHandler := handler.NewDoctorAppointmentHandler(appointmentSrv)
-
-		router := httprouter.New()
-
-		router.GET("/v1/admin/users/", doctorPatientHandler.GetSinglePatient)
-		router.GET("/v1/admin/users", doctorPatientHandler.GetPatients)
-		router.PUT("/v3/admin/users/:id", doctorPatientHandler.PutPatient)
-		router.POST("/v1/admin/users", doctorPatientHandler.PostPatient)
-		router.DELETE("/v2/admin/users/:id", doctorPatientHandler.DeletePatient)
+			patientRepo := repository.NewPatientGormRepo(dbconn)
+			patientSrv := service.NewPatientService(patientRepo)
+			doctorPatientHandler := handler.NewDoctorPatientHandler(patientSrv)
+			// thise is the general doctor information
+			appointmentRepo := repository.NewAppointmentGormRepo(dbconn)
+			appointmentSrv := service.NewAppointmentService(appointmentRepo)
+			doctorAppointmentHandler := handler.NewDoctorAppointmentHandler(appointmentSrv)
 		//
-		router.GET("/v1/doctor/appointments/:id ", doctorAppointmentHandler.GetSingleAppointment)
-		router.GET("/v1/doctor/appointments", doctorAppointmentHandler.GetAppointments)
-		router.PUT("/v1/doctor/appointments/:id", doctorAppointmentHandler.PutAppointment)
-		router.DELETE("/v1/doctor/appointments/:id", doctorAppointmentHandler.DeleteAppointment)
+			generalRepo := repository.NewGeneralGormRepo(dbconn)
+			generalSrv := service.NewGeneralService(generalRepo)
+			generalHandler := handler.NewGeneralHandler(generalSrv)
 
-		http.ListenAndServe(":8480", router)*/
+			router := httprouter.New()
+
+			router.GET	(	"/v1/admin/users/:id", doctorPatientHandler.GetSinglePatient)
+			router.GET	(	"/v1/admin/users/", doctorPatientHandler.GetPatients)
+			router.PUT	(	"/v1/admin/users/:id", doctorPatientHandler.PutPatient)
+			router.POST	(	"/v1/admin/users/", doctorPatientHandler.PostPatient)
+			router.DELETE(	"/v1/admin/users/:id", doctorPatientHandler.DeletePatient)
+			//
+			router.GET("/v1/doctor/appointments/:id", doctorAppointmentHandler.GetSingleAppointment)
+			router.GET("/v1/doctor/appointments/", doctorAppointmentHandler.GetAppointments)
+			router.PUT("/v1/doctor/appointments/:id", doctorAppointmentHandler.PutAppointment)
+			router.DELETE("/v1/doctor/appointments/:id", doctorAppointmentHandler.DeleteAppointment)
+			//
+			router.GET("/v1/doctor/pharmacists/", generalHandler.GetPharmacists)
+			router.GET("/v1/doctor/laboratorists/", generalHandler.GetLaboratorists)
+
+			http.ListenAndServe(":8480", router)*/
 }
