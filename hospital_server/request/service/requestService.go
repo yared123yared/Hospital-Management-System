@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/getach1/web1/hospital/entity"
-	request "github.com/getach1/web1/hospital/request"
+	"github.com/getach1/web1/web1_group_project/hospital_server/entity"
+	"github.com/getach1/web1/web1_group_project/hospital_server/request"
 )
 
 // RequestService implements menu.RequestService interface

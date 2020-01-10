@@ -3,8 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	petient "github.com/getach1/web1/hospital/Registeration"
-	"github.com/getach1/web1/hospital/entity"
+	"github.com/getach1/web1/web1_group_project/hospital_server/entity"
+	"github.com/getach1/web1/web1_group_project/hospital_server/petient"
+
 	"github.com/julienschmidt/httprouter"
 	"net/http"
 	"strconv"

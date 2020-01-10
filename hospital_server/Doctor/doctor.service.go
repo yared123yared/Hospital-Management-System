@@ -1,6 +1,6 @@
 package Doctor
 
-import "github.com/monday271/hospital_server/entity"
+import "github.com/getach1/web1/web1_group_project/hospital_server/entity"
 
 // UserService specifies application user related services
 type PatientService interface {
@@ -18,8 +18,4 @@ type AppointmentService interface {
 	Appointment(id uint) (*entity.Doctor, []error)
 	UpdateAppointment(user *entity.Doctor) (*entity.Doctor, []error)
 	DeleteAppointment(id uint) (*entity.Doctor, []error)
-}
-type GeneralService interface {
-	Pharmacists() ([]entity.Pharmacist, []error)
-	Laboratorists() ([]entity.Laboratorist, []error)
 }

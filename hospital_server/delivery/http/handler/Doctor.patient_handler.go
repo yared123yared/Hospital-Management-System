@@ -9,9 +9,6 @@ import (
 
 	//"github.com/betsegawlemma/restaurant-rest/comment"
 	"github.com/julienschmidt/httprouter"
-
-	"github.com/yaredsolomon/webProgram1/hospital/Registeration"
-	"github.com/yaredsolomon/webProgram1/hospital/entity"
 )
 
 //"github.com/yaredsolomon/webProgram1/sathurday18/entity"
@@ -58,12 +55,13 @@ func (aph *DoctorPatientHandler) GetSinglePatient(w http.ResponseWriter,
 	fmt.Println(" i am about to get single value")
 
 	id, err := strconv.Atoi(ps.ByName("id"))
-	fmt.Println(id)
+
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
+	fmt.Println(id)
 
 	patient, errs := aph.patientService.Patient(uint(id))
 
@@ -88,18 +86,14 @@ func (aph *DoctorPatientHandler) GetSinglePatient(w http.ResponseWriter,
 
 // PostUser handles POST /v1/admin/users request
 func (aph *DoctorPatientHandler) PostPatient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Println(" i am at the post method")
 
 	l := r.ContentLength
 	body := make([]byte, l)
-	fmt.Println(" ia have changed the data to byte")
-	fmt.Println(string(body))
 	r.Body.Read(body)
 	patient := &entity.Petient{}
 
 	err := json.Unmarshal(body, patient)
-	fmt.Println("thise is the unmarchal jeson")
-	fmt.Println(patient)
+
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
@@ -169,9 +163,8 @@ func (aph *DoctorPatientHandler) PutPatient(w http.ResponseWriter, r *http.Reque
 
 // DeleteComment handles DELETE /v1/admin/comments/:id request
 func (aph *DoctorPatientHandler) DeletePatient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Println(" i amabout to delete ")
+
 	id, err := strconv.Atoi(ps.ByName("id"))
-	fmt.Println(id)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")

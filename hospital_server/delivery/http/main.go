@@ -1,15 +1,15 @@
 package main
 
 import (
-	aptrepo "github.com/getach1/web1/hospital/Appointment/repository"
-	aptserv "github.com/getach1/web1/hospital/Appointment/service"
-	"github.com/getach1/web1/hospital/delivery/http/handler"
-	prescsrepo "github.com/getach1/web1/hospital/prescribtion/repository"
-	prescserv "github.com/getach1/web1/hospital/prescribtion/service"
-	reqRepo "github.com/getach1/web1/hospital/request/repository"
-	reqServ "github.com/getach1/web1/hospital/request/service"
+	"github.com/getach1/web1/web1_group_project/hospital_server/Doctor/repository"
+	service2 "github.com/getach1/web1/web1_group_project/hospital_server/Doctor/service"
+	"github.com/getach1/web1/web1_group_project/hospital_server/delivery/http/handler"
 	peRepo "github.com/getach1/web1/web1_group_project/hospital_server/petient/repository"
 	peServ "github.com/getach1/web1/web1_group_project/hospital_server/petient/service"
+	repository3 "github.com/getach1/web1/web1_group_project/hospital_server/prescribtion/repository"
+	service3 "github.com/getach1/web1/web1_group_project/hospital_server/prescribtion/service"
+	repository2 "github.com/getach1/web1/web1_group_project/hospital_server/request/repository"
+	"github.com/getach1/web1/web1_group_project/hospital_server/request/service"
 	"github.com/jinzhu/gorm"
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
@@ -118,8 +118,8 @@ func main() {
 	router.POST("/v1/admin/petients", adminPetientHandler.PostPetient)
 	router.DELETE("/v1/admin/petients/:id", adminPetientHandler.DeletePetient)
 
-	requestRepo := reqRepo.NewRequestGormRepo(dbconn)
-	requestServ := reqServ.NewRequestService(requestRepo)
+	requestRepo := repository2.NewRequestGormRepo(dbconn)
+	requestServ := service.NewRequestService(requestRepo)
 
 	adminRequestHandler := handler.NewAdminRequestHandler(requestServ)
 	router.GET("/v1/admin/requests", adminRequestHandler.GetRequests)
@@ -128,8 +128,8 @@ func main() {
 	router.POST("/v1/admin/requests", adminRequestHandler.PostRequest)
 	router.DELETE("/v1/admin/requests/:id", adminRequestHandler.DeleteRequest)
 
-	appointmentRepo := aptrepo.NewAppointmentGormRepo(dbconn)
-	appointmentServ := aptserv.NewAppointmentService(appointmentRepo)
+	appointmentRepo := repository.NewAppointmentGormRepo(dbconn)
+	appointmentServ := service2.NewAppointmentService(appointmentRepo)
 
 	adminAppointmentHandler := handler.NewAdminAppointmentHandler(appointmentServ)
 	router.GET("/v1/admin/appointments", adminAppointmentHandler.GetAppointments)
@@ -138,8 +138,8 @@ func main() {
 	router.POST("/v1/admin/appointments", adminAppointmentHandler.PostAppointment)
 	router.DELETE("/v1/admin/appointments/:id", adminAppointmentHandler.DeleteAppointment)
 
-	prescriptionRepo := prescsrepo.NewPrescriptionGormRepo(dbconn)
-	prescriptionServ := prescserv.NewPrescriptionService(prescriptionRepo)
+	prescriptionRepo := repository3.NewPrescriptionGormRepo(dbconn)
+	prescriptionServ := service3.NewPrescriptionService(prescriptionRepo)
 
 	adminPrescriptiontHandler := handler.NewAdminPrescriptionHandler(prescriptionServ)
 	router.GET("/v1/admin/prescriptions", adminPrescriptiontHandler.GetPrescriptions)

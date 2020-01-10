@@ -1,13 +1,12 @@
 package service
 
 import (
-	"github.com/yaredsolomon/webProgram1/hospital/entity"
-	"github.com/yaredsolomon/webProgram1/hospital/Registeration"
+	"github.com/getach1/web1/web1_group_project/hospital_server/entity"
 )
 
 // PatientService implements Registeration.PatientService interface
 type PatientService struct {
-	patientRepo  Registeration.PatientRepository
+	patientRepo Registeration.PatientRepository
 }
 
 // NewPatientService  returns a new PatientService object

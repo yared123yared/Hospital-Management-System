@@ -1,8 +1,8 @@
 package repository
 
 import (
-	"github.com/getach1/web1/hospital/entity"
-	Request "github.com/getach1/web1/hospital/request"
+	"github.com/getach1/web1/web1_group_project/hospital_server/entity"
+	"github.com/getach1/web1/web1_group_project/hospital_server/request"
 	"github.com/jinzhu/gorm"
 )
 
@@ -12,7 +12,7 @@ type RequestGormRepo struct {
 }
 
 // NewRequestGormRepo creates a new object of RequestGormRepo
-func NewRequestGormRepo(db *gorm.DB) Request.RequestRepository {
+func NewRequestGormRepo(db *gorm.DB) request.RequestRepository {
 	return &RequestGormRepo{conn: db}
 }
 
