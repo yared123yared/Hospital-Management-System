@@ -24,10 +24,12 @@
                 </tr>
                 </tfoot>
                 <tbody>
-                {{range .Profile}}
+                {{range .}}
                     <tr>
                         <td>{{.ID}}</td>
+                    {{with .Profile}}
                         <td>{{.FullName}}</td>
+                            {{end}}
                         <td>{{.Department}}</td>
                     </tr>
                 {{end}}

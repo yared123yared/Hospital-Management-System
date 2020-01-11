@@ -2,13 +2,12 @@ package handler
 
 import (
 	"fmt"
-	"github.com/yaredsolomon/webProgram1/hospital2/delivery/http/data"
-	"github.com/yaredsolomon/webProgram1/hospital2/entity"
+	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data"
+	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
 	"html/template"
 	"net/http"
 	"strconv"
 	_ "time"
-	//"github.com/betsegawlemma/restaurant/menu"
 )
 
 // MenuHandler handles menu related requests

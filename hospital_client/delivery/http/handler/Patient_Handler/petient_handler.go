@@ -2,8 +2,8 @@ package Patient_Handler
 
 import (
 	"fmt"
-	entity2 "github.com/getach1/web1/web1_group_project/hospital_client/delivery/entity"
-	"github.com/getach1/web1/web1_group_project/hospital_client/delivery/http/data"
+	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
+	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/http/data"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -20,37 +20,44 @@ func NewPatientHandler(T *template.Template) *AdminPatientHandler {
 
 func (ph *AdminPatientHandler) Profile(w http.ResponseWriter, _ *http.Request) {
 	//petient:=Petient{1 ,"Getachew","Tebikew","prescription.png","Addis Ababa","xy@z.com","+1113444",time.Now()}
-	petient := entity2.Petient{}
+	petient :=entity.Petient{}
 	var err error
-	petient, err = data.FetchPetient(11)
+	petient, err = data.FetchPetient(1)
 	data.CheckErr(err)
 	err = ph.tmpl.ExecuteTemplate(w, "patient.view.profile.update", petient)
 	data.CheckErr(err)
 }
 
 func (ph *AdminPatientHandler) Doctors(w http.ResponseWriter, _ *http.Request) {
-	doctors := []entity2.Doctor{}
+	doctors := []entity.Doctor{}
+	petient :=entity.Petient{}
+	petient, err := data.FetchPetient(1)
+	data.CheckErr(err)
+
 	doctors, _ = data.FetchDoctors()
-	err := ph.tmpl.ExecuteTemplate(w, "patient.view.doctor", doctors)
+	ph.tmpl.ExecuteTemplate(w, "patient.navbar", petient)
+
+	err = ph.tmpl.ExecuteTemplate(w, "patient.view.doctor", doctors)
+
 	data.CheckErr(err)
 }
 func (ph *AdminPatientHandler) Appointment(w http.ResponseWriter, _ *http.Request) {
-	petient := entity2.Petient{}
-	petient, _ = data.FetchPetient(11)
+	petient := entity.Petient{}
+	petient, _ = data.FetchPetient(1)
 	err := ph.tmpl.ExecuteTemplate(w, "patient.view.appointment", petient)
 	data.CheckErr(err)
 }
 func (ph *AdminPatientHandler) Prescription(w http.ResponseWriter, _ *http.Request) {
-	petient := entity2.Petient{}
-	petient, _ = data.FetchPetient(11)
+	petient := entity.Petient{}
+	petient, _ = data.FetchPetient(1)
 	err := ph.tmpl.ExecuteTemplate(w, "patient.view.prescription", petient)
 	fmt.Println(petient.Appointment)
 	data.CheckErr(err)
 }
 
 func (ph *AdminPatientHandler) Request(w http.ResponseWriter, r *http.Request) {
-	petient := entity2.Petient{}
-	petient, _ = data.FetchPetient(11)
+	petient := entity.Petient{}
+	petient, _ = data.FetchPetient(1)
 	err := ph.tmpl.ExecuteTemplate(w, "patient.view.request", petient)
 	data.CheckErr(err)
 }
@@ -60,19 +67,19 @@ func (ph *AdminPatientHandler) SendRequest(w http.ResponseWriter, r *http.Reques
 		fmt.Println("hello")
 		id, err := strconv.Atoi(idRaw)
 		data.CheckErr(err)
-		user := entity2.Petient{}
+		user := entity.Petient{}
 		user, err = data.FetchPetient(id)
 		data.CheckErr(err)
 		user, _ = data.FetchPetient(id)
 		err = ph.tmpl.ExecuteTemplate(w, "patient.view.request", user)
 		data.CheckErr(err)
 	} else if r.Method == http.MethodPost {
-		user := entity2.Petient{}
+		user := entity.Petient{}
 		id, _ := strconv.Atoi(r.FormValue("id"))
 		var err error
 		user, err = data.FetchPetient(id)
 		data.CheckErr(err)
-		request := entity2.Request{
+		request := entity.Request{
 			ID:            1,
 			DoctorId:      1,
 			PatientId:     uint(user.ID),
@@ -101,7 +108,7 @@ func (ph *AdminPatientHandler) Update(w http.ResponseWriter, r *http.Request) {
 		err = ph.tmpl.ExecuteTemplate(w, "admin.user.update.layout", user)
 		data.CheckErr(err)
 	} else if r.Method == http.MethodPost {
-		user := entity2.Petient{}
+		user := entity.Petient{}
 		id, _ := strconv.Atoi(r.FormValue("id"))
 		var err error
 		user, err = data.FetchPetient(id)

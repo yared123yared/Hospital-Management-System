@@ -1,9 +1,9 @@
-package repository
+package PetientRepository
 
 import (
 	"fmt"
-	"github.com/getach1/web1/hospital/entity"
-	"github.com/getach1/web1/hospital/petient"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
 	"github.com/jinzhu/gorm"
 )
 

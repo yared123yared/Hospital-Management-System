@@ -4,13 +4,9 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "fmt"
-	"github.com/monday271/hospital_server/Doctor"
-	//"github.com/yaredsolomon/webProgram1/hospital/request"
-	"net/http"
-	//"github.com/betsegawlemma/restaurant-rest/comment"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/Doctor"
 	"github.com/julienschmidt/httprouter"
-	_ "github.com/yaredsolomon/webProgram1/hospital/entity"
-	//"github.com/yaredsolomon/webProgram1/hospital/request"
+	"net/http"
 )
 
 //"github.com/yaredsolomon/webProgram1/sathurday18/entity"

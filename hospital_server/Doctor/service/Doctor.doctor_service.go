@@ -1,17 +1,20 @@
 package service
 
 import (
-	"github.com/getach1/web1/web1_group_project/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project/hospital_server/request"
+	//"github.com/yaredsolomon/webProgram1/hospital/entity"
+	//"github.com/yaredsolomon/webProgram1/hospital/request"
+	"github.com/monday271/hospital_server/Doctor"
+	"github.com/monday271/hospital_server/entity"
+	//"github.com/yaredsolomon/webProgram1/hospital/request"
 )
 
 // AppointmentService implements request.AppointmentService interface
 type AppointmentService struct {
-	appointRepo request.AppointmentRepository
+	appointRepo Doctor.AppointmentRepository
 }
 
 // NewAppointmentService  returns a new AppointmentService object
-func NewAppointmentService(appointmentRepository request.AppointmentRepository) request.AppointmentService {
+func NewAppointmentService(appointmentRepository Doctor.AppointmentRepository) Doctor.AppointmentService {
 	return &AppointmentService{appointRepo: appointmentRepository}
 }
 

@@ -1,8 +1,8 @@
-package service
+package PetientService
 
 import (
-	"github.com/getach1/web1/hospital/entity"
-	"github.com/getach1/web1/hospital/petient"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
 )
 
 // PetientService implements menu.PetientService interface

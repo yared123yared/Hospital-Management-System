@@ -1,8 +1,8 @@
-package repository
+package PetientRepository
 
 import (
-	"github.com/getach1/web1/web1_group_project/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project/hospital_server/request"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
 	"github.com/jinzhu/gorm"
 )
 
@@ -12,7 +12,7 @@ type RequestGormRepo struct {
 }
 
 // NewRequestGormRepo creates a new object of RequestGormRepo
-func NewRequestGormRepo(db *gorm.DB) request.RequestRepository {
+func NewRequestGormRepo(db *gorm.DB) petient.RequestRepository {
 	return &RequestGormRepo{conn: db}
 }
 
@@ -35,7 +35,7 @@ func (requestRepo *RequestGormRepo) Request(id uint) (*entity.Request, []error) 
 	}
 	return &request, errs
 }
-
+/*
 // UpdateRequest updates a given request in the database
 func (requestRepo *RequestGormRepo) UpdateRequest(request *entity.Request) (*entity.Request, []error) {
 	usr := request
@@ -58,7 +58,7 @@ func (requestRepo *RequestGormRepo) DeleteRequest(id uint) (*entity.Request, []e
 	}
 	return usr, errs
 }
-
+*/
 // StoreRequest stores a new request into the database
 func (requestRepo *RequestGormRepo) StoreRequest(request *entity.Request) (*entity.Request, []error) {
 	usr := request

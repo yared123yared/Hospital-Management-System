@@ -11,12 +11,14 @@
                 <thead class="bg-white">
                 <tr>
                     <th>ID</th>
-                    <th>Petient ID</th>
+                    <th>your Name</th>
                     <th>Doctor ID</th>
                     <th>Pharmacist ID</th>
                     <th>Medicine Name</th>
                     <th>Description</th>
-                    <th>Date</th>
+                    <th>Presc Date</th>
+                    <th>Taken or Not</th>
+                    <th>Taken Date</th>
                 </tr>
                 </thead>
                 <tfoot>
@@ -27,7 +29,9 @@
                     <th>Pharmacist ID</th>
                     <th>Medicine Name</th>
                     <th>Description</th>
-                    <th>Date</th>
+                    <th>Presc Date</th>
+                    <th>Taken or Not</th>
+                    <th>Taken Date</th>
 
                 </tr>
                 </tfoot>
@@ -41,6 +45,8 @@
                         <td>{{ .MedicineName}}</td>
                         <td>{{ .Description}}</td>
                         <td>{{ .Date}}</td>
+                        <td>{{ .GivenStatus}}</td>
+                        <td>{{ .GuvenDate}}</td>
                     </tr>
                 {{end}}
                 </tbody>

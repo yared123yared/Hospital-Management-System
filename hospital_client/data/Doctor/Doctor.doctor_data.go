@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/yaredsolomon/webProgram1/hospital2/entity"
+	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
 	"io/ioutil"
 	"net/http"
 )

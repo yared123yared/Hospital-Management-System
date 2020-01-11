@@ -1,15 +1,9 @@
 package main
 
 import (
-	"github.com/getach1/web1/web1_group_project/hospital_server/Doctor/repository"
-	service2 "github.com/getach1/web1/web1_group_project/hospital_server/Doctor/service"
-	"github.com/getach1/web1/web1_group_project/hospital_server/delivery/http/handler"
-	peRepo "github.com/getach1/web1/web1_group_project/hospital_server/petient/repository"
-	peServ "github.com/getach1/web1/web1_group_project/hospital_server/petient/service"
-	repository3 "github.com/getach1/web1/web1_group_project/hospital_server/prescribtion/repository"
-	service3 "github.com/getach1/web1/web1_group_project/hospital_server/prescribtion/service"
-	repository2 "github.com/getach1/web1/web1_group_project/hospital_server/request/repository"
-	"github.com/getach1/web1/web1_group_project/hospital_server/request/service"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/delivery/http/handler"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient/repository"
+	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient/service"
 	"github.com/jinzhu/gorm"
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
@@ -106,47 +100,42 @@ func main() {
 	  dbconn.Save(&lab)
 
 	*/
-	petientRepo := peRepo.NewPetientGormRepo(dbconn)
-	petientServ := peServ.NewPetientService(petientRepo)
-
-	adminPetientHandler := handler.NewAdminPetientHandler(petientServ)
+	petientRepo := PetientRepository.NewPetientGormRepo(dbconn)
+	petientServ := PetientService.NewPetientService(petientRepo)
+	PetientHandler := handler.NewAdminPetientHandler(petientServ)
 	router := httprouter.New()
-	router.GET("/v1/admin/petients", adminPetientHandler.GetPetients)
-	router.GET("/v1/admin/petients/:id", adminPetientHandler.GetSinglePetient)
+	router.GET("/v1/admin/petients", PetientHandler.GetPetients)
+	router.GET("/v1/admin/petients/:id", PetientHandler.GetSinglePetient)
+	router.PUT("/v1/admin/petients/:id", PetientHandler.PutPetient)
+	router.POST("/v1/admin/petients", PetientHandler.PostPetient)
+	router.DELETE("/v1/admin/petients/:id", PetientHandler.DeletePetient)
 
-	router.PUT("/v1/admin/petients/:id", adminPetientHandler.PutPetient)
-	router.POST("/v1/admin/petients", adminPetientHandler.PostPetient)
-	router.DELETE("/v1/admin/petients/:id", adminPetientHandler.DeletePetient)
+	petientRequestRepo := PetientRepository.NewRequestGormRepo(dbconn)
+	petientRequestServ := PetientService.NewRequestService(petientRequestRepo)
+	PetientRequestHandler := handler.NewPetientRequestHandler(petientRequestServ)
+	router.GET("/v1/patient/requests", PetientRequestHandler.GetRequests)
+	router.GET("/v1/patient/requests/:id", PetientRequestHandler.GetSingleRequest)
+	router.POST("/v1/patient/requests", PetientRequestHandler.PostRequest)
 
-	requestRepo := repository2.NewRequestGormRepo(dbconn)
-	requestServ := service.NewRequestService(requestRepo)
+	petientAppointmentRepo := PetientRepository.NewAppointmentGormRepo(dbconn)
+	petientAppointmentServ := PetientService.NewAppointmentService(petientAppointmentRepo)
+	PetientAppointmentHandler := handler.NewPetientAppointmentHandler(petientAppointmentServ)
+	router.GET("/v1/patient/appointments", PetientAppointmentHandler.GetAppointments)
+	router.GET("/v1/patient/appointments/:id", PetientAppointmentHandler.GetSingleAppointment)
 
-	adminRequestHandler := handler.NewAdminRequestHandler(requestServ)
-	router.GET("/v1/admin/requests", adminRequestHandler.GetRequests)
-	router.GET("/v1/admin/requests/:id", adminRequestHandler.GetSingleRequest)
-	router.PUT("/v1/admin/requests/:id", adminRequestHandler.PutRequest)
-	router.POST("/v1/admin/requests", adminRequestHandler.PostRequest)
-	router.DELETE("/v1/admin/requests/:id", adminRequestHandler.DeleteRequest)
+	petientPrescriptionRepo := PetientRepository.NewPrescriptionGormRepo(dbconn)
+	petientPrescriptionServ := PetientService.NewPrescriptionService(petientPrescriptionRepo)
+	PetientPrescriptionHandler := handler.NewPetientPrescriptionHandler(petientPrescriptionServ)
+	router.GET("/v1/patient/prescriptions", PetientPrescriptionHandler.GetSinglePrescription)
+	router.GET("/v1/patient/prescriptions/:id", PetientPrescriptionHandler.GetPrescriptions)
 
-	appointmentRepo := repository.NewAppointmentGormRepo(dbconn)
-	appointmentServ := service2.NewAppointmentService(appointmentRepo)
 
-	adminAppointmentHandler := handler.NewAdminAppointmentHandler(appointmentServ)
-	router.GET("/v1/admin/appointments", adminAppointmentHandler.GetAppointments)
-	router.GET("/v1/admin/appointments/:id", adminAppointmentHandler.GetSingleAppointment)
-	router.PUT("/v1/admin/appointments/:id", adminAppointmentHandler.PutAppointment)
-	router.POST("/v1/admin/appointments", adminAppointmentHandler.PostAppointment)
-	router.DELETE("/v1/admin/appointments/:id", adminAppointmentHandler.DeleteAppointment)
+	petientDoctorRepo := PetientRepository.NewDoctorGormRepo(dbconn)
+	petientDoctorServ := PetientService.NewDoctorService(petientDoctorRepo)
+	PetientDoctorHandler := handler.NewPetientDoctorHandler(petientDoctorServ)
+	router.GET("/v1/patient/doctors", PetientDoctorHandler.GetDoctors)
+	router.GET("/v1/patient/doctors/:id", PetientDoctorHandler.GetSingleDoctor)
 
-	prescriptionRepo := repository3.NewPrescriptionGormRepo(dbconn)
-	prescriptionServ := service3.NewPrescriptionService(prescriptionRepo)
-
-	adminPrescriptiontHandler := handler.NewAdminPrescriptionHandler(prescriptionServ)
-	router.GET("/v1/admin/prescriptions", adminPrescriptiontHandler.GetPrescriptions)
-	router.GET("/v1/admin/prescriptions/:id", adminPrescriptiontHandler.GetSinglePrescription)
-	router.PUT("/v1/admin/prescriptions/:id", adminPrescriptiontHandler.PutPrescription)
-	router.POST("/v1/admin/prescriptions", adminPrescriptiontHandler.PostPrescription)
-	router.DELETE("/v1/admin/prescriptions/:id", adminPrescriptiontHandler.DeletePrescription)
 
 	http.ListenAndServe(":8100", router)
 	/*

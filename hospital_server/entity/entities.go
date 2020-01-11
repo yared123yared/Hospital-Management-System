@@ -24,14 +24,12 @@ type Doctor struct {
 	Profile    Profile `gorm:"ForeignKey:ID"`
 	Uuid       uint
 	Department string `gorm:"type:varchar(255);not null"`
-
-	//DoctorHistory []DoctorHistory
-	//PetientHistory []PetientHistory
 	Prescription []Prescription `gorm:"ForeignKey:DoctorId"`
 	Diagnosis    []Diagnosis    `gorm:"ForeignKey:DoctorId"`
 	Appointment  []Appointment  `gorm:"ForeignKey:DoctorId"`
 	Pharmacist   []Pharmacist
 }
+
 type Appointment struct {
 	ID          uint
 	PatientId   uint   `gorm:"not null"`
@@ -69,7 +67,6 @@ type Admin struct {
 	ID      uint
 	Uuid    uint
 	Profile Profile `gorm:"ForeignKey:Uuid"`
-	// Appointment []Appointment `gorm:"many2many:admin_appointment"`
 	Request []Request `gorm:"ForeignKey:AdminId"`
 }
 
@@ -120,3 +117,4 @@ type Error struct {
 	Code    int
 	Message string
 }
+

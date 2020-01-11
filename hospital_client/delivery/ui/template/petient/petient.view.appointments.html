@@ -12,7 +12,7 @@
                 <thead>
                 <tr>
                     <th>Id</th>
-                    <th>Patient Id</th>
+                    <th>Your Name</th>
                     <th>Date</th>
                     <th>Doctor</th>
                     <th>Department</th>
@@ -21,7 +21,7 @@
                 <tfoot>
                 <tr>
                     <th>Id</th>
-                    <th>Patient Id</th>
+                    <th>Your Name</th>
                     <th>Date</th>
                     <th>Doctor</th>
                     <th>Department</th>
@@ -31,7 +31,7 @@
                 {{range .Appointment}}
                     <tr>
                         <td>{{.ID}}</td>
-                        <td>{{.PatientId}}</td>
+                        <td>{{.PatientName}}</td>
                         <td>{{.Date}}</td>
                         <td>{{.DoctorId}}</td>
                         {{/*                <td>{{.ID}}</td>*/}}
