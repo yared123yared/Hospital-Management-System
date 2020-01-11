@@ -133,3 +133,9 @@ type AddDiagonosis struct {
 	Diagnosis    Diagnosis
 	Laboratorist []Laboratorist
 }
+type Dash struct {
+	Annual_one  int
+	Monthly_one int
+	Annual_two  int
+	Monthly_two int
+}

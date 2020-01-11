@@ -81,7 +81,7 @@ func (mh *patientHandler) AddNewPatient(w http.ResponseWriter, r *http.Request) 
 		writeFile(&mf, fh.Filename)
 		patient.Profile.Image = fh.Filename
 		patient.Profile.Sex = r.FormValue("sex")
-		patient.Profile.Role = "patient"
+		patient.Profile.RoleId = 5
 		//patient.Profile.BirthDate = r.FormValue("bDate")
 		patient.Profile.Description = r.FormValue("description")
 		patient.BloodGroup = r.FormValue("blood_group")

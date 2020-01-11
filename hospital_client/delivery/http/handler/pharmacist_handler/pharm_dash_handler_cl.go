@@ -2,17 +2,14 @@ package pharmacist_handler
 
 import (
 	"fmt"
+	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/session"
 
 	"html/template"
 	"net/http"
 
-	pharmacistData "github.com/fasikawkn/web1_group_project-1/hospital_client/data/pharmacist"
-
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
-	"github.com/fasikawkn/web1_group_project/hospital_server/session"
+	pharmacistData "github.com/web1_group_project/hospital_client/data/pharmacist"
 )
-
-var sesion uint = session.GetPharmSession()
 
 // AdminCategoryHandler handles category handler admin requests
 type PharmProfHandler struct {
@@ -30,9 +27,10 @@ func (ach *PharmProfHandler) Index(w http.ResponseWriter, r *http.Request) {
 }
 
 func (ach *PharmProfHandler) Dashboard(w http.ResponseWriter, r *http.Request) {
+	var sesion, _ = session.IsLogged(r)
 	fmt.Println("Dashboard")
-	num := pharmacistData.GetMedsNumber(sesion)
-	num2 := pharmacistData.GetPrescsNumber(sesion)
+	num := pharmacistData.GetMedsNumber(uint(sesion))
+	num2 := pharmacistData.GetPrescsNumber(uint(sesion))
 	var num3 int = num / 12
 	var num4 int = num2 / 12
 	dash := entity.Dash{

@@ -1,12 +1,13 @@
 package pharmacist_handler
 
 import (
+	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/session"
 	"net/http"
 	"strconv"
 	"time"
 
-	pharmacistData "github.com/fasikawkn/web1_group_project-1/hospital_client/data/pharmacist"
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	pharmacistData "github.com/web1_group_project/hospital_client/data/pharmacist"
 )
 
 func (ach *PharmProfHandler) Prescription(w http.ResponseWriter, r *http.Request) {
@@ -38,7 +39,7 @@ func (ach *PharmProfHandler) DeletePrescription(w http.ResponseWriter, r *http.R
 }
 
 func (ach *PharmProfHandler) PrescriptionUpdate(w http.ResponseWriter, r *http.Request) {
-
+	var sesion, _ = session.IsLogged(r)
 	if r.Method == http.MethodGet {
 		idRaw := r.URL.Query().Get("id")
 		id, err := strconv.Atoi(idRaw)
@@ -66,7 +67,7 @@ func (ach *PharmProfHandler) PrescriptionUpdate(w http.ResponseWriter, r *http.R
 		pharms.MedicineName = presc.MedicineName
 		pharms.Description = r.FormValue("description")
 		pharms.GivenStatus = r.FormValue("givenstatus")
-		pharms.PhrmacistId = sesion
+		pharms.PhrmacistId = uint(sesion)
 		pharmacistData.PutPrescription(&pharms)
 
 		http.Redirect(w, r, "/prescription", http.StatusSeeOther)

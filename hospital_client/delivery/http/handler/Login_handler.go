@@ -72,20 +72,21 @@ func (lh *loginHandler) Users(w http.ResponseWriter, r *http.Request) {
 		role := users1.RoleId
 		_ = session1.Save(r, w)
 		//role=4
-		if role == 4 {
+		if role == 1 {
 			fmt.Print("Admin")
+
 		} else if role == 2 {
 			fmt.Print("doctor")
 			http.Redirect(w, r, "/doctor", 302)
 		} else if role == 3 {
 			fmt.Print("Pharmacist")
-			http.Redirect(w, r, "/patients", 302)
-		} else if role == 1 {
+			http.Redirect(w, r, "/pharmacist", 302)
+		} else if role == 4 {
 			fmt.Print("Laboratorist")
-			http.Redirect(w, r, "/doctor/appointment", 302)
+			http.Redirect(w, r, "/laboratorist", 302)
 		} else if role == 5 {
 			fmt.Print("Petient")
-			http.Redirect(w, r, "/laboratorsit", 302)
+			http.Redirect(w, r, "/prescription", 302)
 		}
 	}
 

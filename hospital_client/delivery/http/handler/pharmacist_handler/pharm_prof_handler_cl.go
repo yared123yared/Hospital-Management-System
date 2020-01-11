@@ -2,16 +2,18 @@ package pharmacist_handler
 
 import (
 	"fmt"
+	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/session"
 	"net/http"
 	"strconv"
 	"time"
 
-	pharmacistData "github.com/fasikawkn/web1_group_project-1/hospital_client/data/pharmacist"
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	pharmacistData "github.com/web1_group_project/hospital_client/data/pharmacist"
 )
 
 func (ach *PharmProfHandler) ProHandler(w http.ResponseWriter, r *http.Request) {
-	pharmacist, _ := pharmacistData.GetPharmacist(sesion)
+	var sesion, _ = session.IsLogged(r)
+	pharmacist, _ := pharmacistData.GetPharmacist(uint(sesion))
 	ach.tmpl.ExecuteTemplate(w, "pharm.prof.layout", pharmacist)
 
 }
@@ -40,7 +42,7 @@ func (ach *PharmProfHandler) PharmProfileUpdate(w http.ResponseWriter, r *http.R
 		pharms.ID = pharmacist.ID
 		pharms.Medicine = pharmacist.Medicine
 		pharms.Prescription = pharmacist.Prescription
-		pharms.Profile.Role = pharmacist.Profile.Role
+		pharms.Profile.RoleId = pharmacist.Profile.RoleId
 
 		stt, _ := strconv.ParseUint(r.FormValue("id"), 10, 64)
 		pharms.Profile.ID = uint(stt)

@@ -10,12 +10,14 @@ import (
 	"net/http"
 )
 
-var tmpl_doctor = template.Must(template.ParseGlob("../../ui/template/Doctor/*.html"))
-var tmpl_patient = template.Must(template.ParseGlob("../../ui/template/petient/*.html"))
-var tmpl_admin = template.Must(template.ParseGlob("../../ui/template/Admin/*.html"))
-var tmpl_pharmacist = template.Must(template.ParseGlob("../../ui/template/pharmacist/*.html"))
-var tmpl_laboratorsit = template.Must(template.ParseGlob("../../ui/template/laboratorist/*.html"))
-var tmpl = template.Must(template.ParseGlob("../../ui/template/*.html"))
+var tmpl_doctor = template.Must(template.ParseGlob("../ui/template/Doctor/*.html"))
+var tmpl_patient = template.Must(template.ParseGlob("../ui/template/petient/*.html"))
+
+//var tmpl_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"))
+var tmpl_pharmacist = template.Must(template.ParseGlob("../ui/template/pharmacist/*.html"))
+
+//var tmpl_laboratorsit = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
+var tmpl = template.Must(template.ParseGlob("../ui/template/*.html"))
 
 func main() {
 	//doctor handlers
@@ -35,13 +37,13 @@ func main() {
 	mux := http.NewServeMux()
 	fs := http.FileServer(http.Dir("../ui/assets"))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	//	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	// login page path registeration
 
 	mux.HandleFunc("/", loginHandler.LoginGetHandler)
 
 	// patient handler path registeration
-	mux.HandleFunc("/", patientHandler.Appointment)
+	mux.HandleFunc("/appointment", patientHandler.Appointment)
 	mux.HandleFunc("/profile", patientHandler.Profile)
 	mux.HandleFunc("/doctors", patientHandler.Doctors)
 	mux.HandleFunc("/prescription", patientHandler.Prescription)
@@ -71,7 +73,7 @@ func main() {
 	mux.HandleFunc("/doctor/diagonosisNew", doctorDiagonosisHandler.AddNewDiagonosis)
 
 	//pharmacist path registeration
-	mux.HandleFunc("/", pharmacisstHandler.Index)
+	mux.HandleFunc("/pharmacist", pharmacisstHandler.Index)
 	mux.HandleFunc("/cat", pharmacisstHandler.CatHandler)
 	mux.HandleFunc("/prof", pharmacisstHandler.ProHandler)
 	mux.HandleFunc("/addcat", pharmacisstHandler.AddNewCat)
@@ -79,7 +81,7 @@ func main() {
 	mux.HandleFunc("/deleteCat", pharmacisstHandler.DleteMedicine)
 	mux.HandleFunc("/updateProv", pharmacisstHandler.UpdateProv)
 	mux.HandleFunc("/pharmProf/update", pharmacisstHandler.PharmProfileUpdate)
-	mux.HandleFunc("/prescription", pharmacisstHandler.Prescription)
+	mux.HandleFunc("/prescription1", pharmacisstHandler.Prescription)
 	mux.HandleFunc("/updatePres", pharmacisstHandler.PrescriptionUpdate)
 	mux.HandleFunc("/deletePres", pharmacisstHandler.DeletePrescription)
 	mux.HandleFunc("/dashboard", pharmacisstHandler.Dashboard)

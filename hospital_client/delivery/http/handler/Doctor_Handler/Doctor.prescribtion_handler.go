@@ -86,7 +86,7 @@ func (mh *prescribtionHandler) AddNewPrescribtions(w http.ResponseWriter, r *htt
 		prescribtion2 := GetModifiedPrescribtion(doctor.Prescription, prescribtion1, uint(id))
 
 		doctor.Prescription = prescribtion2
-		err = data.UpdateDoctor(doctor, 1)
+		err = Doctor_data.UpdateDoctor(doctor, 1)
 		if err != nil {
 			panic(err)
 		}

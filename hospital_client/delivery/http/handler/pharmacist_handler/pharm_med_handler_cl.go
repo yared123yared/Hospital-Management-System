@@ -2,12 +2,12 @@ package pharmacist_handler
 
 import (
 	"fmt"
+	pharmacistData "github.com/web1_group_project/hospital_client/data/pharmacist"
+	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/session"
 	"net/http"
 	"strconv"
 	"time"
-
-	pharmacistData "github.com/fasikawkn/web1_group_project-1/hospital_client/data/pharmacist"
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
 )
 
 func (ach *PharmProfHandler) CatHandler(w http.ResponseWriter, r *http.Request) {
@@ -17,6 +17,7 @@ func (ach *PharmProfHandler) CatHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 func (ach *PharmProfHandler) AddNewCat(w http.ResponseWriter, r *http.Request) {
+	var sesion, _ = session.IsLogged(r)
 	if r.Method == http.MethodPost {
 
 		med := entity.Medicine{}
@@ -33,7 +34,7 @@ func (ach *PharmProfHandler) AddNewCat(w http.ResponseWriter, r *http.Request) {
 		fmt.Println("catDate", r.FormValue("expireddate"))
 		i, _ := strconv.ParseUint(r.FormValue("amount"), 10, 64)
 		med.Amount = uint(i)
-		med.AddedBy = sesion
+		med.AddedBy = uint(sesion)
 		// fmt.Println(med.AddedBy)
 		pharmacistData.PostMedicine(&med)
 		http.Redirect(w, r, "/cat", http.StatusSeeOther)
@@ -44,6 +45,7 @@ func (ach *PharmProfHandler) AddNewCat(w http.ResponseWriter, r *http.Request) {
 }
 
 func (ach *PharmProfHandler) UpdateCat(w http.ResponseWriter, r *http.Request) {
+	var sesion, _ = session.IsLogged(r)
 	if r.Method == http.MethodGet {
 		idRaw := r.URL.Query().Get("id")
 		id, err := strconv.Atoi(idRaw)
@@ -65,7 +67,7 @@ func (ach *PharmProfHandler) UpdateCat(w http.ResponseWriter, r *http.Request) {
 		pharms := entity.Medicine{}
 
 		pharms.ID = medicine.ID
-		pharms.AddedBy = sesion
+		pharms.AddedBy = uint(sesion)
 
 		pharms.CategoryName = r.FormValue("catname")
 		pharms.MedicineName = r.FormValue("Medname")
