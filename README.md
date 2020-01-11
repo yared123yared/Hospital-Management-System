@@ -43,5 +43,3 @@ So our system will do the following functionalities
 
 This is what I thought about it so try to read it well and modify it.
 
-
-Wejfhgjhfjh
