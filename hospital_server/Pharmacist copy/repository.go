@@ -1,6 +1,6 @@
 package Pharmacist
 
-import "github.com/fasikawkn/web1_group_project/hospital_server/entity"
+import "github.com/web1_group_project/hospital_server/entity"
 
 //MedicineRepository  specifies Medicine database
 type MedicineRepository interface {

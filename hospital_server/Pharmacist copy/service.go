@@ -1,7 +1,7 @@
 package Pharmacist
 
 import (
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 //MedicineService medicine related service
