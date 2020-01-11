@@ -1,4 +1,4 @@
-package handler
+package Doctor_Handler
 
 import (
 	"fmt"
