@@ -2,7 +2,7 @@ package handler
 
 import (
 	"fmt"
-	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data"
+	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data/Doctor"
 	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
 	"html/template"
 	"net/http"

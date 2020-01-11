@@ -2,8 +2,8 @@ package Patient_Handler
 
 import (
 	"fmt"
-	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
-	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/http/data"
+	data "github.com/getach1/web1/web1_group_project_old_new/hospital_client/data/Patient"
+	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/entity"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -20,7 +20,7 @@ func NewPatientHandler(T *template.Template) *AdminPatientHandler {
 
 func (ph *AdminPatientHandler) Profile(w http.ResponseWriter, _ *http.Request) {
 	//petient:=Petient{1 ,"Getachew","Tebikew","prescription.png","Addis Ababa","xy@z.com","+1113444",time.Now()}
-	petient :=entity.Petient{}
+	petient := entity.Petient{}
 	var err error
 	petient, err = data.FetchPetient(1)
 	data.CheckErr(err)
@@ -30,7 +30,7 @@ func (ph *AdminPatientHandler) Profile(w http.ResponseWriter, _ *http.Request) {
 
 func (ph *AdminPatientHandler) Doctors(w http.ResponseWriter, _ *http.Request) {
 	doctors := []entity.Doctor{}
-	petient :=entity.Petient{}
+	petient := entity.Petient{}
 	petient, err := data.FetchPetient(1)
 	data.CheckErr(err)
 

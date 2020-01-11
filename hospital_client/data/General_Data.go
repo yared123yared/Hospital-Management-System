@@ -3,14 +3,13 @@ package data
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
+	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/entity"
 	"io/ioutil"
 	"net/http"
 )
 
-var baseURL_general= "http://localhost:4444/v1/doctor/pharmacists/"
-var baseURL_general1= "http://localhost:4444/v1/doctor/laboratorists/"
-
+var baseURL_general = "http://localhost:4444/v1/doctor/pharmacists/"
+var baseURL_general1 = "http://localhost:4444/v1/doctor/laboratorists/"
 
 func Pharmacists() (*[]entity.Pharmacist, error) {
 	client := &http.Client{}
@@ -57,4 +56,3 @@ func Laboratorists() (*[]entity.Laboratorist, error) {
 	fmt.Println(usdata)
 	return usdata, nil
 }
-
