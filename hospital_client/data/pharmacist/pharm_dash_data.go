@@ -1,11 +1,6 @@
-package pharmacist
+package pharmacist_data
 
-
-
-import (
-
-)
-
+import ()
 
 func GetMedsNumber(id uint) int {
 	pharmacist, _ := GetPharmacist(id)

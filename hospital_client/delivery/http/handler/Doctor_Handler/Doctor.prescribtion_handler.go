@@ -2,9 +2,10 @@ package Doctor_Handler
 
 import (
 	"fmt"
-	data2 "github.com/getach1/web1/web1_group_project-master/hospital_client/data"
-	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data/Doctor"
-	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/data"
+	_ "github.com/web1_group_project/hospital_client/data"
+	Doctor_data "github.com/web1_group_project/hospital_client/data/Doctor"
+	"github.com/web1_group_project/hospital_client/entity"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -26,7 +27,7 @@ func NewprescribtionHandler(T *template.Template) *prescribtionHandler {
 // Index handles request on route /
 func (mh *prescribtionHandler) Prescribtions(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("thise is the prescribtions method")
-	prescriptions, err := data.Doctor(1)
+	prescriptions, err := Doctor_data.Doctor(1)
 	fmt.Println(prescriptions)
 	if err != nil {
 		w.WriteHeader(http.StatusNoContent)
@@ -58,9 +59,9 @@ func (mh *prescribtionHandler) AddNewPrescribtions(w http.ResponseWriter, r *htt
 	if err != nil {
 		panic(err)
 	}
-	doctor, err := data.Doctor(1)
+	doctor, err := Doctor_data.Doctor(1)
 	//doctor.Pharmacist=pharm
-	pharmacist, err := data2.Pharmacists()
+	pharmacist, err := data.Pharmacists()
 	if err != nil {
 		panic(err)
 	}

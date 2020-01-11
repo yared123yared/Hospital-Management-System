@@ -2,8 +2,9 @@ package Doctor_Handler
 
 import (
 	"fmt"
-	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data/Doctor"
-	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/data"
+	Doctor_data "github.com/web1_group_project/hospital_client/data/Doctor"
+	"github.com/web1_group_project/hospital_client/entity"
 	"html/template"
 	"net/http"
 	"strconv"
@@ -24,7 +25,7 @@ func NewdiagonosisHandler(T *template.Template) *diagonosisHandler {
 // Index handles request on route /
 func (mh *diagonosisHandler) Diagonosises(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("thise is the Diagonosises method")
-	diagonosises, err := data.Doctor(1)
+	diagonosises, err := Doctor_data.Doctor(1)
 	fmt.Println(diagonosises)
 	if err != nil {
 		w.WriteHeader(http.StatusNoContent)
@@ -56,7 +57,7 @@ func (mh *diagonosisHandler) AddNewDiagonosis(w http.ResponseWriter, r *http.Req
 	if err != nil {
 		panic(err)
 	}
-	doctor, err := data.Doctor(1)
+	doctor, err := Doctor_data.Doctor(1)
 	//doctor.Pharmacist=pharm
 	laboratorist, err := data.Laboratorists()
 	if err != nil {
@@ -83,7 +84,7 @@ func (mh *diagonosisHandler) AddNewDiagonosis(w http.ResponseWriter, r *http.Req
 		diagonosis2 := GetModifiedDiagonosis(doctor.Diagnosis, diagonosis1, uint(id))
 
 		doctor.Diagnosis = diagonosis2
-		err = data.UpdateDoctor(doctor, 1)
+		err = Doctor_data.UpdateDoctor(doctor, 1)
 		if err != nil {
 			panic(err)
 		}

@@ -37,7 +37,9 @@ func main() {
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
 	// login page path registeration
+
 	mux.HandleFunc("/", loginHandler.LoginGetHandler)
+
 	// patient handler path registeration
 	mux.HandleFunc("/", patientHandler.Appointment)
 	mux.HandleFunc("/profile", patientHandler.Profile)
@@ -46,31 +48,34 @@ func main() {
 	mux.HandleFunc("/request", patientHandler.Request)
 	mux.HandleFunc("/request/new", patientHandler.SendRequest)
 	mux.HandleFunc("/profile/update", patientHandler.Update)
+
 	//doctor handler path registeration
+
 	//Doctor.patient registeration pathes
 	mux.HandleFunc("/doctor", doctorPatientHandler.Index)
 	mux.HandleFunc("/doctor/patients", doctorPatientHandler.Patients)
 	mux.HandleFunc("/doctor/patientUpdate", doctorPatientHandler.UpdatePatient)
 	mux.HandleFunc("/doctor/patientDelete", doctorPatientHandler.DeletePatient)
 	mux.HandleFunc("/doctor/patientNew", doctorPatientHandler.AddNewPatient)
+
 	//Doctor appointment path regiseration
 	mux.HandleFunc("/doctor/appointment", doctorAppointmentHandler.Appointment)
 	mux.HandleFunc("/doctor/appointmentNew", doctorAppointmentHandler.AddNewAppointment)
+
 	// Doctor prescribtion path registeration
 	mux.HandleFunc("/doctor/prescribtion", doctorPrescribtionHandler.Prescribtions)
 	mux.HandleFunc("/doctor/prescribtionNew", doctorPrescribtionHandler.AddNewPrescribtions)
+
 	// doctor diagonosis path registeration
 	mux.HandleFunc("/doctor/diagonosis", doctorDiagonosisHandler.Diagonosises)
 	mux.HandleFunc("/doctor/diagonosisNew", doctorDiagonosisHandler.AddNewDiagonosis)
+
 	//pharmacist path registeration
 	mux.HandleFunc("/", pharmacisstHandler.Index)
 	mux.HandleFunc("/cat", pharmacisstHandler.CatHandler)
-
 	mux.HandleFunc("/prof", pharmacisstHandler.ProHandler)
-
 	mux.HandleFunc("/addcat", pharmacisstHandler.AddNewCat)
 	mux.HandleFunc("/updateCat", pharmacisstHandler.UpdateCat)
-
 	mux.HandleFunc("/deleteCat", pharmacisstHandler.DleteMedicine)
 	mux.HandleFunc("/updateProv", pharmacisstHandler.UpdateProv)
 	mux.HandleFunc("/pharmProf/update", pharmacisstHandler.PharmProfileUpdate)
@@ -86,8 +91,8 @@ func main() {
 	//mux.HandleFunc("/labor/updateDiag", laborHandler.LaborDiagnosisUpdateHandler)
 
 	//Admin
-	http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
-	http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
+	//http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
+	//http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
 
 	http.ListenAndServe(":2241", mux)
 

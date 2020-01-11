@@ -2,8 +2,9 @@ package Doctor_Handler
 
 import (
 	"fmt"
-	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data/Doctor"
-	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
+	_ "github.com/web1_group_project/hospital_client/data"
+	Doctor_data "github.com/web1_group_project/hospital_client/data/Doctor"
+	"github.com/web1_group_project/hospital_client/entity"
 	"html/template"
 	"io"
 	"mime/multipart"
@@ -40,7 +41,7 @@ func (mh *patientHandler) Patients(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("i am about to fech data")
 	//users, err := data.FetchUsers()
 	//petient:=[]entity.Petient
-	petient, err := data.FetchUsers()
+	petient, err := Doctor_data.FetchUsers()
 	fmt.Println(petient)
 
 	if err != nil {
@@ -91,7 +92,7 @@ func (mh *patientHandler) AddNewPatient(w http.ResponseWriter, r *http.Request) 
 		//}
 
 		//ctg.Description = r.FormValue("description")
-		err = data.StorePatients(&patient)
+		err = Doctor_data.StorePatients(&patient)
 
 		if err != nil {
 			panic(err)
@@ -124,7 +125,7 @@ func (mh *patientHandler) DeletePatient(w http.ResponseWriter, r *http.Request) 
 			panic(err)
 		}
 
-		err = data.DeleteUser(id)
+		err = Doctor_data.DeleteUser(id)
 
 		if err != nil {
 			panic(err)
@@ -148,7 +149,7 @@ func (mh *patientHandler) UpdatePatient(w http.ResponseWriter, r *http.Request) 
 			panic(err)
 		}
 
-		singleUser, err := data.FetchUser(id)
+		singleUser, err := Doctor_data.FetchUser(id)
 		fmt.Println("fineeeeeeeeeeeeeeeeeeeee")
 		fmt.Println(singleUser)
 		if err != nil {

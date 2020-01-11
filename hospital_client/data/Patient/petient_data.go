@@ -1,10 +1,10 @@
-package data
+package petient_data
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/entity"
 	"io/ioutil"
 	"log"
 	"net/http"

@@ -2,8 +2,8 @@ package Patient_Handler
 
 import (
 	"fmt"
-	data "github.com/getach1/web1/web1_group_project_old_new/hospital_client/data/Patient"
-	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/entity"
+	"github.com/project/new/web1_group_project/hospital_client/Patient/data"
+	"github.com/web1_group_project/hospital_client/entity"
 	"html/template"
 	"net/http"
 	"strconv"

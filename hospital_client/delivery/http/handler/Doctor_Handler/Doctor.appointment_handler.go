@@ -2,8 +2,9 @@ package Doctor_Handler
 
 import (
 	"fmt"
-	data "github.com/getach1/web1/web1_group_project-master/hospital_client/data/Doctor"
-	"github.com/getach1/web1/web1_group_project-master/hospital_client/entity"
+	Doctor_data "github.com/web1_group_project/hospital_client/data/Doctor"
+	"github.com/web1_group_project/hospital_client/entity"
+
 	"html/template"
 	"net/http"
 	"strconv"
@@ -37,7 +38,7 @@ func (mh *appointmentHandler) Appointment(w http.ResponseWriter, r *http.Request
 	fmt.Println("i am about to fech data")
 	//users, err := data.FetchUsers()
 	//petient:=[]entity.Petient
-	doctor, err := data.Doctor(9)
+	doctor, err := Doctor_data.Doctor(9)
 	fmt.Println(doctor)
 	if err != nil {
 		w.WriteHeader(http.StatusNoContent)
@@ -70,7 +71,7 @@ func (mh *appointmentHandler) DeleteAppointment(w http.ResponseWriter, r *http.R
 			panic(err)
 		}
 
-		err = data.DeleteUser(id)
+		err = Doctor_data.DeleteUser(id)
 
 		if err != nil {
 			panic(err)
@@ -94,7 +95,7 @@ func (mh *appointmentHandler) UpdateAppointment(w http.ResponseWriter, r *http.R
 			panic(err)
 		}
 
-		singleUser, err := data.FetchUser(id)
+		singleUser, err := Doctor_data.FetchUser(id)
 		fmt.Println("fineeeeeeeeeeeeeeeeeeeee")
 
 		if err != nil {
@@ -152,7 +153,7 @@ func (mh *appointmentHandler) AddNewAppointment(w http.ResponseWriter, r *http.R
 	idRaw := r.URL.Query().Get("id")
 
 	id, err := strconv.Atoi(idRaw)
-	doctor, err := data.Doctor(9)
+	doctor, err := Doctor_data.Doctor(9)
 	if err != nil {
 		panic(err)
 	}
@@ -170,7 +171,7 @@ func (mh *appointmentHandler) AddNewAppointment(w http.ResponseWriter, r *http.R
 	appointment2 := GetModifiedAppointment(doctor.Appointment, appointment1, uint(id))
 
 	doctor.Appointment = appointment2
-	err = data.UpdateDoctor(doctor, 9)
+	err = Doctor_data.UpdateDoctor(doctor, 9)
 	if err != nil {
 		panic(err)
 	}
