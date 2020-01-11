@@ -2,8 +2,8 @@ package repository
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/monday271/hospital_server/Doctor"
-	"github.com/monday271/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Doctor"
+	"github.com/web1_group_project/hospital_server/entity"
 	//"github.com/yaredsolomon/webProgram1/hospital/request"
 )
 

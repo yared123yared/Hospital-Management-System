@@ -1,8 +1,8 @@
 package PetientService
 
 import (
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
+	"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/petient"
 )
 
 // PrescriptionService implements menu.PrescriptionService interface
@@ -32,4 +32,3 @@ func (us *PrescriptionService) Prescription(id uint) (*entity.Prescription, []er
 	}
 	return usr, errs
 }
-

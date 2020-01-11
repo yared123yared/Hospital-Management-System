@@ -1,9 +1,10 @@
 package PetientService
 
 import (
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
+	"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/petient"
 )
+
 // RequestService implements menu.RequestService interface
 type RequestService struct {
 	requestRepo petient.RequestRepository
@@ -22,6 +23,7 @@ func (us *RequestService) Requests() ([]entity.Request, []error) {
 	}
 	return usrs, errs
 }
+
 // Request retrieves an application request by its id
 func (us *RequestService) Request(id uint) (*entity.Request, []error) {
 	usr, errs := us.requestRepo.Request(id)

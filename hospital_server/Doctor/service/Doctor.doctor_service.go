@@ -3,9 +3,10 @@ package service
 import (
 	//"github.com/yaredsolomon/webProgram1/hospital/entity"
 	//"github.com/yaredsolomon/webProgram1/hospital/request"
-	"github.com/monday271/hospital_server/Doctor"
-	"github.com/monday271/hospital_server/entity"
+
 	//"github.com/yaredsolomon/webProgram1/hospital/request"
+	"github.com/web1_group_project/hospital_server/Doctor"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // AppointmentService implements request.AppointmentService interface

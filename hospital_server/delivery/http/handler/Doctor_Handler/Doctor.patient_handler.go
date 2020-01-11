@@ -1,12 +1,12 @@
-package handler
+package Doctor_Handler
 
 import (
 	"encoding/json"
 	"fmt"
 	_ "fmt"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/Doctor"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
 	"github.com/julienschmidt/httprouter"
+	"github.com/web1_group_project/hospital_server/Doctor"
+	"github.com/web1_group_project/hospital_server/entity"
 	"net/http"
 	"strconv"
 )

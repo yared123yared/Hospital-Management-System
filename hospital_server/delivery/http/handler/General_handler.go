@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "fmt"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/Doctor"
 	"github.com/julienschmidt/httprouter"
+	"github.com/web1_group_project/hospital_server/Doctor"
 	"net/http"
 )
 

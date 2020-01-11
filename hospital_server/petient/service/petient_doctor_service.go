@@ -2,8 +2,8 @@ package PetientService
 
 import (
 	"fmt"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
+	"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/petient"
 )
 
 type DoctorService struct {
@@ -14,6 +14,7 @@ type DoctorService struct {
 func NewDoctorService(doctorRepository petient.DoctorRepository) petient.DoctorService {
 	return &DoctorService{doctorRepo: doctorRepository}
 }
+
 // Prescriptions returns all stored application prescriptions
 func (us *DoctorService) Doctors() ([]entity.Doctor, []error) {
 	fmt.Println("Getinng doctotrs ......... in service")
@@ -33,4 +34,3 @@ func (us *DoctorService) Doctor(id uint) (*entity.Doctor, []error) {
 	}
 	return usr, errs
 }
-

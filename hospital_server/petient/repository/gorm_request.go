@@ -1,9 +1,9 @@
 package PetientRepository
 
 import (
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
 	"github.com/jinzhu/gorm"
+	"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/petient"
 )
 
 // RequestGormRepo Implements the menu.RequestRepository interface
@@ -35,6 +35,7 @@ func (requestRepo *RequestGormRepo) Request(id uint) (*entity.Request, []error) 
 	}
 	return &request, errs
 }
+
 /*
 // UpdateRequest updates a given request in the database
 func (requestRepo *RequestGormRepo) UpdateRequest(request *entity.Request) (*entity.Request, []error) {

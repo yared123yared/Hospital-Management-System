@@ -2,9 +2,9 @@ package PetientRepository
 
 import (
 	"fmt"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/petient"
 	"github.com/jinzhu/gorm"
+	"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/petient"
 )
 
 // PetientGormRepo Implements the menu.PetientRepository interface

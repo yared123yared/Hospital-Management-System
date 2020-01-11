@@ -3,13 +3,13 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/web1_group_project/hospital_server/Pharmacist copy"
+	"github.com/web1_group_project/hospital_server/entity"
 	"log"
 	"net/http"
 	"strconv"
 
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/Pharmacist"
 
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
 	"github.com/julienschmidt/httprouter"
 )
 

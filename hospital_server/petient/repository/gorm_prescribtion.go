@@ -1,8 +1,8 @@
 package PetientRepository
 
 import (
-	"github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
 	"github.com/jinzhu/gorm"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // PrescriptionGormRepo Implements the menu.PrescriptionRepository interface
@@ -11,7 +11,7 @@ type PrescriptionGormRepo struct {
 }
 
 // NewPrescriptionGormRepo creates a new object of PrescriptionGormRepo
-func NewPrescriptionGormRepo(db *gorm.DB) *PrescriptionGormRepo{
+func NewPrescriptionGormRepo(db *gorm.DB) *PrescriptionGormRepo {
 	return &PrescriptionGormRepo{conn: db}
 }
 

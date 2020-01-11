@@ -1,6 +1,6 @@
 package petient
 
-import "github.com/getach1/web1/web1_group_project-master/hospital_server/entity"
+import "github.com/web1_group_project/hospital_server/entity"
 
 type PetientService interface {
 	Petients() ([]entity.Petient, []error)
@@ -14,7 +14,6 @@ type AppointmentService interface {
 	Appointments() ([]entity.Appointment, []error)
 	Appointment(id uint) (*entity.Appointment, []error)
 }
-
 
 type PrescriptionService interface {
 	Prescriptions() ([]entity.Prescription, []error)

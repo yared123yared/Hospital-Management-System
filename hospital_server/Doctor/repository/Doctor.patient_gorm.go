@@ -3,9 +3,8 @@ package repository
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-
-	"github.com/yaredsolomon/webProgram1/hospital/Registeration"
-	"github.com/yaredsolomon/webProgram1/hospital/entity"
+	"github.com/web1_group_project/hospital_server/Doctor"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // UserGormRepo Implements the menu.UserRepository interface
@@ -14,7 +13,7 @@ type PatientGormRepo struct {
 }
 
 // NewPatientGormRepo creates a new object of PatientGormRepo
-func NewPatientGormRepo(db *gorm.DB) Registeration.PatientRepository {
+func NewPatientGormRepo(db *gorm.DB) Doctor.PatientRepository {
 	return &PatientGormRepo{conn: db}
 }
 
