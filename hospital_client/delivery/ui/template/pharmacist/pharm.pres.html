@@ -1,6 +1,6 @@
 {{define "pharm.pres.layout"}}
-    {{template "pharm.nav.layout"}}
-    {{template "pharm.pres.content"}}
+    {{template "pharm.nav.layout".}}
+    {{template "pharm.pres.content".}}
 
 {{end}}
 {{define "pharm.pres.content"}}
@@ -33,9 +33,10 @@
         <div style="width: 18%;" class="justify-content-center">
             <a class=" container  nav-link  bg-primary text-light" href="/prescription" style="width: auto; margin-right: 5%; margin-left: 10%;">Prescription list</a>
   
+
         </div>
            <div style="width: 18%;">
-              <a class=" container  nav-link  bg-primary text-light" href="/addProv" style="width: auto; margin-right: 5%;">Add New</a>
+              <a type="hidden" class=" container  nav-link  bg-white text-light" href="/prescription" style="width: auto; margin-right: 5%;"></a>
      
            </div>
 
@@ -47,81 +48,53 @@
             <thead>
               <tr class="text-dark">
 
-                <th>ID</th>
+                <!-- <th>ID</th> -->
                 <th>Patient ID</th>
+                <th>Patient Name</th>
                 <th>Doctor ID</th>
-                <th>PhrmacistId</th>
-                <th>Date</th>
-                <th>MedicineName</th>
+                <th>Phrmacist Id</th>
+                <th>Prescribed Date</th>
+                <th>Medicine Name</th>
                 <th>Description</th>
-                <th>GivenStatus</th>
+                <th>Given Status</th>
+                <th>Given Date</th>
                 <th>Option</th>
 
               </tr>
             </thead>
            
             <tbody>
+              {{range .}}
               <tr>
-                  <td>1</td>
-                  <td>1123</td>
-                  <td>2341</td>
-                  <td>1123</td>
-                  <th>23-09-2019</th>
-                  <th>Pencilin</th>
-                  <th>The Patient with the id 1123 is ordered the medicine Pencilin</th>
-                  <th></th>
-                  
-                  <td>
-                     
-                    <a href="/updatePres" class="fas fa-edit"></a>
-                        <span>
-                            <a href="#" class="fas fa-trash-alt text-danger"></a>
-                        </span>
-                  </td>
-
+                <td>{{.PatientId}}</td>
+                <td>{{.PatientName}}</td>
+                <td>{{.DoctorId}}</td>
+                <td>{{if .PhrmacistId}}{{.PhrmacistId}}{{end}}</td>
+                <td>{{.PrescribedDate}}</td>
+                <td>{{.MedicineName}}</td>
+                <td>{{.Description}}</td>
+                <td>{{.GivenStatus}}</td>
+                <td>{{if .GivenDate}}{{.GivenDate}}{{end}}</td>
+                <!-- <td>{{.PatientId}}</td>
+                <td>{{.PatientName}}<td>
+                <td>{{.DoctorId}}</td>
+                <td>{{.PhrmacistId}}</td>
+                <td>{{.PrescribedDate}}</td>
+                <td>{{.MedicineName}}</td>
+                <td>{{.Description}}</td>
+                <td>{{.GivenStatus}}</td>
+                <td>{{.GivenDate}}</td> -->
                  
-              </tr>
-              <tr>
-                <td>2</td>
-                  <td>1123</td>
-                  <td>2341</td>
-                  <td>1123</td>
-                  <th>23-09-2019</th>
-                  <th>Pencilin</th>
-                  <th>The Patient with the id 1123 is ordered the medicine Pencilin</th>
-                  <th></th>
-                  
-                  <td>
-                     
-                    <a href="/updatePres" class="fas fa-edit"></a>
-                        <span>
-                            <a href="#" class="fas fa-trash-alt text-danger"></a>
-                        </span>
-                  </td>
-               
-            </tr>
-            <tr>
-                <td>3</td>
-                  <td>1123</td>
-                  <td>2341</td>
-                  <td>1123</td>
-                  <th>23-09-2019</th>
-                  <th>Pencilin</th>
-                  <th>The Patient with the id 1123 is ordered the medicine Pencilin</th>
-                  <th></th>
-                  
-                  <td>
-                     
-                    <a href="/updatePres" class="fas fa-edit"></a>
-                        <span>
-                            <a href="#" class="fas fa-trash-alt text-danger"></a>
-                        </span>
-                  </td>
+                <td>
+                   
+                  <a href="/updatePres?id={{.ID}}" class="fas fa-edit"></a>
+                      <span>
+                          <a href="/deletePres?id={{.ID}}" class="fas fa-trash-alt text-danger"></a>
+                      </span>
+                </td>
 
-               
-            </tr>
-              
-
+              {{end}}
+                 
             </tbody>
           </table>
         </div>

@@ -2,6 +2,7 @@
 
     {{template "pharm.nav.layout".}}
     {{template "pharm_prof.content".}}
+    {{template "pharm.footer.layout".}}
 
 {{end}}
 
@@ -34,11 +35,13 @@
 
    {{with .}}
    {{with .Profile}}
-    <form action="/pharmProf/update" method="POST" >
+   
+    <form method="POST" action="/pharmProf/update"   >
      <div class="container row" style="margin:20px;">
       <input type="hidden" name="id" id="id" value="{{.ID}}">
        <div class="col">
          <img src="../assets/img/{{.Image}}" style="width: 200px;height: 300px; margin: 30px;" alt="img not found">
+         <input class="mb-20" name = "image2" id= "image" type="hidden" value="{{if .Image}}{{.Image}}{{end}}"/>
          <input class="mb-20" name = "image" id= "image" type="file" value="{{if .Image}}{{.Image}}{{end}}"/>
        </div>
        <div class="col">
@@ -103,7 +106,7 @@
           <div class="col-md-6  inputGroupContainer">
           <div class="input-group">
           <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-          <textarea  name="description" id="description" placeholder="" class="form-control"  type="text" value="{{if .Description}}{{.Description}}{{end}}"></textarea>
+          <textarea  name="description" id="description" placeholder="" class="form-control"  type="text" >{{if .Description}}{{.Description}}{{end}}</textarea>
             </div>
           </div>
         </div>

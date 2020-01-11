@@ -1,6 +1,6 @@
 {{define "pharm_cat.layout"}}
-    {{template "pharm.nav.layout"}}
-    {{template "pharm_cat.content"}}
+    {{template "pharm.nav.layout".}}
+    {{template "pharm_cat.content".}}
     
 
 {{end}}
@@ -57,55 +57,38 @@
             <thead>
               <tr class="text-dark">
 
-                    <th>ID</th>
+                    
                     <th>Medicine Name</th>
                     <th>CategoryName</th>
                     <th>AddedBy</th>
                     <th>ExpiredAt</th>
                     <th>Amount</th>
-                    <th>Description</th>
                     <th>Option</th>
 
               </tr>
             </thead>
            
             <tbody>
-              <tr>
-                  <td>1</td>
-                  <td>Pencilin</td>
-                  <td>Italy</td>
-                  <td>12</td>
-                  <td>09/07/2022</td>
-                  <td>113</td>
-                  <td>This is Pencilin medicine from Italy that kills fungus</td>
-                  
-                  <td>
-                     
-                    <a href="updateCat" class="fas fa-edit"></a>
+              
+                 
+                  {{range .}}
+                  <tr>
+                    <td>{{.MedicineName}}</td>
+                    <td>{{.CategoryName}}</td>
+                    <td>{{.AddedBy}}</td>
+                    <td>{{.ExpiredAt}}</td>
+                    <td>{{.Amount}}</td>
+                    <td>
+                      <a href="updateCat?id={{.ID}}" class="fas fa-edit"></a>
                         <span>
-                            <a href="#" class="fas fa-trash-alt text-danger"></a>
+                            <a href="deleteCat?id={{.ID}}" class="fas fa-trash-alt text-danger"></a>
                         </span>
-                  </td>
+                    </td>
 
                  
               </tr>
-              <tr>
-                <td>2</td>
-                <td>Aspirin</td>
-                <td>Germany</td>
-                <td>23</td>
-                <td>09/07/2022</td>
-                <td>113</td>
-                <td>This is aspirin medicine from Germany</td>
-                
-                <td>
-                   
-                  <a href="updateCat" class="fas fa-edit"></a>
-                      <span>
-                          <a href="#" class="fas fa-trash-alt text-danger"></a>
-                      </span>
-                </td>
-            </tr>
+              {{end}}
+              
               
 
             </tbody>
