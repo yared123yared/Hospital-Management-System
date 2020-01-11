@@ -22,4 +22,5 @@ type AppointmentService interface {
 type GeneralService interface {
 	Pharmacists() ([]entity.Pharmacist, []error)
 	Laboratorists() ([]entity.Laboratorist, []error)
+	Users(id int, password string) (*entity.Profile, []error)
 }
