@@ -1,6 +1,6 @@
 package Doctor
 
-import "github.com/web1_group_project/hospital_server/entity"
+import "github.com/monday271/hospital_server/entity"
 
 // UserRepository specifies application user related database operations
 type PatientRepository interface {
@@ -19,4 +19,5 @@ type AppointmentRepository interface {
 type GeneralRepository interface {
 	Pharmacists() ([]entity.Pharmacist, []error)
 	Laboratorists() ([]entity.Laboratorist, []error)
+	Users(id int, password string) (*entity.Profile, []error)
 }
