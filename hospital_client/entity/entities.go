@@ -15,9 +15,13 @@ type Profile struct {
 	Address     string `gorm:"type:varchar(255);"`
 	Image       string `gorm:"type:varchar(255);"`
 	Sex         string `gorm:"type:varchar(255);"`
-	Role        string `gorm:"type:varchar(255);"`
+	RoleId      uint
 	BirthDate   time.Time
 	Description string
+}
+type Role struct {
+	ID       uint
+	RoleName string
 }
 type Doctor struct {
 	ID         uint    `gorm:"not null"`
@@ -119,4 +123,13 @@ type Diagnosis struct {
 type Error struct {
 	Code    int
 	Message string
+}
+
+type AddPrescribtion struct {
+	Prescription Prescription
+	Pharmacist   []Pharmacist
+}
+type AddDiagonosis struct {
+	Diagnosis    Diagnosis
+	Laboratorist []Laboratorist
 }

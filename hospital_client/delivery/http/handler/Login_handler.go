@@ -2,11 +2,11 @@ package handler
 
 import (
 	"fmt"
-	"github.com/yaredsolomon/webProgram1/hospital2/delivery/utils"
+	"github.com/web1_group_project/hospital_client/data"
+	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/session"
+	"github.com/web1_group_project/hospital_client/utils"
 
-	"github.com/yaredsolomon/webProgram1/hospital2/delivery/http/data"
-	"github.com/yaredsolomon/webProgram1/hospital2/delivery/session"
-	"github.com/yaredsolomon/webProgram1/hospital2/entity"
 	"html/template"
 
 	"net/http"
