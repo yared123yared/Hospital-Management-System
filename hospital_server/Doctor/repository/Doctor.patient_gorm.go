@@ -1,10 +1,11 @@
 package repository
 
 import (
+	"fmt"
 	"github.com/jinzhu/gorm"
 
-	"github.com/yaredsolomon/webProgram1/hospital/entity"
 	"github.com/yaredsolomon/webProgram1/hospital/Registeration"
+	"github.com/yaredsolomon/webProgram1/hospital/entity"
 )
 
 // UserGormRepo Implements the menu.UserRepository interface
@@ -27,11 +28,10 @@ func (patientRepo *PatientGormRepo) Patientes() ([]entity.Petient, []error) {
 	return patients, errs
 }
 
-
 // Patient retrieves a Patient by its id from the database
 func (patientRepo *PatientGormRepo) Patient(id uint) (*entity.Petient, []error) {
 	patient := entity.Petient{}
-	errs := patientRepo.conn.First(&patient, id).GetErrors()
+	errs := patientRepo.conn.Preload("Profile").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").First(&patient, id).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -54,7 +54,15 @@ func (patientRepo *PatientGormRepo) DeletePatient(id uint) (*entity.Petient, []e
 	if len(errs) > 0 {
 		return nil, errs
 	}
+	proId := pst.Uuid
+	profile, err := patientRepo.Profile(proId)
+	if len(err) > 0 {
+		return nil, err
+	}
+
+	fmt.Println(proId)
 	errs = patientRepo.conn.Delete(pst, id).GetErrors()
+	errs = patientRepo.conn.Delete(profile, proId).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -69,4 +77,13 @@ func (patientRepo *PatientGormRepo) StorePatient(patient *entity.Petient) (*enti
 		return nil, errs
 	}
 	return pst, errs
+}
+
+func (patientRepo *PatientGormRepo) Profile(id uint) (*entity.Profile, []error) {
+	profile := entity.Profile{}
+	errs := patientRepo.conn.First(&profile, id).GetErrors()
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return &profile, errs
 }

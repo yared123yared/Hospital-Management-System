@@ -1,6 +1,8 @@
-package  entity
+package entity
 
-import "time"
+import (
+	"time"
+)
 
 // Category represents Food Menu Category
 type Profile struct {
@@ -28,6 +30,7 @@ type Doctor struct {
 	Prescription []Prescription `gorm:"ForeignKey:DoctorId"`
 	Diagnosis    []Diagnosis    `gorm:"ForeignKey:DoctorId"`
 	Appointment  []Appointment  `gorm:"ForeignKey:DoctorId"`
+	Pharmacist   []Pharmacist
 }
 type Appointment struct {
 	ID          uint
@@ -37,10 +40,11 @@ type Appointment struct {
 	Date        time.Time
 }
 type Petient struct {
-	ID           uint `gorm:"not null"`
-	Uuid         uint
-	Profile      Profile `gorm:"ForeignKey:Uuid"`
-	BloodGroup   string  `gorm:"type:varchar(255);not null"`
+	ID      uint `gorm:"not null"`
+	Uuid    uint
+	Profile Profile `gorm:"ForeignKey:Uuid"`
+
+	BloodGroup   string `gorm:"type:varchar(255);not null"`
 	Age          int
 	Prescription []Prescription `gorm:"ForeignKey:PatientId"`
 	Diagnosis    []Diagnosis    `gorm:"ForeignKey:PatientId"`
