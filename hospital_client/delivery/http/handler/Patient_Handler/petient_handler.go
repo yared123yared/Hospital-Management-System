@@ -1,26 +1,24 @@
-package handler
+package Patient_Handler
 
 import (
 	"fmt"
 	entity2 "github.com/getach1/web1/web1_group_project/hospital_client/delivery/entity"
 	"github.com/getach1/web1/web1_group_project/hospital_client/delivery/http/data"
 	"html/template"
+	"net/http"
 	"strconv"
 	"time"
-	"net/http"
 )
 
 type AdminPatientHandler struct {
-	tmpl        *template.Template
+	tmpl *template.Template
 }
-
 
 func NewPatientHandler(T *template.Template) *AdminPatientHandler {
 	return &AdminPatientHandler{tmpl: T}
 }
 
-
-func (ph *AdminPatientHandler)Profile(w http.ResponseWriter, _ *http.Request) {
+func (ph *AdminPatientHandler) Profile(w http.ResponseWriter, _ *http.Request) {
 	//petient:=Petient{1 ,"Getachew","Tebikew","prescription.png","Addis Ababa","xy@z.com","+1113444",time.Now()}
 	petient := entity2.Petient{}
 	var err error
@@ -30,7 +28,7 @@ func (ph *AdminPatientHandler)Profile(w http.ResponseWriter, _ *http.Request) {
 	data.CheckErr(err)
 }
 
-func (ph *AdminPatientHandler)Doctors(w http.ResponseWriter, _ *http.Request) {
+func (ph *AdminPatientHandler) Doctors(w http.ResponseWriter, _ *http.Request) {
 	doctors := []entity2.Doctor{}
 	doctors, _ = data.FetchDoctors()
 	err := ph.tmpl.ExecuteTemplate(w, "patient.view.doctor", doctors)
