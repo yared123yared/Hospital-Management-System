@@ -1,0 +1,161 @@
+{{define "labor.prof.layout"}}
+
+    {{template "labor.nav.layout".}}
+    {{template "labor.prof.content".}}
+    {{template "labor.footer.layout"}}
+
+{{end}}
+
+{{ define "labor.prof.content"}}
+
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Document</title>
+                
+        <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="../assets/css/dashboard.css">
+<!-- Custom styles for this template-->
+<link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+    </head>
+    <body>
+
+ <!-- Begin Page Content -->
+ <div class="container-fluid bg-light">
+
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">Profile</h1>
+
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4 bg-light">
+        {{with .}}
+          {{with .Profile}}
+        <div style="margin-top: 20px;margin-bottom: 30px;" class="fluid-container row mt-10">
+            <div class="col mt-10">
+                <img style="width: 200px;height: 300px;margin-top: 20px;" class="rounded img-thumbnail mx-auto d-block mb-10 " src="../assets/img/{{.Image}}" />
+
+            </div>
+            <div class="col mt-10 mb-10">
+                <div class="p-4">
+                    <h4 class="text-dark ml-2">
+                     {{.FullName}}
+                    </h4>
+                    
+                </div>
+                <div class="pb-2">
+                    <h5 class="">ID: <span class="text-success ml-5">
+                    {{.ID}}
+
+                    </span> </h5>
+                    
+                    
+                </div>
+                <div class="pb-2">
+                    <h5 class="">Phone: <span class="text-success ml-5">
+                      {{.Phone}}
+                 </span> </h5>
+                    
+                    
+                </div>
+                <div class="pb-2">
+                    <h5 class="">Email: <span class="text-success ml-5">
+                    {{.Email}}
+                    </span> </h5>
+                    
+                    
+                </div>
+                <div class="pb-2">
+                  <h5 class="">Sex: <span class="text-success ml-5">
+                      {{.Sex}}
+                  </span> </h5>
+                  
+                  
+              </div>
+              <div class="pb-2">
+                <h5 class="">Address: <span class="text-success ml-5">{{.Address}}
+                </span> </h5>
+                
+                
+            </div>
+            <div class="pb-2">
+              <h5 class="">Birth Date: <span class="text-success ml-5">
+                          {{.BirthDate}}
+             </span> </h5>
+              
+              
+          </div>
+          <div class="pb-2">
+            <h5 class="">Description: <span class="text-success ml-5">{{.Description}}
+            </span> </h5>
+            
+            
+        </div>
+           
+            </div>
+        </div>
+        {{end}}
+        {{end}}
+      
+    
+    
+        <div>    <a type="submit" href="/laborProf/update?id={{.ID}}" class="btn mt-10 text-white  col-5 width-25 btn-primary">Update Profile</a>
+</div>
+    <div class="card-body">
+      <div class="table-responsive">
+              
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
+
+<!-- Footer -->
+<footer class="sticky-footer bg-white">
+<div class="container my-auto">
+  <div class="copyright text-center my-auto">
+    <span>Copyright &copy; Your Website 2019</span>
+  </div>
+</div>
+</footer>
+<!-- End of Footer -->
+
+</div>
+<!-- End of Content Wrapper -->
+
+</div>
+<!-- End of Page Wrapper -->
+
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">×</span>
+  </button>
+</div>
+<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+<div class="modal-footer">
+  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+  <a class="btn btn-primary" href="login.html">Logout</a>
+</div>
+</div>
+</div>
+</div>
+    </body>
+    </html>
+
+{{end}}

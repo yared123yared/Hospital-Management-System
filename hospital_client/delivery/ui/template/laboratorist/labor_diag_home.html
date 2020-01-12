@@ -1,0 +1,56 @@
+{{define "labor.diag.home.layout"}}
+    {{template "labor.nav.layout".}}
+    {{template "labor.diag.home.content".}}
+    {{template "labor.footer.layout".}}
+{{end}}
+
+{{define "labor.diag.home.content"}}
+<div class="container-fluid">
+    <h1 class="mt-4">Diagnosis</h1>
+    <div class="container">
+        <div style="width: 25%;" class="justify-content-center mt-5">
+            <a class=" container  nav-link  bg-primary text-light" href="/diagnosisLabor" style="width: auto; margin-right: 5%; margin-left: 10%;">Diagnosis list</a>
+  
+        </div>
+        <table class="datatable table table-bordered table-striped"  style="width:100%;" cellspacing="0">
+            <thead>
+            <tr>
+                <!-- <th>Id</th> -->
+                <th>Patient Id</th>
+                <th>Patient Name</th>
+                <th>Doctor Id</th>
+                <th>Laboratorist Id</th>
+                <th>Description</th>
+                <th>Diagnosis date </th>
+                <th>Response</th>
+                <th>Response Date</th>
+                <th>Option</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .}}
+                <tr>
+                    <td>{{.PatientId}}</td>
+                    <td>{{.PatientName}}</td>
+                    <td>{{.DoctorId}}</td>
+                    <td>{{.LaboratoristId}}</td>
+                    <td>{{.Description}}</td>
+                    <td>{{.DiagonosesDate}}</td>
+                    <td>{{.Reponse}}</td>
+                    <td>{{.ResponseDate}}</td>
+                    <td>
+                   
+                        <a href="/labor/updateDiag?id={{.ID}}" class="fas fa-edit"></a>
+                            
+                      </td>
+                </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- /#wrapper -->
+</div>
+</div>
+</div>
+{{end}}

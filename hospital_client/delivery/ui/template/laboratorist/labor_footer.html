@@ -1,0 +1,43 @@
+{{define "labor.footer.layout"}}
+
+</div>
+</div>
+</div>
+<div class="bg-dark py-sm-3 mt-lg-5">
+<p class="text-white text-lg-center">&copy;Copy Right 2019  AAiT @ ITSC</p>
+</div>
+<!-- Bootstrap core JavaScript -->
+
+<script src="../../assets/js/bootstrap.js"></script>
+<!-- Menu Toggle Script -->
+
+<!-- Bootstrap core JavaScript-->
+<script src="../../assets/js/jquery.js"></script>
+<script src="../../assets/js/poper.min.js"></script>
+
+<script src="../../assets/js/http_cdn.datatables.net_1.10.18_js_jquery.dataTables.js"></script>
+
+<script src="../../assets/js/http_cdn.datatables.net_1.10.18_js_dataTables.bootstrap4.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="../../assets/jquery-easing/jquery.easing.min.js"></script>
+
+<!-- Custom scripts for all pages-->
+<script src="../../assets/js/sb-admin-2.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+  $('.datatable').DataTable();
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function () {
+  $('#sidebarCollapse').on('click', function () {
+      $('#sidebar').toggleClass('active');
+      $(this).toggleClass('active');
+  });
+});
+</script>
+</body>
+</html>
+
+{{end}}
