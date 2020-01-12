@@ -3,8 +3,9 @@ package repository
 import (
 	"fmt"
 
-	"github.com/fasikawkn/web1_group_project/hospital_server/Laboratorist"
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Laboratorist"
+	"github.com/web1_group_project/hospital_server/entity"
+
 	"github.com/jinzhu/gorm"
 )
 

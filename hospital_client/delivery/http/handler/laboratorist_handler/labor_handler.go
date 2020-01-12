@@ -8,9 +8,9 @@ import (
 	"strconv"
 	"time"
 
-	laborData "github.com/fasikawkn/web1_group_project/hospital_client/laboratorist"
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
 	"github.com/fasikawkn/web1_group_project/hospital_server/session"
+	laborData "github.com/web1_group_project/hospital_client/data/laboratorist"
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
 var sesion uint = session.GetLaborSession()

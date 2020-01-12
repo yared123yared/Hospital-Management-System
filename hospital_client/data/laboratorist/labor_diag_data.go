@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
 var baseURLDiag = "http://localhost:8182/v1/labor/diag/"

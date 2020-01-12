@@ -1,9 +1,7 @@
 package Laboratorist
 
-
-
 import (
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 //DiagnosisService  specifies Medicine service

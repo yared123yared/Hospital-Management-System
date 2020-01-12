@@ -1,13 +1,14 @@
 package main
 
 import (
+	"html/template"
+	"net/http"
+
 	"github.com/web1_group_project/hospital_client/delivery/http/handler"
+	"github.com/web1_group_project/hospital_client/delivery/http/handler/Admin_hanlder"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Doctor_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Patient_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/pharmacist_handler"
-	"github.com/web1_group_project/hospital_client/delivery/http/handler/Admin_hanlder"
-	"html/template"
-	"net/http"
 )
 
 var tmpl_doctor = template.Must(template.ParseGlob("../ui/template/Doctor/*.html"))
@@ -19,6 +20,9 @@ var tmpl_pharmacist = template.Must(template.ParseGlob("../ui/template/pharmacis
 //var tmpl_laboratorsit = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
 var tmpl = template.Must(template.ParseGlob("../ui/template/*.html"))
 var templ_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"))
+
+var temple = template.Must(template.ParseGlob("../ui/template/pharmacist/*.html"))
+var temple2 = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
 
 func main() {
 	//doctor handlers
@@ -96,10 +100,34 @@ func main() {
 	//http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
 	//http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
 
-/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
-/*88888888888888888888888888888888 PETIENTT HANDLER  8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
-/*88888888888888888888888888888888 PATIENT HANDLER   888888888888888888888888888888888888888888888888888888888888888888888888888888*/
-/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+	/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+	/*88888888888888888888888888888888 PETIENTT HANDLER  8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+	/*88888888888888888888888888888888 PATIENT HANDLER   888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+	/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+
+	handler := pharmacist_handler.NewPharmTempHandler(temple)
+	laborHandler := lbrhdlr.NewLaborTempHandler(temple2)
+	http.HandleFunc("/", handler.Index)
+	http.HandleFunc("/cat", handler.CatHandler)
+
+	http.HandleFunc("/prof", handler.ProHandler)
+
+	http.HandleFunc("/addcat", handler.AddNewCat)
+	http.HandleFunc("/updateCat", handler.UpdateCat)
+
+	http.HandleFunc("/deleteCat", handler.DleteMedicine)
+	http.HandleFunc("/updateProv", handler.UpdateProv)
+	http.HandleFunc("/pharmProf/update", handler.PharmProfileUpdate)
+	http.HandleFunc("/prescription", handler.Prescription)
+	http.HandleFunc("/updatePres", handler.PrescriptionUpdate)
+	http.HandleFunc("/deletePres", handler.DeletePrescription)
+	http.HandleFunc("/dashboard", handler.Dashboard)
+	http.HandleFunc("/dashboardLabor", laborHandler.LaborDashHandler)
+	http.HandleFunc("/diagnosisLabor", laborHandler.LaborDiagnosisHandler)
+	http.HandleFunc("/profileLabor", laborHandler.LaborProfileHandler)
+	http.HandleFunc("/laborProf/update",laborHandler.LaborProfileUpdateHandler)
+	http.HandleFunc("/labor/updateDiag",laborHandler.LaborDiagnosisUpdateHandler)
+	
 	adminHandler := Admin_hanlder.NewAdminTempHandler(templ_admin)
 
 	//Admin doctors
@@ -130,7 +158,6 @@ func main() {
 	mux.HandleFunc("/request_new", patientHandler.NewRequest)
 	mux.HandleFunc("/request/new", patientHandler.SendRequest)
 	mux.HandleFunc("/profile/update", patientHandler.Update)
-
 
 	http.ListenAndServe(":2241", mux)
 

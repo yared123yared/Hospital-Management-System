@@ -13,7 +13,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
 var baseURLProf = "http://localhost:8182/v1/labor/profile/"

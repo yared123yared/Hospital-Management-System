@@ -1,6 +1,6 @@
 package Laboratorist
 
-import "github.com/fasikawkn/web1_group_project/hospital_server/entity"
+import "github.com/web1_group_project/hospital_server/entity"
 
 //DiagnosisRepository  specifies Medicine database
 type DiagnosisRepository interface {
