@@ -31,15 +31,12 @@ func (aph *PetientDoctorHandler) GetDoctors(w http.ResponseWriter,
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
-
 	output, err := json.MarshalIndent(doctors, "", "\t\t")
-
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
-
 	w.Header().Set("Content-Type", "application/json")
 	_, _ = w.Write(output)
 	return
@@ -77,3 +74,4 @@ func (aph *PetientDoctorHandler) GetSingleDoctor(w http.ResponseWriter,
 	w.Write(output)
 	return
 }
+

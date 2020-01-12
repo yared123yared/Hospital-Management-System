@@ -1,6 +1,6 @@
 {{define "patient.view.profile"}}
     {{template "patient.navbar".}}
-    {{template "patient.view.profile.update.content".}}
+    {{template "patient.view.profile.content".}}
     {{template "patient.footer".}}
 {{end}}
 {{define "patient.view.profile.content"}}
@@ -9,7 +9,6 @@
 
             <!-- Page Heading -->
             <h1 class="h3 mb-2 text-gray-800">Profile</h1>
-
             <!-- DataTales Example -->
             <div class="card shadow mb-4 bg-light">
                 {{with .}}
@@ -17,72 +16,39 @@
                         <div style="margin-top: 20px;margin-bottom: 30px;" class="fluid-container row mt-10">
                             <div class="col mt-10">
                                 <img style="width: 200px;height: 300px;margin-top: 20px;" class="rounded img-thumbnail mx-auto d-block mb-10 " src="../assets/img/{{.Image}}" />
-
                             </div>
-                            <div class="col mt-10 mb-10">
+                            <div class="col mt-20 mb-10">
                                 <div class="p-4">
-                                    <h4 class="text-dark ml-2">
-                                        {{.FullName}}
-                                    </h4>
-
+                                    <h4 class="text-dark ml-2">{{.FullName}}</h4>
                                 </div>
                                 <div class="pb-2">
-                                    <h5 class="">ID: <span class="text-success ml-5">
-                    {{.ID}}
-
-                    </span> </h5>
-
-
+                                    <h5 class="">ID: <span class="text-success ml-5">{{.ID}}</span> </h5>
                                 </div>
                                 <div class="pb-2">
-                                    <h5 class="">Phone: <span class="text-success ml-5">
-                      {{.Phone}}
-                 </span> </h5>
-
-
+                                    <h5 class="">Phone: <span class="text-success ml-5">{{.Phone}}</span> </h5>
                                 </div>
                                 <div class="pb-2">
-                                    <h5 class="">Email: <span class="text-success ml-5">
-                    {{.Email}}
-                    </span> </h5>
-
-
+                                    <h5 class="">Email: <span class="text-success ml-5">{{.Email}}</span> </h5>
                                 </div>
                                 <div class="pb-2">
-                                    <h5 class="">Sex: <span class="text-success ml-5">
-                      {{.Sex}}
-                  </span> </h5>
-
-
+                                    <h5 class="">Sex: <span class="text-success ml-5">{{.Sex}}</span> </h5>
+                               </div>
+                                <div class="pb-2">
+                                    <h5 class="">Address: <span class="text-success ml-5">{{.Address}}</span> </h5>
                                 </div>
                                 <div class="pb-2">
-                                    <h5 class="">Address: <span class="text-success ml-5">{{.Address}}
-                </span> </h5>
-
-
+                                    <h5 class="">Birth Date: <span class="text-success ml-5">{{.BirthDate}}</span> </h5>
                                 </div>
                                 <div class="pb-2">
-                                    <h5 class="">Birth Date: <span class="text-success ml-5">
-                          {{.BirthDate}}
-             </span> </h5>
-
-
+                                    <h5 class="">Description: <span class="text-success ml-5">{{.Description}}</span> </h5>
                                 </div>
-                                <div class="pb-2">
-                                    <h5 class="">Description: <span class="text-success ml-5">{{.Description}}
-            </span> </h5>
-
-
-                                </div>
-
                             </div>
                         </div>
                     {{end}}
                 {{end}}
 
 
-
-                <div>    <a type="submit" href="/pharmProf/update?id={{.ID}}" class="btn mt-10 text-white  col-5 width-25 btn-primary">Update Profile</a>
+                <div>    <a type="submit" href="/profile/update?id={{.ID}}" class="btn mt-10 text-white  col-5 width-25 btn-primary">Update Profile</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

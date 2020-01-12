@@ -1,10 +1,10 @@
 package main
 
 import (
+	"github.com/web1_group_project/hospital_client/delivery/http/handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Doctor_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Patient_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/pharmacist_handler"
-	"github.com/yaredsolomon/webProgram1/hospital2/delivery/http/handler"
 
 	"html/template"
 	"net/http"
@@ -95,6 +95,25 @@ func main() {
 	//Admin
 	//http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
 	//http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
+
+/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+/*88888888888888888888888888888888 PETIENTT HANDLER  8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+/*88888888888888888888888888888888 PATIENT HANDLER   888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+
+	tmpl := template.Must(template.ParseGlob("C:/Users/Gech/go/src/github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/ui/template/petient/*"))
+	patientHandler = Patient_Handler.NewPatientHandler(tmpl)
+	fsn := http.FileServer(http.Dir("C:/Users/Gech/go/src/github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/ui/assets"))
+	mux.Handle("/assets/", http.StripPrefix("/assets/", fsn))
+	mux.HandleFunc("/", patientHandler.Appointment)
+	mux.HandleFunc("/profile", patientHandler.Profile)
+	mux.HandleFunc("/doctors", patientHandler.Doctors)
+	mux.HandleFunc("/prescription", patientHandler.Prescription)
+	mux.HandleFunc("/request", patientHandler.Request)
+	mux.HandleFunc("/request_new", patientHandler.NewRequest)
+	mux.HandleFunc("/request/new", patientHandler.SendRequest)
+	mux.HandleFunc("/profile/update", patientHandler.Update)
+
 
 	http.ListenAndServe(":2241", mux)
 

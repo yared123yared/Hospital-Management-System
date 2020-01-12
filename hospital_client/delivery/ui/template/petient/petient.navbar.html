@@ -109,9 +109,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
               <span class="d-none d-inline text-gray-600 small">Log Out</span>
-{{/*              {{with .Profile}}*/}}
-{{/*                <img src="/assets/img/{{.Image}}" class="rounded-circle img-profile  d-lg-inline"/>*/}}
-{{/*              {{end}}*/}}
+{{/*              {{if .Profile}}<img src="/assets/img/{{.Profile.Image}}" class="rounded-circle img-profile  d-lg-inline"/>{{else}}{{with .User}}{{with .Profile}}<img src="/assets/img/{{.Image}}" class="rounded-circle img-profile  d-lg-inline"/>{{end}}{{end}}{{end}}*/}}
             </a>
           </li>
         </ul>
@@ -122,5 +120,4 @@
       <div class="container-fluid">
         <!-- DataTales Example -->
       </div>
-
       {{end}}

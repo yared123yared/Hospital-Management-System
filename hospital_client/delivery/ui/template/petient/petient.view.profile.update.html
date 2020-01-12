@@ -5,7 +5,7 @@
 {{end}}
 {{define "patient.view.profile.update.content"}}
     <div class="container-fluid">
-        <h1 class="h3 mb-2 text-gray-800">Profile</h1>
+        <h1 class="h3 mb-2 text-gray-800">Profile update</h1>
 
         <!-- DataTales Example -->
         <div class="card shadow mb-4 bg-light">
@@ -14,7 +14,7 @@
 
             {{with .}}
             {{with .Profile}}
-            <form action="/petient/update" method="POST" >
+            <form action="/profile/update" method="POST" >
                 <div class="container row" style="margin:20px;">
                     <input type="hidden" name="id" id="id" value="{{.ID}}">
                     <div class="col">
@@ -91,9 +91,7 @@
                 </div>
                 {{end}}
                 {{end}}
-
                 <button type="submit" class="btn  col-5 width-25 btn-primary">Update Profile</button>
-
             </form>
         </div>
     </div>

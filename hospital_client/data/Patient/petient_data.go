@@ -5,7 +5,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/web1_group_project/hospital_client/entity"
-
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -17,8 +16,10 @@ func CheckErr(err error) {
 	}
 }
 
+
 var baseURL = "http://localhost:8100/v1/admin/petients/"
 var doctorURL = "http://localhost:8100/v1/patient/doctors/"
+var adminURL = "http://localhost:8100/v1/patient/admins/"
 
 //var requestURL="http://localhost:8100/v1/admin/requests/"
 
@@ -42,6 +43,30 @@ func FetchPetient(id int) (entity.Petient, error) {
 	if err != nil {
 		CheckErr(err)
 		return entity.Petient{}, err
+	}
+	return userdata, nil
+}
+
+func FetchAdmins() ([]entity.Admin, error) {
+	client := &http.Client{}
+	URL := fmt.Sprintf("%s", baseURL)
+	req, _ := http.NewRequest("GET", URL, nil)
+	res, err := client.Do(req)
+	//res, err := client.Get(URL)
+	if err != nil {
+		CheckErr(err)
+		return []entity.Admin{}, err
+	}
+	userdata := []entity.Admin{}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		CheckErr(err)
+		return []entity.Admin{}, err
+	}
+	err = json.Unmarshal(body, &userdata)
+	if err != nil {
+		CheckErr(err)
+		return []entity.Admin{}, err
 	}
 	return userdata, nil
 }

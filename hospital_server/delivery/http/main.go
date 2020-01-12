@@ -27,7 +27,6 @@ func main() {
 	petientServ := PetientService.NewPetientService(petientRepo)
 	PetientHandler := Patient_Handler.NewAdminPetientHandler(petientServ)
 	router := httprouter.New()
-	//patient api
 	router.GET("/v1/admin/petients", PetientHandler.GetPetients)
 	router.GET("/v1/admin/petients/:id", PetientHandler.GetSinglePetient)
 	router.PUT("/v1/admin/petients/:id", PetientHandler.PutPetient)
@@ -53,12 +52,18 @@ func main() {
 	router.GET("/v1/patient/prescriptions", PetientPrescriptionHandler.GetSinglePrescription)
 	router.GET("/v1/patient/prescriptions/:id", PetientPrescriptionHandler.GetPrescriptions)
 
+
 	petientDoctorRepo := PetientRepository.NewDoctorGormRepo(dbconn)
 	petientDoctorServ := PetientService.NewDoctorService(petientDoctorRepo)
 	PetientDoctorHandler := Patient_Handler.NewPetientDoctorHandler(petientDoctorServ)
 	router.GET("/v1/patient/doctors", PetientDoctorHandler.GetDoctors)
 	router.GET("/v1/patient/doctors/:id", PetientDoctorHandler.GetSingleDoctor)
 
+
+	petientAdminRepo := PetientRepository.NewAdminGormRepo(dbconn)
+	petientAdminServ := PetientService.NewAdminService(petientAdminRepo)
+	PetientAdminHandler := Patient_Handler.NewPatientAdminHandler(petientAdminServ)
+	router.GET("/v1/patient/admins/:id", PetientAdminHandler.GetAdmins)
 	http.ListenAndServe(":8100", router)
 
 	patientRepo := repository.NewPatientGormRepo(dbconn)

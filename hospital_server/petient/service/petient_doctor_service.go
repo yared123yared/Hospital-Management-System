@@ -5,7 +5,6 @@ import (
 	"github.com/web1_group_project/hospital_server/entity"
 	"github.com/web1_group_project/hospital_server/petient"
 )
-
 type DoctorService struct {
 	doctorRepo petient.DoctorRepository
 }
@@ -14,7 +13,6 @@ type DoctorService struct {
 func NewDoctorService(doctorRepository petient.DoctorRepository) petient.DoctorService {
 	return &DoctorService{doctorRepo: doctorRepository}
 }
-
 // Prescriptions returns all stored application prescriptions
 func (us *DoctorService) Doctors() ([]entity.Doctor, []error) {
 	fmt.Println("Getinng doctotrs ......... in service")

@@ -11,6 +11,7 @@
                 <thead class="bg-white">
                 <tr>
                     <th>ID</th>
+                    <th>Petient Name</th>
                     <th>Petient ID</th>
                     <th>Approve status</th>
                 </tr>
@@ -18,6 +19,7 @@
                 <tfoot>
                 <tr>
                     <th>ID</th>
+                    <th>Petient Name</th>
                     <th>Petient ID</th>
                     <th>Approve status</th>
                 </tr>
@@ -26,16 +28,14 @@
                 {{range .Request}}
                     <tr>
                         <td>{{ .ID}}</td>
+                        <td>{{ .PatientName}}</td>
                         <td>{{ .PatientId}}</td>
                         <td>{{ .ApproveStatus}}</td>
                     </tr>
                 {{end}}
                 </tbody>
             </table>
-            <form action="/request/new" method="post">
-                <input type="hidden" name="id" value="{{.ID}}">
-                <button class="btn btn-primary btn-pill">New Request</button>
-            </form>
+                <a href="request_new" class="btn btn-primary btn-pill">New Request</a>
         </div>
     </div>
     <!-- /#wrapper -->

@@ -29,3 +29,6 @@ type DoctorService interface {
 	Doctors() ([]entity.Doctor, []error)
 	Doctor(id uint) (*entity.Doctor, []error)
 }
+type AdminService interface {
+	Admins() ([]entity.Admin, []error)
+}

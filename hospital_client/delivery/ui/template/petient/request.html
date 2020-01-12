@@ -1,0 +1,50 @@
+{{define "patient.new.request"}}
+    {{template "patient.navbar".}}
+    {{template "patient.new.request.content".}}
+    {{template "patient.footer".}}
+{{end}}
+{{define "patient.new.request.content"}}
+    <div class="container-fluid bg-light">
+        <!-- Page Heading -->
+        <h1 class="h3 mb-2 text-gray-800">New Request</h1>
+        <!-- DataTales Example -->
+        <form action="/request/new" method="post">
+            <label for="pid">Your ID</label>
+            <input type="number" id="pid" class="form-check-inline" name="id">
+        <div class="card shadow mb-4 bg-light">
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Doctor</label>
+                    <div class="col-md-4 selectContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            {{with .Doctors}}
+                                <select name="doctor_id" class="form-control selectpicker">
+                                    {{range .}}
+                                        <option>{{.ID}}</option>
+                                    {{end}}
+                                </select>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Approve By</label>
+                    <div class="col-md-4 selectContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+                            {{with .Admins}}
+                                <select name="admin_id" class="form-control selectpicker">
+                                    {{range .}}
+                                        <option>{{.ID}}</option>
+                                    {{end}}
+                                </select>
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+        </div>
+            <button type="submit" class="btn-primary badge-pill">Send</button>
+        </form>
+    </div>
+    </di>
+{{end}}

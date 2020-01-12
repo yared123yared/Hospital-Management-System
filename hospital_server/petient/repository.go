@@ -29,3 +29,6 @@ type DoctorRepository interface {
 	Doctors() ([]entity.Doctor, []error)
 	Doctor(id uint) (*entity.Doctor, []error)
 }
+type AdminRepository interface {
+	Admins() ([]entity.Admin, []error)
+}
