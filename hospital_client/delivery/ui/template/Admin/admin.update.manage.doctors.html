@@ -1,0 +1,100 @@
+{{ define "admin.update.manage.doctors.layout" }}
+{{ template "navbar" . }}
+{{ template "admin.update.manage.doctors.content" . }}
+{{ template "footer" . }}
+{{ end }}
+
+{{ define "admin.update.manage.doctors.content"}}
+
+<main role="main" class="">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2>Update Doctor</h2>
+  </div>
+  <div class="container col-md-9 ml-sm-auto col-lg-10 px-4">
+    {{with .}}
+{{with .Profile}}
+    <form method="POST" action="/adminDocUpdate" enctype="multipart/form-data">
+      <div class="form-row">
+        <div class="col">
+          <div class="form-group col-md-6">
+            <input type="hidden" name="id" value="{{.ID}}" >
+            <label for="inputAddress2">phone number</label>
+            <input type="phone" class="form-control  text-dark" id="phone" value="{{if .Phone}}{{.Phone}}{{end}}" placeholder="eg. 0911223344">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputAddress2">Department</label>
+            <input type="text" class="form-control  text-dark" name="department" value="" placeholder="eg. heart specialist">
+          </div>
+
+          <div class="form-group col-md-4">
+            <label for="inputState">Gender</label>
+            <select  name="sex" class="form-control  text-dark">
+              <option selected>Choose...</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+              {{.Sex}}
+            </select>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="inputAddress2">Description</label>
+            <textarea type="phone" class="form-control  text-dark" name="description" placeholder="">{{if.Description}}{{.Description}}{{end}}</textarea>
+          </div>
+          <div class="form-group">
+            <label for="catimg" class="col-sm-4 col-form-label">Upload Image</label>
+            <div class="col-sm-10">
+              <input type="hidden" class="form-control-file" name="hidimage" value="{{if .Image}}{{.Image}}{{end}}" id="image">
+
+              <input type="file" class="form-control-file" name="image" id="image">
+            </input>
+          </div>
+          </div>
+          </div>
+          <div class="col">
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="inputEmail4">Full Name</label>
+                <input type="text" class="form-control  text-dark" name="fullname" value="{{.FullName}}" id="firstName" placeholder="First Name">
+              </div>
+              
+      
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Password</label>
+              <input type="password" class="form-control  text-dark" value="{{.Password}}" name="password" id="password" placeholder="Password">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputPassword4">Confirm Password</label>
+              <input type="password" class="form-control  text-dark" value="{{.Password}}" name="conpassword" id="conpassword" placeholder="Password">
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputAddress">Email</label>
+              <input type="text" class="form-control text-dark" value="{{.Email}}" name="email" placeholder="ex@gmail.com" >
+            </div>
+            <div class="form-group col-md-6">
+              <label for="inputAddress2">Address</label>
+              <input type="text" class="form-control text-dark" value="{{.Address}}" name="address"
+                placeholder="eg. Addis Ababa, Ethiopia">
+      
+            </div>
+            
+      
+          
+          </div>
+        </div>
+        <button style="float: right;" type="submit" class="btn btn-primary w-25">Update Doctor</button>
+      </form>
+{{end}}
+{{end}}
+      
+      
+      
+
+      
+     
+      
+    </form>
+  </div>
+</main>
+
+{{ end }}

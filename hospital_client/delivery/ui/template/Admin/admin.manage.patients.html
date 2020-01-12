@@ -1,0 +1,41 @@
+{{ define "admin.manage.patients.layout" }}
+{{ template "navbar" . }}
+{{ template "admin.manage.patients.content" . }}
+{{ template "footer" . }}
+{{ end }}
+
+{{ define "admin.manage.patients.content"}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Manage Patients</h2>
+    </div>
+    <div class="pt-3 pb-2 mb-3">
+        <a class="btn btn-primary btn-lg" href="/admin/patients/new" role="button">New Patient</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">UUID</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Age</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {{ range . }}
+          <tr>
+            <th scope="row"> {{ .ID }} </th>
+            <td> {{ .UUID }} </td>
+            <td> {{ .BloodG }} </td>
+            <td> {{ .Age }} </td>
+            <td> <a href="/admin/appointents/update?id={{ .ID }}">Edit</a> </td>
+            <td> <a href="/admin/appointents/delete?id={{ .ID }}">Delete</a> </td>
+          </tr>
+          {{ end }}
+          </tbody>
+          </table>
+</main>
+{{ end }}

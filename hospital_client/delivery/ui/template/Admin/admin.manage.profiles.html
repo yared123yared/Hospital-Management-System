@@ -1,0 +1,53 @@
+{{ define "admin.manage.profiles.layout" }}
+{{ template "navbar" . }}
+{{ template "admin.manage.profiles.content" . }}
+{{ template "footer" . }}
+{{ end }}
+
+{{ define "admin.manage.profiles.content"}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Manage Profiles</h2>
+    </div>
+    <div class="pt-3 pb-2 mb-3">
+        <a class="btn btn-primary btn-lg" href="/admin/profiles/new" role="button">New Profile</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone</th>
+            <th scope="col">Address</th>
+            <th scope="col">Birthdate</th>
+            <th scope="col">Sex</th>
+            <th scope="col">Role</th>
+            <th scope="col">Discription</th>
+            <th scope="col">Image</th>            
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {{ range . }}
+          <tr>
+            <th scope="row"> {{ .ID }} </th>
+            <td> {{ .FullN }} </td>
+            <td> {{ .Email }} </td>
+            <td> {{ .Phone }} </td>
+            <td> {{ .Address }} </td>
+            <td> {{ .BD }} </td>
+            <td> {{ .Sex }} </td>
+            <td> {{ .Role }} </td>
+            <td> {{ .Disc }} </td>
+            <td> <img src="../assets/images/{{ .Image }}" width="70rem" height="70rem" /> </td>
+            <td> <a href="/admin/profile/update?id={{ .ID }}">Edit</a> </td>
+            <td> <a href="/admin/profile/delete?id={{ .ID }}">Delete</a> </td>
+          </tr>
+          {{ end }}
+          </tbody>
+          </table>
+</main>
+{{ end }}

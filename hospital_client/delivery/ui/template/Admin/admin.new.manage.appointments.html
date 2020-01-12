@@ -1,0 +1,40 @@
+{{ define "admin.new.manage.appointents.layout" }}
+{{ template "navbar" . }}
+{{ template "admin.new.manage.appointents.content" . }}
+{{ template "footer" . }}
+{{ end }}
+
+{{ define "admin.new.manage.appointents.content"}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h2>Add New Appointment</h2>
+  </div>
+  <div class="container">
+    <form method="POST" action="/admin/appointment" enctype="multipart/form-data">
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Patient ID</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" name="PID" id="PID" placeholder="Patient ID">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Doctor ID</label>
+        <div class="col-sm-10">
+          <input type="number" class="form-control" name="DID" id="DID" placeholder="Doctor ID">
+        </div>
+      </div>
+      <div class="form-group row">
+        <label for="name" class="col-sm-2 col-form-label">Date</label>
+        <div class="col-sm-10">
+          <input type="datetime" class="form-control" name="DATE" id="DATE" placeholder="DATE">
+        </div>
+      </div>
+      <div class="form-group row">
+        <div class="col-sm-10">
+          <button type="submit" class="btn btn-primary float-right">Add Appointment</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</main>
+{{ end }}

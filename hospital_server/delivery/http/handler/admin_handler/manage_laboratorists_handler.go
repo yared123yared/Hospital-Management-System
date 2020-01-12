@@ -1,31 +1,31 @@
-package Doctor_Handler
+package handler
 
 import (
 	"encoding/json"
 	"fmt"
-	_ "fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/julienschmidt/httprouter"
-	"github.com/web1_group_project/hospital_server/Doctor"
+	"github.com/web1_group_project/hospital_server/Admin"
 	"github.com/web1_group_project/hospital_server/entity"
 )
 
-type DoctorPatientHandler struct {
-	patientService Doctor.PatientService
+// AdminCommentHandler handles comment related http requests
+type ManageLaboratoristHandler struct {
+	manageLaboratoristService Admin.ManageLaboratoristsService
 }
 
 // NewAdminCommentHandler returns new AdminCommentHandler object
-func NewDoctorPatientHandler(ptService Doctor.PatientService) *DoctorPatientHandler {
-	return &DoctorPatientHandler{patientService: ptService}
+func NewManageLaboratoristHandler(mdService Admin.ManageLaboratoristsService) *ManageLaboratoristHandler {
+	return &ManageLaboratoristHandler{manageLaboratoristService: mdService}
 }
 
-// GetUsers handles GET /v1/admin/users request
-func (aph *DoctorPatientHandler) GetPatients(w http.ResponseWriter,
+// GetComments handles GET /v1/admin/comments request
+func (mdh *ManageLaboratoristHandler) GetLaboratorists(w http.ResponseWriter,
 	r *http.Request, _ httprouter.Params) {
 
-	patientes, errs := aph.patientService.Patientes()
+	doctors, errs := mdh.manageLaboratoristService.Laboratorsts()
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")
@@ -33,7 +33,7 @@ func (aph *DoctorPatientHandler) GetPatients(w http.ResponseWriter,
 		return
 	}
 
-	output, err := json.MarshalIndent(patientes, "", "\t\t")
+	output, err := json.MarshalIndent(doctors, "", "\t\t")
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
@@ -47,20 +47,19 @@ func (aph *DoctorPatientHandler) GetPatients(w http.ResponseWriter,
 
 }
 
-// GetSingleUsers handles GET /v1/admin/users/:id request
-func (aph *DoctorPatientHandler) GetSinglePatient(w http.ResponseWriter,
+// GetSingleComment handles GET /v1/admin/comments/:id request
+func (mdh *ManageLaboratoristHandler) GetSingleLaboratorist(w http.ResponseWriter,
 	r *http.Request, ps httprouter.Params) {
-	fmt.Println(" i am about to get single value")
 
 	id, err := strconv.Atoi(ps.ByName("id"))
-	fmt.Println(id)
+
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 
-	patient, errs := aph.patientService.Patient(uint(id))
+	doctor, errs := mdh.manageLaboratoristService.Laboratorst(uint(id))
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")
@@ -68,7 +67,7 @@ func (aph *DoctorPatientHandler) GetSinglePatient(w http.ResponseWriter,
 		return
 	}
 
-	output, err := json.MarshalIndent(patient, "", "\t\t")
+	output, err := json.MarshalIndent(doctor, "", "\t\t")
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
@@ -81,27 +80,23 @@ func (aph *DoctorPatientHandler) GetSinglePatient(w http.ResponseWriter,
 	return
 }
 
-// PostUser handles POST /v1/admin/users request
-func (aph *DoctorPatientHandler) PostPatient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Println(" i am at the post method")
+// PostComment handles POST /v1/admin/comments request
+func (mdh *ManageLaboratoristHandler) AddLaboratorist(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	l := r.ContentLength
 	body := make([]byte, l)
-	fmt.Println(" ia have changed the data to byte")
-	fmt.Println(string(body))
 	r.Body.Read(body)
-	patient := &entity.Petient{}
+	doctor := &entity.Laboratorist{}
 
-	err := json.Unmarshal(body, patient)
-	fmt.Println("thise is the unmarchal jeson")
-	fmt.Println(patient)
+	err := json.Unmarshal(body, doctor)
+
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
 		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
 		return
 	}
 
-	patient, errs := aph.patientService.StorePatient(patient)
+	comment, errs := mdh.manageLaboratoristService.StoreLaboratorst(doctor)
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")
@@ -109,14 +104,14 @@ func (aph *DoctorPatientHandler) PostPatient(w http.ResponseWriter, r *http.Requ
 		return
 	}
 
-	p := fmt.Sprintf("/v1/admin/users/%d")
+	p := fmt.Sprintf("/admin/laboratorist/%d", comment.ID)
 	w.Header().Set("Location", p)
 	w.WriteHeader(http.StatusCreated)
 	return
 }
 
 // PutComment handles PUT /v1/admin/comments/:id request
-func (aph *DoctorPatientHandler) PutPatient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+func (mdh *ManageLaboratoristHandler) UpdateLaboratorist(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 
 	id, err := strconv.Atoi(ps.ByName("id"))
 	if err != nil {
@@ -125,7 +120,7 @@ func (aph *DoctorPatientHandler) PutPatient(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	patient, errs := aph.patientService.Patient(uint(id))
+	doctor, errs := mdh.manageLaboratoristService.Laboratorst(uint(id))
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")
@@ -139,9 +134,9 @@ func (aph *DoctorPatientHandler) PutPatient(w http.ResponseWriter, r *http.Reque
 
 	r.Body.Read(body)
 
-	json.Unmarshal(body, &patient)
+	json.Unmarshal(body, &doctor)
 
-	patient, errs = aph.patientService.UpdatePatient(patient)
+	doctor, errs = mdh.manageLaboratoristService.UpdateLaboratorst(doctor)
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")
@@ -149,7 +144,7 @@ func (aph *DoctorPatientHandler) PutPatient(w http.ResponseWriter, r *http.Reque
 		return
 	}
 
-	output, err := json.MarshalIndent(patient, "", "\t\t")
+	output, err := json.MarshalIndent(doctor, "", "\t\t")
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
@@ -163,10 +158,9 @@ func (aph *DoctorPatientHandler) PutPatient(w http.ResponseWriter, r *http.Reque
 }
 
 // DeleteComment handles DELETE /v1/admin/comments/:id request
-func (aph *DoctorPatientHandler) DeletePatient(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	fmt.Println(" i amabout to delete ")
+func (mdh *ManageLaboratoristHandler) DeleteLaboratorist(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+
 	id, err := strconv.Atoi(ps.ByName("id"))
-	fmt.Println(id)
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")
@@ -174,7 +168,7 @@ func (aph *DoctorPatientHandler) DeletePatient(w http.ResponseWriter, r *http.Re
 		return
 	}
 
-	_, errs := aph.patientService.DeletePatient(uint(id))
+	_, errs := mdh.manageLaboratoristService.DeleteLaboratorst(uint(id))
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")

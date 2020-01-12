@@ -58,14 +58,14 @@ type Petient struct {
 type Pharmacist struct {
 	ID           uint
 	Uuid         uint
-	Profile      Profile
+	Profile      Profile        `gorm:"ForeignKey:Uuid"`
 	Medicine     []Medicine     `gorm:"ForeignKey:AddedBy"`
 	Prescription []Prescription `gorm:"ForeignKey:PhrmacistId"`
 }
 type Laboratorist struct {
 	ID        uint
 	Uuid      uint
-	Profile   Profile
+	Profile   Profile     `gorm:"ForeignKey:Uuid"`
 	Diagnosis []Diagnosis `gorm:"ForeignKey:LaboratoristId"`
 }
 

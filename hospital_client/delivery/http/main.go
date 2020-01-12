@@ -5,7 +5,7 @@ import (
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Doctor_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Patient_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/pharmacist_handler"
-
+	"github.com/web1_group_project/hospital_client/delivery/http/handler/Admin_hanlder"
 	"html/template"
 	"net/http"
 )
@@ -18,6 +18,7 @@ var tmpl_pharmacist = template.Must(template.ParseGlob("../ui/template/pharmacis
 
 //var tmpl_laboratorsit = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
 var tmpl = template.Must(template.ParseGlob("../ui/template/*.html"))
+var templ_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"))
 
 func main() {
 	//doctor handlers
@@ -91,7 +92,6 @@ func main() {
 	//mux.HandleFunc("/profileLabor", laborHandler.LaborProfileHandler)
 	//mux.HandleFunc("/laborProf/update", laborHandler.LaborProfileUpdateHandler)
 	//mux.HandleFunc("/labor/updateDiag", laborHandler.LaborDiagnosisUpdateHandler)
-
 	//Admin
 	//http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
 	//http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
@@ -100,7 +100,24 @@ func main() {
 /*88888888888888888888888888888888 PETIENTT HANDLER  8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
 /*88888888888888888888888888888888 PATIENT HANDLER   888888888888888888888888888888888888888888888888888888888888888888888888888888*/
 /*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+	adminHandler := Admin_hanlder.NewAdminTempHandler(templ_admin)
 
+	//Admin doctors
+	http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
+	http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
+	http.HandleFunc("/adminDocUpdate", adminHandler.UpdateDoctorTempHandler)
+	http.HandleFunc("/adminDocDelete", adminHandler.DeleteDoctorTempHandler)
+
+	//Admin pharmacists
+	http.HandleFunc("/adminPharmacists", adminHandler.PharmacistTempHandler)
+	http.HandleFunc("/admin/addNewPharmacist", adminHandler.PharmacistNewTempHandler)
+	http.HandleFunc("/adminPharmUpdate", adminHandler.UpdatePharmacistTempHandler)
+	http.HandleFunc("/adminpharmDelete", adminHandler.DeletePharmacistTempHandler)
+	//admin Laboratorist
+	http.HandleFunc("/adminLaboratorists", adminHandler.LaboratoristTempHandler)
+	http.HandleFunc("/admin/addNewLaboratorist", adminHandler.LaboratoristNewTempHandler)
+	http.HandleFunc("/adminLabormUpdate", adminHandler.UpdateLLaboratoristTempHandler)
+	http.HandleFunc("/adminLaborDelete", adminHandler.DeleteLaboratoristTempHandler)
 	tmpl := template.Must(template.ParseGlob("C:/Users/Gech/go/src/github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/ui/template/petient/*"))
 	patientHandler = Patient_Handler.NewPatientHandler(tmpl)
 	fsn := http.FileServer(http.Dir("C:/Users/Gech/go/src/github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/ui/assets"))

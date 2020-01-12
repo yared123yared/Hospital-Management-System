@@ -1,0 +1,43 @@
+{{ define "admin.manage.appointents.layout" }}
+{{ template "navbar" . }}
+{{ template "admin.manage.appointents.content" . }}
+{{ template "footer" . }}
+{{ end }}
+
+{{ define "admin.manage.appointents.content"}}
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h2>Manage Appointent</h2>
+    </div>
+    <div class="pt-3 pb-2 mb-3">
+        <a class="btn btn-primary btn-lg" href="/admin/appointents/new" role="button">New Appointment</a>
+    </div>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Patient ID</th>
+            <th scope="col">Patient Uname</th>
+            <th scope="col">Doctor ID</th>
+            <th scope="col">Date</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+            {{ range . }}
+          <tr>
+            <th scope="row"> {{ .ID }} </th>
+            <td> {{ .PatID }} </td>
+            <td> {{ .PatUName }} </td>
+            <td> {{ .DocID }} </td>
+            <td> {{ .Date }} </td>
+            <td> <a href="/admin/appointents/update?id={{ .ID }}">Edit</a> </td>
+            <td> <a href="/admin/appointents/delete?id={{ .ID }}">Delete</a> </td>
+          </tr>
+          {{ end }}
+          </tbody>
+          </table>
+</main>
+{{ end }}
