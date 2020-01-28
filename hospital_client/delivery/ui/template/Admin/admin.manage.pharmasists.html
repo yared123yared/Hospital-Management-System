@@ -32,12 +32,12 @@
       </div>
       <div style="display: flex;">
         <div style="width: 18%;" class="justify-content-center">
-            <a class=" container  nav-link  bg-primary text-light" href="/adminPharmacists" style="width: auto; margin-right: 5%; margin-left: 10%;">Pharmacist list</a>
+            <a class=" container  nav-link  bg-primary text-light" href="/admin/pharmacists" style="width: auto; margin-right: 5%; margin-left: 10%;">Pharmacist list</a>
   
 
         </div>
            <div style="width: 18%;">
-              <a type="hidden" class=" container  nav-link  bg-primary text-light" href="/admin/addNewPharmacist" style="width: auto; margin-right: 5%;"> Add Pharmacist</a>
+              <a type="hidden" class=" container  nav-link  bg-primary text-light" href="/admin/pharmacists/new" style="width: auto; margin-right: 5%;"> Add Pharmacist</a>
      
            </div>
 
@@ -63,7 +63,7 @@
                     </thead>
                     <tbody>
                     {{range .}}
-                    {{with .Profile}}
+                    {{with .User}}
                         <tr>
                             <td>{{.ID }}</td>
                             <td>{{.FullName}}</td>

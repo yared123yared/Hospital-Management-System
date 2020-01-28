@@ -12,7 +12,7 @@ import (
 	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var baseURLLabor = "http://localhost:8182/admin/laboratorists/"
+var baseURLLabor = "http://localhost:8180/v1/admin/laboratorists/"
 
 func GetLaboratorist(id uint) (*entity.Laboratorist, error) {
 	fmt.Println("Enteritn")

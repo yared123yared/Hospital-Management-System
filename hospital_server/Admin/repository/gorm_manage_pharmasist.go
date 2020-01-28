@@ -5,8 +5,8 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/Admin"
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Admin"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // ManageDoctorsRepository implements Admin.ManagePharmasistsRepository interface
@@ -22,7 +22,7 @@ func NewManagePharmasistsRepository(db *gorm.DB) Admin.ManagePharmasistsReposito
 // Doctors return all doctors stored in the databasee
 func (mpRepo *ManagePharmasistsRepository) Pharmasists() ([]entity.Pharmacist, []error) {
 	phas := []entity.Pharmacist{}
-	errs := mpRepo.conn.Preload("Profile").Preload("Prescription").Preload("Medicine").Find(&phas).GetErrors()
+	errs := mpRepo.conn.Preload("User").Preload("Prescription").Preload("Medicine").Find(&phas).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -32,7 +32,7 @@ func (mpRepo *ManagePharmasistsRepository) Pharmasists() ([]entity.Pharmacist, [
 // Doctor retrieves a doctor from the database by its id
 func (mpRepo *ManagePharmasistsRepository) Pharmasist(id uint) (*entity.Pharmacist, []error) {
 	phas := entity.Pharmacist{}
-	errs := mpRepo.conn.Preload("Profile").Preload("Prescription").Preload("Medicine").First(&phas, id).GetErrors()
+	errs := mpRepo.conn.Preload("User").Preload("Prescription").Preload("Medicine").First(&phas, id).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}

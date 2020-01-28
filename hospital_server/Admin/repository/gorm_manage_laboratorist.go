@@ -3,8 +3,8 @@ package repository
 import (
 	"github.com/jinzhu/gorm"
 
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/Admin"
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Admin"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // ManageLaboratoristsRepository implements Admin.ManageLaboratoristsRepository interface
@@ -20,7 +20,7 @@ func NewManageLaboratoristsRepository(db *gorm.DB) Admin.ManageLaboratoristsRepo
 // Laboratorsts return all Laboratorst stored in the databasee
 func (mlRepo *ManageLaboratoristsRepository) Laboratorsts() ([]entity.Laboratorist, []error) {
 	labs := []entity.Laboratorist{}
-	errs := mlRepo.conn.Preload("Profile").Preload("Diagnosis").Find(&labs).GetErrors()
+	errs := mlRepo.conn.Preload("User").Preload("Diagnosis").Find(&labs).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -30,7 +30,7 @@ func (mlRepo *ManageLaboratoristsRepository) Laboratorsts() ([]entity.Laboratori
 // Laboratorst retrieves a Laboratorst from the database by its id
 func (mlRepo *ManageLaboratoristsRepository) Laboratorst(id uint) (*entity.Laboratorist, []error) {
 	labs := entity.Laboratorist{}
-	errs := mlRepo.conn.Preload("Profile").Preload("Diagnosis").First(&labs, id).GetErrors()
+	errs := mlRepo.conn.Preload("User").Preload("Diagnosis").First(&labs, id).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}

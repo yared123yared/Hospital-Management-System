@@ -16,7 +16,7 @@ import (
 	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var baseURLDctrs = "http://localhost:8182/admin/doctors/"
+var baseURLDctrs = "http://localhost:8180/v1/admin/doctors/"
 
 func GetDoctor(id uint) (*entity.Doctor, error) {
 	fmt.Println("Enteritn")
@@ -43,6 +43,7 @@ func GetDoctor(id uint) (*entity.Doctor, error) {
 	return presc, nil
 }
 func Doctors() ([]entity.Doctor, error) {
+	fmt.Println("Geting all The doctors")
 	client := &http.Client{}
 	sp := ""
 	URL := fmt.Sprintf("%s%s", baseURLDctrs, sp)

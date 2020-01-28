@@ -1,4 +1,4 @@
-{{ define "admin.manage.laboratorist.layout" }}
+{{ define "admin.manage.laboratorists.layout" }}
 {{ template "navbar" . }}
 {{ template "admin.manage.laboratorist.content" . }}
 {{ template "footer" . }}
@@ -32,12 +32,12 @@
       </div>
       <div style="display: flex;">
         <div style="width: 18%;" class="justify-content-center">
-            <a class=" container  nav-link  bg-primary text-light" href="/adminLaboratorists" style="width: auto; margin-right: 5%; margin-left: 10%;">Laboratorists list</a>
+            <a class=" container  nav-link  bg-primary text-light" href="/admin/laboratorists" style="width: auto; margin-right: 5%; margin-left: 10%;">Laboratorists list</a>
   
 
         </div>
            <div style="width: 18%;">
-              <a type="hidden" class=" container  nav-link  bg-primary text-light" href="/admin/addNewLaboratorist" style="width: auto; margin-right: 5%;"> Add Laboratorist</a>
+              <a type="hidden" class=" container  nav-link  bg-primary text-light" href="/admin/laboratorists/new" style="width: auto; margin-right: 5%;"> Add Laboratorist</a>
      
            </div>
 
@@ -63,7 +63,7 @@
                     </thead>
                     <tbody>
                     {{range .}}
-                    {{with .Profile}}
+                    {{with .User}}
                         <tr>
                             <td>{{.ID }}</td>
                             <td>{{.FullName}}</td>

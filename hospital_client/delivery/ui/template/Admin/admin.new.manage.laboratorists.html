@@ -10,54 +10,186 @@
     <h2>Add New Laboratorist</h2>
   </div>
   <div class="container">
-    <form method="POST" action="/admin/laboratorist" enctype="multipart/form-data">
-      <div class="form-row">
-        <div class="form-group col-md-4">
-          <label for="inputEmail4">First Name</label>
-          <input type="email" class="form-control bg-dark text-white" id="inputEmail4" placeholder="yared">
+    <form class="well form-horizontal" action="/admin/laboratorists/new" method="post"  id="contact_form" enctype="multipart/form-data">
+      <!-- Form Name -->
+      <legend><h2><b>Add New Pharmacist</b></h2></legend><br>
+      <!-- Text input-->
+      <div class="row">
+      <div class="col-5">
+      <div class="form-group">
+        <input type="hidden" name="_csrf" id="_csrf" value="{{ .CSRF }}" />
+        <label for="full_name" class=" control-label">Full Name</label>
+        {{with .VErrors.Get "full_name"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input  name="full_name" id="full_name"  required autocomplete="off" placeholder="Full Name" class="form-control"  value="{{.Values.Get "full_name"}}" type="text">
+          </div>
         </div>
-        <div class="form-group col-md-4 ">
-          <label for="inputEmail4">Last Name</label>
-          <input type="email" class="form-control bg-dark text-white" id="inputEmail4" placeholder="solomon">
-        </div>
+      </div>
 
+      <!-- Text input-->
+
+      <div class="form-group">
+        <label for="user_password" class=" control-label" >Password</label>
+        {{with .VErrors.Get "user_password"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <label>
+              <input name="user_password" id="user_password"  required autocomplete="off" placeholder="Password" value='{{.Values.Get "user_password"}}' class="form-control"  type="password">
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="form-group col-md-4">
-        <label for="inputPassword4">Password</label>
-        <input type="password" class="form-control bg-dark text-white" id="inputPassword4" placeholder="Password">
+
+      <!-- Text input-->
+
+      <div class="form-group">
+        <label for="confirm_password" class=" control-label" >Confirm Password</label>
+        {{with .VErrors.Get "confirm_password"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <label>
+              <input  name="confirm_password" id="confirm_password" required autocomplete="off" placeholder="Confirm Password" value='{{.Values.Get "confirm_password"}}' class="form-control"  type="password">
+            </label>
+          </div>
+        </div>
       </div>
-      <div class="form-group col-md-9">
-        <label for="inputAddress">Email</label>
-        <input type="text" class="form-control bg-dark text-white" id="inputAddress" placeholder="yaredyaya16@gmail.com" >
-      </div>
-      <div class="form-group col-md-8">
-        <label for="inputAddress2">Address</label>
-        <input type="text" class="form-control bg-dark text-white" id="inputAddress2"
-          placeholder="Apartment, studio, or floor">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputAddress2">phone number</label>
-        <input type="phone" class="form-control bg-dark text-white" id="inputAddress2" placeholder="phone">
-      </div>
-      <div class="form-group col-md-4">
-        <label for="inputState">Gender</label>
-        <select id="inputState" class="form-control bg-dark text-white">
-          <option selected>Choose...</option>
-          <option>male</option>
-          <option>female</option>
-          <option>other</option>
-        </select>
+
+      <!-- Text input-->
+      <div class="form-group">
+        <label for="email" class=" control-label">E-Mail</label>
+        {{with .VErrors.Get "email"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+            <input  name="email" id="email" required autocomplete="off" placeholder="E-Mail Address" value='{{.Values.Get "email"}}' class="form-control"  type="text">
+          </div>
+        </div>
       </div>
 
       <div class="form-group">
-        <label for="catimg" class="col-sm-2 col-form-label">Upload Image</label>
-        <div class="col-sm-10">
-          <input type="file" class="form-control-file" name="catimg" id="catimg">
-        </input>
+        <label for="address" class=" control-label">Address</label>
+        {{with .VErrors.Get "address"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input name="address" id="email" required autocomplete="off" placeholder="country/city/kebele" value='{{.Values.Get "address"}}' class="form-control"  type="text">
+          </div>
+        </div>
       </div>
+
+        <div class="form-group">
+          <label for="contact_no" class=" control-label">Contact No</label>
+          {{with .VErrors.Get "phone"}}
+            <label class=" col-form-label text-danger">{{.}}</label>
+          {{end}}
+          <div class=" inputGroupContainer">
+            <div class="input-groupcontact_no">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+              <input type="tel" id="contact_no" name="phone" required autocomplete="off"
+                     placeholder="+2519"  value='{{.Values.Get "phone"}}'
+
+                     class="form-control">
+            </div>
+          </div>
+        </div>
+      <!-- Text input-->
+
+      </div>
+      <div class="col-5">
+      <div class="form-group">
+        <label for="sex" class="control-label">Sex</label>
+        <div class=" selectContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-list"></i></span>
+            <select id="sex" name="sex" class="form-control selectpicker">
+              <option value="">Select your sex</option>
+              <option>Male</option>
+              <option>Female</option>
+              <option >other</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- Text input-->
+      <div class="form-group">
+        <label for="bd" class=" control-label">Birth Date</label>
+        {{with .VErrors.Get "bDate"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input  name="bDate" id="bd" required autocomplete="off" placeholder="1999/2/3"  value='{{.Values.Get "bDate"}}'  class="form-control"  type="datetime-local">
+          </div>
+        </div>
+      </div>
+
      
-      <button type="submit" class="btn btn-primary">Add Laboratorist</button>
-    </form>
+      <!-- <div class="form-group">
+        <label for="age" class=" control-label">Age</label>
+        {{with .VErrors.Get "age"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="age" name="age" value="{{.Values.Get "age"}}" required autocomplete="off" placeholder="0" class="form-control"  type="number">
+          </div>
+        </div>
+      </div> -->
+
+      
+
+      <div class="form-group">
+        <label for="description" class=" control-label">Description</label>
+        {{with .VErrors.Get "description"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class=" inputGroupContainer">
+          <div class="input-group">
+            <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+            <input id="description" required autocomplete="off" name="description"
+                   placeholder="Description" class="form-control"
+                   value='{{.Values.Get "description"}}' type="text">
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="catimg" class="col-form-label">Upload Image</label>
+        {{with .VErrors.Get "catimg"}}
+          <label class=" col-form-label text-danger">{{.}}</label>
+        {{end}}
+        <div class="col-sm-10">
+          <input type="hidden" class="form-control-file" required autocomplete="off" value='{{.Values.Get "catimg"}}'  name="image" id="image">
+          <input type="file" class="form-control-file" required autocomplete="off" value='{{.Values.Get "catimg"}}'  name="catimg" id="catimg">
+        </div>
+      </div>
+      </div>
+        </div>
+      <!-- Success message -->
+      <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
+      <div class="form-group">
+        <label class=" control-label"></label>
+        <div class=""><br>
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+        </div>
+      </div>
+  </form>
+      
   </div>
 </main>
 {{ end }}

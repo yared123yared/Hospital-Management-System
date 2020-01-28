@@ -5,8 +5,8 @@ import (
 
 	"github.com/jinzhu/gorm"
 
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/Admin"
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Admin"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // ManageDoctorsRepository implements Admin.ManageDoctorsRepository interface
@@ -22,7 +22,7 @@ func NewManageDoctorsRepository(db *gorm.DB) Admin.ManageDoctorsRepository {
 // Doctors return all doctors stored in the databasee
 func (mdRepo *ManageDoctorsRepository) Doctors() ([]entity.Doctor, []error) {
 	docs := []entity.Doctor{}
-	errs := mdRepo.conn.Preload("Profile").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Find(&docs).GetErrors()
+	errs := mdRepo.conn.Preload("User").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Find(&docs).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -31,8 +31,9 @@ func (mdRepo *ManageDoctorsRepository) Doctors() ([]entity.Doctor, []error) {
 
 // Doctor retrieves a doctor from the database by its id
 func (mdRepo *ManageDoctorsRepository) Doctor(id uint) (*entity.Doctor, []error) {
+	fmt.Println("I got the id ", id)
 	docs := entity.Doctor{}
-	errs := mdRepo.conn.Where("uuid=?", id).Preload("Profile").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Find(&docs).GetErrors()
+	errs := mdRepo.conn.Where("id=?", id).Preload("User").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Find(&docs).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}

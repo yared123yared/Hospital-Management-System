@@ -3,11 +3,15 @@ package Admin_hanlder
 import (
 	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 
 	"github.com/web1_group_project/hospital_client/data/Admin"
 	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/form"
+	"github.com/web1_group_project/hospital_client/rtoken"
+	"golang.org/x/crypto/bcrypt"
 )
 
 func (ach *AdminTempHandler) PharmacistTempHandler(w http.ResponseWriter, r *http.Request) {
@@ -15,46 +19,80 @@ func (ach *AdminTempHandler) PharmacistTempHandler(w http.ResponseWriter, r *htt
 	ach.tmpl.ExecuteTemplate(w, "admin.manage.pharmacists.layout", pharmacists)
 }
 func (ach *AdminTempHandler) PharmacistNewTempHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Println("Entering adding pharmacist")
+	token, err := rtoken.CSRFToken(ach.csrfSignKey)
+	if err != nil {
+		http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+	}
 	if r.Method == http.MethodPost {
+		err := r.ParseForm()
+		if err != nil {
+			http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+			return
+		}
+		doctorRegistrationForm := form.Input{Values: r.PostForm, VErrors: form.ValidationErrors{}}
+		doctorRegistrationForm.Required("full_name", "phone", "email", "user_password", "confirm_password")
+		doctorRegistrationForm.MatchesPattern("email", form.EmailRX)
+		doctorRegistrationForm.MatchesPattern("phone", form.PhoneRX)
+		doctorRegistrationForm.MinLength("user_password", 8)
+		doctorRegistrationForm.PasswordMatches("user_password", "confirm_password")
+		doctorRegistrationForm.CSRF = token
+
+		if !doctorRegistrationForm.Valid() {
+			ach.tmpl.ExecuteTemplate(w, "admin.new.pharmacists.layout", doctorRegistrationForm)
+			return
+		}
+		hashedPassword, err := bcrypt.GenerateFromPassword([]byte(r.FormValue("password")), 12)
+		if err != nil {
+			fmt.Println("hash password")
+			// doctorRegistrationForm.VErrors.Add("password", "Password Could not be stored")
+			ach.tmpl.ExecuteTemplate(w, "admin.new.pharmacists.layout", doctorRegistrationForm)
+			return
+		}
 		med := entity.Pharmacist{}
 		// i, _ := strconv.ParseUint(r.FormValue("id"), 10, 64)
-		fname := r.FormValue("firstname")
-		lname := r.FormValue("lastname")
 
-		med.Profile.FullName = fname + " " + lname
-		med.Profile.BirthDate = time.Now()
-		if r.FormValue("password") == r.FormValue("conpassword") {
-			med.Profile.Password = r.FormValue("password")
+		med.User.FullName = r.FormValue("full_name")
+		med.User.BirthDate = time.Now()
 
-		} else {
-			ach.tmpl.ExecuteTemplate(w, "admin.new.doctors.layout", nil)
-		}
-		med.Profile.Password = r.FormValue("password")
-		med.Profile.Email = r.FormValue("email")
-		med.Profile.Phone = r.FormValue("phone")
-		med.Profile.Address = r.FormValue("address")
-		med.Profile.Sex = r.FormValue("sex")
-		med.Profile.RoleId = 3
-		med.Profile.Description = r.FormValue("description")
+		med.User.Password = string(hashedPassword)
+		med.User.Email = r.FormValue("email")
+		med.User.Phone = r.FormValue("phone")
+		med.User.Address = r.FormValue("address")
+		med.User.Sex = r.FormValue("sex")
+		med.User.RoleId = 3
+		med.User.Description = r.FormValue("description")
 		// med.Uuid = med.Profile.ID
-		// med.ID = med.Profile.ID
+		// med.ID = med.Profile.IDimage
 		// prof := med.Profile
 		// Admin.PostProfile(&prof)
-		mf, fh, err := r.FormFile("image")
+		mf, fh, err := r.FormFile("catimg")
 		if err != nil {
 			panic(err)
 		}
 		defer mf.Close()
-		med.Profile.Image = fh.Filename
+		med.User.Image = fh.Filename
 
 		Admin.WriteFile(&mf, fh.Filename)
 		Admin.PostPharmacist(&med)
-		// fmt.Println(prof.ID, "sdfjhdsjhfjdshfgdfskjhgjhfsdkjghkjdfshgkjh")
-		http.Redirect(w, r, "/adminPharmacists", http.StatusSeeOther)
+		fmt.Println(med.ID, "sdfjhdsjhfjdshfgdfskjhgjhfsdkjghkjdfshgkjh")
+		http.Redirect(w, r, "/admin/pharmacists", http.StatusSeeOther)
 
 	} else {
+		if r.Method == http.MethodGet {
+			pharmacistAddForm := struct {
+				Values  url.Values
+				VErrors form.ValidationErrors
+				CSRF    string
+			}{
+				Values:  nil,
+				VErrors: nil,
+				CSRF:    token,
+			}
+			ach.tmpl.ExecuteTemplate(w, "admin.new.pharmacists.layout", pharmacistAddForm)
+		}
 		fmt.Println("temlating")
-		ach.tmpl.ExecuteTemplate(w, "admin.new.pharmacists.layout", nil)
+
 		fmt.Println("temlating2")
 
 	}
@@ -83,27 +121,27 @@ func (ach *AdminTempHandler) UpdatePharmacistTempHandler(w http.ResponseWriter, 
 
 		med := entity.Pharmacist{}
 
-		med.Profile.ID = medicine.Profile.ID
+		med.User.ID = medicine.User.ID
 		fname := r.FormValue("fullname")
 
-		med.Profile.FullName = fname
-		med.Profile.BirthDate = time.Now()
+		med.User.FullName = fname
+		med.User.BirthDate = time.Now()
 		if r.FormValue("password") == r.FormValue("conpassword") {
-			med.Profile.Password = r.FormValue("password")
+			med.User.Password = r.FormValue("password")
 
 		} else {
 			ach.tmpl.ExecuteTemplate(w, "admin.update.pharmacist.layout", nil)
 		}
-		med.Profile.Password = r.FormValue("password")
-		med.Profile.Email = r.FormValue("email")
-		med.Profile.Phone = r.FormValue("phone")
-		med.Profile.Address = r.FormValue("address")
-		med.Profile.Sex = r.FormValue("sex")
-		med.Profile.RoleId = 3
-		med.Profile.Description = r.FormValue("description")
+		med.User.Password = r.FormValue("password")
+		med.User.Email = r.FormValue("email")
+		med.User.Phone = r.FormValue("phone")
+		med.User.Address = r.FormValue("address")
+		med.User.Sex = r.FormValue("sex")
+		med.User.RoleId = 3
+		med.User.Description = r.FormValue("description")
 		image, _, _ := r.FormFile("image")
 		if image == nil {
-			med.Profile.Image = r.FormValue("hidimage")
+			med.User.Image = r.FormValue("hidimage")
 			fmt.Println("Image is null")
 		} else {
 			mf, fh, err := r.FormFile("image")
@@ -112,7 +150,7 @@ func (ach *AdminTempHandler) UpdatePharmacistTempHandler(w http.ResponseWriter, 
 			}
 			defer mf.Close()
 
-			med.Profile.Image = fh.Filename
+			med.User.Image = fh.Filename
 
 			Admin.WriteFile(&mf, fh.Filename)
 

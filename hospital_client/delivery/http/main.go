@@ -3,22 +3,25 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"time"
 
 	"github.com/web1_group_project/hospital_client/delivery/http/handler"
+	"github.com/web1_group_project/hospital_client/entity"
+	"github.com/web1_group_project/hospital_client/rtoken"
+
+	//	"github.com/web1_group_project/hospital_client/delivery/http/handler/laboratorist_handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Admin_hanlder"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Doctor_Handler"
 	"github.com/web1_group_project/hospital_client/delivery/http/handler/Patient_Handler"
-	"github.com/web1_group_project/hospital_client/delivery/http/handler/pharmacist_handler"
+	"github.com/web1_group_project/hospital_client/delivery/http/handler/Pharmacist_handler"
 )
 
 var tmpl_doctor = template.Must(template.ParseGlob("../ui/template/Doctor/*.html"))
-var tmpl_patient = template.Must(template.ParseGlob("../ui/template/petient/*.html"))
+
+//var tmpl_patient = template.Must(template.ParseGlob("../ui/template/petient/*.html"))
 
 //var tmpl_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"))
 var tmpl_pharmacist = template.Must(template.ParseGlob("../ui/template/pharmacist/*.html"))
-
-
-
 
 //var tmpl_laboratorsit = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
 var tmpl = template.Must(template.ParseGlob("../ui/template/*.html"))
@@ -27,142 +30,120 @@ var templ_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"
 var temple = template.Must(template.ParseGlob("../ui/template/pharmacist/*.html"))
 var temple2 = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
 
+var tmpl_patient = template.Must(template.ParseGlob("../ui/template/petient/*"))
+
 func main() {
-	//doctor handlers
-	doctorPatientHandler := Doctor_Handler.NewpatientHandler(tmpl_doctor)
-	doctorAppointmentHandler := Doctor_Handler.NewappointmentHandler(tmpl_doctor)
-	doctorPrescribtionHandler := Doctor_Handler.NewprescribtionHandler(tmpl_doctor)
-	doctorDiagonosisHandler := Doctor_Handler.NewdiagonosisHandler(tmpl_doctor)
-	//loginhandler
-	loginHandler := handler.NewLoginHandler(tmpl)
-	//patient handler
-	patientHandler := Patient_Handler.NewPatientHandler(tmpl_patient)
-	//pharmacistHandler
-	pharmacisstHandler := pharmacist_handler.NewPharmTempHandler(tmpl_pharmacist)
-	//aborHandler := lbrhdlr.NewLaborTempHandler(temple2)
-	//adminHandler := adminhdlr.NewAdminTempHandler(temple3)
+	fs := http.FileServer(http.Dir("../ui/assets/"))
+	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
 
+	// <<<<<<<<<<<<<<<<<<<<<<<LOGIN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	csrfSignKey := []byte(rtoken.GenerateRandomID(32))
+	sess := configSess()
 	mux := http.NewServeMux()
-	fs := http.FileServer(http.Dir("../ui/assets"))
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	//	mux.Handle("/assets/", http.StripPrefix("/assets/", fs))
-	// login page path registeration
-
-	mux.HandleFunc("/", loginHandler.LoginGetHandler)
-
-	// patient handler path registeration
-	mux.HandleFunc("/appointment", patientHandler.Appointment)
-	mux.HandleFunc("/profile", patientHandler.Profile)
-	mux.HandleFunc("/doctors", patientHandler.Doctors)
-	mux.HandleFunc("/prescription", patientHandler.Prescription)
-	mux.HandleFunc("/request", patientHandler.Request)
-	mux.HandleFunc("/request/new", patientHandler.SendRequest)
-	mux.HandleFunc("/profile/update", patientHandler.Update)
-
-	//doctor handler path registeration
-
-	//Doctor.patient registeration pathes
-	mux.HandleFunc("/doctor", doctorPatientHandler.Index)
-	mux.HandleFunc("/doctor/patients", doctorPatientHandler.Patients)
-	mux.HandleFunc("/doctor/patientUpdate", doctorPatientHandler.UpdatePatient)
-	mux.HandleFunc("/doctor/patientDelete", doctorPatientHandler.DeletePatient)
-	mux.HandleFunc("/doctor/patientNew", doctorPatientHandler.AddNewPatient)
-
+	uh := handler.NewUserHandler(tmpl, sess, csrfSignKey)
+	http.HandleFunc("/login", uh.Login)
+	http.Handle("/logout", uh.Authenticated(http.HandlerFunc(uh.Logout)))
+	//
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<DOCTORS>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//Doctor.patient path registeration
+	doctorHandler := Doctor_Handler.NewpatientHandler(tmpl_doctor, uh, csrfSignKey)
+	http.Handle("/doctor", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.Index))))
+	http.Handle("/doctor/patients", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.Patients))))
+	http.Handle("/doctor/patientUpdate", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.UpdatePatient))))
+	http.HandleFunc("/doctor/patient/delete", doctorHandler.DeletePatient)
+	http.Handle("/doctor/patientNew", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.AddNewPatient))))
+	//
 	//Doctor appointment path regiseration
-	mux.HandleFunc("/doctor/appointment", doctorAppointmentHandler.Appointment)
-	mux.HandleFunc("/doctor/appointmentNew", doctorAppointmentHandler.AddNewAppointment)
-
+	//doctorAppointmentHandler := Doctor_Handler.NewappointmentHandler(tmpl_doctor, uh, csrfSignKey)
+	http.Handle("/doctor/appointment", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.Appointment))))
+	http.Handle("/doctor/appointment/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.AddNewAppointment))))
+	//
 	// Doctor prescribtion path registeration
-	mux.HandleFunc("/doctor/prescribtion", doctorPrescribtionHandler.Prescribtions)
-	mux.HandleFunc("/doctor/prescribtionNew", doctorPrescribtionHandler.AddNewPrescribtions)
-
+	doctorPrescribtionHandler := Doctor_Handler.NewprescribtionHandler(tmpl_doctor)
+	http.Handle("/doctor/prescribtion", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorPrescribtionHandler.Prescribtions))))
+	http.Handle("/doctor/prescribtion/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorPrescribtionHandler.AddNewPrescribtions))))
+	//
 	// doctor diagonosis path registeration
-	mux.HandleFunc("/doctor/diagonosis", doctorDiagonosisHandler.Diagonosises)
-	mux.HandleFunc("/doctor/diagonosisNew", doctorDiagonosisHandler.AddNewDiagonosis)
+	doctorDiagonosisHandler := Doctor_Handler.NewdiagonosisHandler(tmpl_doctor)
+	http.Handle("/doctor/diagonosis", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorDiagonosisHandler.Diagonosises))))
+	http.Handle("/doctor/diagonosis/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorDiagonosisHandler.AddNewDiagonosis))))
+	//
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PATIENT>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-	//pharmacist path registeration
-	mux.HandleFunc("/pharmacist", pharmacisstHandler.Index)
-	mux.HandleFunc("/cat", pharmacisstHandler.CatHandler)
-	mux.HandleFunc("/prof", pharmacisstHandler.ProHandler)
-	mux.HandleFunc("/addcat", pharmacisstHandler.AddNewCat)
-	mux.HandleFunc("/updateCat", pharmacisstHandler.UpdateCat)
-	mux.HandleFunc("/deleteCat", pharmacisstHandler.DleteMedicine)
-	mux.HandleFunc("/updateProv", pharmacisstHandler.UpdateProv)
-	mux.HandleFunc("/pharmProf/update", pharmacisstHandler.PharmProfileUpdate)
-	mux.HandleFunc("/prescription1", pharmacisstHandler.Prescription)
-	mux.HandleFunc("/updatePres", pharmacisstHandler.PrescriptionUpdate)
-	mux.HandleFunc("/deletePres", pharmacisstHandler.DeletePrescription)
-	mux.HandleFunc("/dashboard", pharmacisstHandler.Dashboard)
+	patientHandler := Patient_Handler.NewPatientHandler(tmpl_patient, uh, csrfSignKey)
+	http.Handle("/patient", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Appointment))))
+	http.Handle("/patient/profile", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Profile))))
+	http.Handle("/patient/doctors", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Doctors))))
+	http.Handle("/patient/prescription", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Prescription))))
+	http.Handle("/patient/request", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Request))))
+	http.Handle("/patient/request/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.NewRequest))))
+	//mux.Handle("/patient/request/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.SendRequest))))
+	mux.Handle("/patient/profile/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Update))))
+	//
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PHARMACIST>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//patientHandler := Patient_Handler.NewPatientHandler(tmpl_patient,uh,csrfSignKey)
 
-	//mux.HandleFunc("/dashboardLabor", laborHandler.LaborDashHandler)
-	//mux.HandleFunc("/diagnosisLabor", laborHandler.LaborDiagnosisHandler)
-	//mux.HandleFunc("/profileLabor", laborHandler.LaborProfileHandler)
-	//mux.HandleFunc("/laborProf/update", laborHandler.LaborProfileUpdateHandler)
-	//mux.HandleFunc("/labor/updateDiag", laborHandler.LaborDiagnosisUpdateHandler)
-	//Admin
-	//http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
-	//http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
+	pharmacisthandler := Pharmacist_handler.NewPharmTempHandler(temple, uh, csrfSignKey)
+	//Pharmacist Dashboard
+	http.Handle("/pharmacist", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Index))))
+	http.Handle("/pharmacist/dashboard", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Dashboard))))
+	//
+	//Pharmacist Medicine
+	http.Handle("/pharmacist/medicine", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.CatHandler))))
+	http.Handle("/pharmacist/medicine/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.AddNewCat))))
+	http.Handle("/pharmacist/medicine/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.UpdateCat))))
+	http.Handle("/pharmacist/medicine/delete", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.DleteMedicine))))
 
-	/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
-	/*88888888888888888888888888888888 PETIENTT HANDLER  8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
-	/*88888888888888888888888888888888 PATIENT HANDLER   888888888888888888888888888888888888888888888888888888888888888888888888888888*/
-	/*888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888*/
+	//Pharmacist profile
+	http.Handle("/pharmacist/profile", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.ProHandler))))
+	http.Handle("/pharmacist/profile/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.PharmProfileUpdate))))
+	//Pharmacist prescription
+	http.Handle("/pharmacist/prescription", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Prescription))))
+	http.Handle("/pharmacist/prescription/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.PrescriptionUpdate))))
+	http.Handle("/pharmacist/prescription/delete", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.DeletePrescription))))
 
-	handler := pharmacist_handler.NewPharmTempHandler(temple)
-	laborHandler := lbrhdlr.NewLaborTempHandler(temple2)
-	http.HandleFunc("/", handler.Index)
-	http.HandleFunc("/cat", handler.CatHandler)
+	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LABORATORIST>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+	//laboratoristHandler := laboratorist_handler.NewLaborTempHandler(temple2)
+	//Laboratorist dashboard
+	//http.HandleFunc("/laboratorist/dashboard", laboratoristHandler.LaborDashHandler)
+	//
+	//Laboratorist Diagnosis
+	// http.HandleFunc("/laboratorist/diagnosis", laboratoristHandler.LaborDiagnosisHandler)
+	// http.HandleFunc("/laboratorist/updateDiagnosis", laboratoristHandler.LaborDiagnosisUpdateHandler)
+	//
+	//Laboratorist Profile
+	// http.HandleFunc("/laboratorist/profile", laboratoristHandler.LaborProfileHandler)
+	// http.HandleFunc("/laboratorist/profile/update", laboratoristHandler.LaborProfileUpdateHandler)
+	//
+	//
+	adminHandler := Admin_hanlder.NewAdminTempHandler(templ_admin, uh, csrfSignKey)
+	http.Handle("/admin", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.AdminIndex))))
+	http.Handle("/admin/doctors", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.DoctorTempHandler))))
+	http.Handle("/admin/doctors/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.AddDoctorTempHandler))))
 
-	http.HandleFunc("/prof", handler.ProHandler)
+	http.Handle("/admin/pharmacists", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.PharmacistTempHandler))))
+	http.Handle("/admin/pharmacists/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.PharmacistNewTempHandler))))
+	// http.Handle("admin/pharmacists", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.PharmacistTempHandler))))
 
-	http.HandleFunc("/addcat", handler.AddNewCat)
-	http.HandleFunc("/updateCat", handler.UpdateCat)
+	http.Handle("/admin/laboratorists", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.LaboratoristTempHandler))))
+	http.Handle("/admin/laboratorists/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.LaboratoristNewTempHandler))))
 
-	http.HandleFunc("/deleteCat", handler.DleteMedicine)
-	http.HandleFunc("/updateProv", handler.UpdateProv)
-	http.HandleFunc("/pharmProf/update", handler.PharmProfileUpdate)
-	http.HandleFunc("/prescription", handler.Prescription)
-	http.HandleFunc("/updatePres", handler.PrescriptionUpdate)
-	http.HandleFunc("/deletePres", handler.DeletePrescription)
-	http.HandleFunc("/dashboard", handler.Dashboard)
-	http.HandleFunc("/dashboardLabor", laborHandler.LaborDashHandler)
-	http.HandleFunc("/diagnosisLabor", laborHandler.LaborDiagnosisHandler)
-	http.HandleFunc("/profileLabor", laborHandler.LaborProfileHandler)
-	http.HandleFunc("/laborProf/update",laborHandler.LaborProfileUpdateHandler)
-	http.HandleFunc("/labor/updateDiag",laborHandler.LaborDiagnosisUpdateHandler)
-	
-	adminHandler := Admin_hanlder.NewAdminTempHandler(templ_admin)
+	http.ListenAndServe(":8185", nil)
 
-	//Admin doctors
-	http.HandleFunc("/adminDoctors", adminHandler.DoctorTempHandler)
-	http.HandleFunc("/admin/addNewDoctor", adminHandler.AddDoctorTempHandler)
-	http.HandleFunc("/adminDocUpdate", adminHandler.UpdateDoctorTempHandler)
-	http.HandleFunc("/adminDocDelete", adminHandler.DeleteDoctorTempHandler)
+}
+func configSess() *entity.Session {
+	tokenExpires := time.Now().Add(time.Minute * 30).Unix()
+	sessionID := rtoken.GenerateRandomID(32)
+	signingString, err := rtoken.GenerateRandomString(32)
+	if err != nil {
+		panic(err)
+	}
 
-	//Admin pharmacists
-	http.HandleFunc("/adminPharmacists", adminHandler.PharmacistTempHandler)
-	http.HandleFunc("/admin/addNewPharmacist", adminHandler.PharmacistNewTempHandler)
-	http.HandleFunc("/adminPharmUpdate", adminHandler.UpdatePharmacistTempHandler)
-	http.HandleFunc("/adminpharmDelete", adminHandler.DeletePharmacistTempHandler)
-	//admin Laboratorist
-	http.HandleFunc("/adminLaboratorists", adminHandler.LaboratoristTempHandler)
-	http.HandleFunc("/admin/addNewLaboratorist", adminHandler.LaboratoristNewTempHandler)
-	http.HandleFunc("/adminLabormUpdate", adminHandler.UpdateLLaboratoristTempHandler)
-	http.HandleFunc("/adminLaborDelete", adminHandler.DeleteLaboratoristTempHandler)
-	tmpl := template.Must(template.ParseGlob("C:/Users/Gech/go/src/github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/ui/template/petient/*"))
-	patientHandler = Patient_Handler.NewPatientHandler(tmpl)
-	fsn := http.FileServer(http.Dir("C:/Users/Gech/go/src/github.com/getach1/web1/web1_group_project_old_new/hospital_client/delivery/ui/assets"))
-	mux.Handle("/assets/", http.StripPrefix("/assets/", fsn))
-	mux.HandleFunc("/", patientHandler.Appointment)
-	mux.HandleFunc("/profile", patientHandler.Profile)
-	mux.HandleFunc("/doctors", patientHandler.Doctors)
-	mux.HandleFunc("/prescription", patientHandler.Prescription)
-	mux.HandleFunc("/request", patientHandler.Request)
-	mux.HandleFunc("/request_new", patientHandler.NewRequest)
-	mux.HandleFunc("/request/new", patientHandler.SendRequest)
-	mux.HandleFunc("/profile/update", patientHandler.Update)
+	signingKey := []byte(signingString)
 
-	http.ListenAndServe(":2241", mux)
-
-	_ = http.ListenAndServe(":8000", nil)
+	return &entity.Session{
+		Expires:    tokenExpires,
+		SigningKey: signingKey,
+		UUID:       sessionID,
+	}
 }
