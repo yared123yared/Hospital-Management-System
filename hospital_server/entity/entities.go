@@ -26,7 +26,7 @@ type Role struct {
 	Users []User
 }
 type Doctor struct {
-	ID uint `gorm:"not null"`
+	ID         uint `gorm:"not null"`
 	Uuid       uint
 	User       User   `gorm:"ForeignKey:Uuid"`
 	Department string `gorm:"type:varchar(255);not null"`
