@@ -3,11 +3,13 @@ package Patient_Handler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/julienschmidt/httprouter"
-	"github.com/web1_group_project/hospital_server/entity"
-	"github.com/web1_group_project/hospital_server/petient"
 	"net/http"
 	"strconv"
+
+	"github.com/julienschmidt/httprouter"
+
+	"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/petient"
 )
 
 // AdminPetientHandler handles petient related http requests
@@ -58,6 +60,38 @@ func (aph *AdminPetientHandler) GetSinglePetient(w http.ResponseWriter,
 	}
 
 	petient, errs := aph.petientService.Petient(uint(id))
+
+	if len(errs) > 0 {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	output, err := json.MarshalIndent(petient, "", "\t\t")
+
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(output)
+	return
+}
+
+func (aph *AdminPetientHandler)GetSinglePetient_uuid(w http.ResponseWriter,
+	r *http.Request, ps httprouter.Params) {
+
+	id, err := strconv.Atoi(ps.ByName("id"))
+
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	petient, errs := aph.petientService.Petient2(uint(id))
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")

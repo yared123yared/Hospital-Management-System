@@ -1,38 +1,40 @@
-package Doctor_data
+package Doctor
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/web1_group_project/hospital_client/entity"
-
 	"io/ioutil"
 	"net/http"
+
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var baseURL1 = "http://localhost:4444/v1/doctor/appointments/"
+var baseURL1 = "http://localhost:8180/v1/doctor/appointments/"
+var baseURL2 = "http://localhost:8180/v1/doctor/prescribtions/"
 
 // User represents User data
 //type User struct {
-//	UserId    int    `json:"userId"`
-//	ID        int    `json:"id"`
-//	Title     string `json:"title"`
-//	Body string `json:"body"`
+//  UserId    int    json:"userId"
+//  ID        int    json:"id"
+//  Title     string json:"title"
+//  Body string json:"body"
 //
 //}jhg
 
 //// SingleData represents a single User
 //type SingleData struct {
-//	user User
+//  user User
 //}
 //
 //// CollectionData represents collection of Users
 //type CollectionData struct {
-//	users []User
+//  users []User
 //}
 
 //FetchUser fetchs a single user by its id
 func Doctor(id int) (*entity.Doctor, error) {
+	fmt.Println("thise is the doctor method")
 	fmt.Println(id)
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s%d", baseURL1, id)
@@ -78,12 +80,12 @@ func DeleteAppointment(id int) error {
 	//body, err := ioutil.ReadAll(res.Body)
 	//fmt.Println(string(body))
 	//if err != nil {
-	//	return  err
+	//  return  err
 	//}
 	//
 	//err = json.Unmarshal(body, userdata)
 	//if err != nil {
-	//	return err
+	//  return err
 	//}
 	//fmt.Println("thise is the struct data")
 	//fmt.Println(&userdata)
@@ -113,12 +115,38 @@ func Doctors() (*[]entity.Doctor, error) {
 	fmt.Println(usdata)
 	return usdata, nil
 }
-
-func UpdateDoctor(doctor *entity.Doctor, id int) error {
+func UpdateAppointment(doctor *entity.Appointment, id int) error {
 	fmt.Println("i am at the Update method")
 	client := &http.Client{}
 	fmt.Println("i am at the Update method2")
 	URL := fmt.Sprintf("%s%d", baseURL1, id)
+	fmt.Println("i am at the Update method3")
+	output, err := json.MarshalIndent(doctor, "", "\t\t")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(string(output))
+	req, err := http.NewRequest("PUT", URL, bytes.NewBuffer(output))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("i am at the Update method5")
+	fmt.Println(URL)
+	_, err = client.Do(req)
+	fmt.Println("i am at the Update method6")
+	//res, err := client.Get(URL)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println("i have finished with out error")
+	fmt.Println(" i am about to left the update method")
+	return nil
+}
+func UpdatePrescribtion(doctor *entity.Prescription, id int) error {
+	fmt.Println("i am at the Update method")
+	client := &http.Client{}
+	fmt.Println("i am at the Update method2")
+	URL := fmt.Sprintf("%s%d", baseURL2, id)
 	fmt.Println("i am at the Update method3")
 	output, err := json.MarshalIndent(doctor, "", "\t\t")
 	if err != nil {

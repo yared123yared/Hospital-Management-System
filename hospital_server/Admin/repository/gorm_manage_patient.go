@@ -3,8 +3,8 @@ package repository
 import (
 	"github.com/jinzhu/gorm"
 
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/Admin"
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Admin"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // ManagePatientsRepository implements Admin.ManagePatientsRepository interface
@@ -67,7 +67,7 @@ func (mpRepo *ManagePatientsRepository) StorePatient(user *entity.Petient) (*ent
 	pat := user
 	errs := mpRepo.conn.Preload("Profile").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Preload("Request").Create(pat).GetErrors()
 
-	errs = mpRepo.conn.Create(pat.Profile).GetErrors()
+	errs = mpRepo.conn.Create(pat.User).GetErrors()
 	errs = mpRepo.conn.Create(pat.Prescription).GetErrors()
 	errs = mpRepo.conn.Create(pat.Diagnosis).GetErrors()
 	errs = mpRepo.conn.Create(pat.Appointment).GetErrors()

@@ -1,8 +1,7 @@
 {{define "admin.home.layout"}}
-    {{template "labor.nav.layout".}}
+{{ template "navbar" . }}
     {{template "labor.content.layout".}}
-    {{template "labor.footer.layout".}}
-  
+    {{ template "footer" . }}  
 {{end}}
 
 
@@ -36,7 +35,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Medicine (Monthly)</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{.Monthly_one}}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -53,7 +52,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Total Medicine</div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{.Annual_one}}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -72,7 +71,7 @@
                   <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Prescription (monthly)</div>
                   <div class="row no-gutters align-items-center">
                     <div class="col-auto">
-                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{.Monthly_two}}</div>
+                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
                     </div>
                     <div class="col">
                       <div class="progress progress-sm mr-2">
@@ -97,7 +96,7 @@
               <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                   <div class="text-xs font-weight-bold text-warning text-uppercase mb-1"> Total Prescription </div>
-                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{.Annual_two}}</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
                 </div>
                 <div class="col-auto">
                   <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>

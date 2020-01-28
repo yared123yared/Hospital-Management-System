@@ -12,7 +12,7 @@ import (
 	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var baseURLAptmnt = "http://localhost:8182/admin/appointments/"
+var baseURLAptmnt = "http://localhost:8180/admin/appointments/"
 
 func GetAppointment(id uint) (*entity.Appointment, error) {
 	fmt.Println("Enteritn")
@@ -37,6 +37,7 @@ func GetAppointment(id uint) (*entity.Appointment, error) {
 	}
 	fmt.Println("pres", presc)
 	return presc, nil
+
 }
 func Appointments(id uint) ([]entity.Appointment, error) {
 	client := &http.Client{}

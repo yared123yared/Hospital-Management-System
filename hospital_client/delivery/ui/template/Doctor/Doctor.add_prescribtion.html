@@ -261,7 +261,8 @@
               <div class="container">
 
                 <form class="well form-horizontal" action="/doctor/prescribtionNew?id={{.Prescription.ID}}" method="post"  id="contact_form" enctype="multipart/form-data">
-
+                  <input type="hidden" name="_csrf" id="_csrf" value="{{ .CSRF }}" />
+            
                   <fieldset>
 
                     <!-- Form Name -->

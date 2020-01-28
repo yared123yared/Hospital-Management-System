@@ -14,10 +14,9 @@ type AppointmentRepository interface {
 	Appointments() ([]entity.Doctor, []error)
 	Appointment(id uint) (*entity.Doctor, []error)
 	UpdateAppointment(user *entity.Doctor) (*entity.Doctor, []error)
+	AppUpdateAppointment(appointment *entity.Appointment) (*entity.Appointment, []error)
+	UpdatePrescription(prescription *entity.Prescription) (*entity.Prescription, []error)
 	DeleteAppointment(id uint) (*entity.Doctor, []error)
-}
-type GeneralRepository interface {
-	Pharmacists() ([]entity.Pharmacist, []error)
-	Laboratorists() ([]entity.Laboratorist, []error)
-	Users(id int, password string) (*entity.Profile, []error)
+	AppAppointment(id uint) (*entity.Appointment, []error)
+	Prescribtion(id uint) (*entity.Prescription, []error)
 }

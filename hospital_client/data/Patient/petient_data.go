@@ -1,13 +1,14 @@
-package petient_data
+package Petient
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/web1_group_project/hospital_client/entity"
 	"io/ioutil"
 	"log"
 	"net/http"
+
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
 func CheckErr(err error) {
@@ -16,10 +17,10 @@ func CheckErr(err error) {
 	}
 }
 
-
-var baseURL = "http://localhost:8100/v1/admin/petients/"
-var doctorURL = "http://localhost:8100/v1/patient/doctors/"
-var adminURL = "http://localhost:8100/v1/patient/admins/"
+var baseURL2 ="http://localhost:8180/v1/admin/petients2/"
+var baseURL = "http://localhost:8180/v1/admin/petients/"
+var doctorURL = "http://localhost:8180/v1/patient/doctors/"
+var adminURL = "http://localhost:8180/v1/patient/admins/"
 
 //var requestURL="http://localhost:8100/v1/admin/requests/"
 
@@ -46,7 +47,29 @@ func FetchPetient(id int) (entity.Petient, error) {
 	}
 	return userdata, nil
 }
-
+func FetchPetient2(id uint) (entity.Petient, error) {
+	client := &http.Client{}
+	URL := fmt.Sprintf("%s%d", baseURL2, int(id))
+	req, _ := http.NewRequest("GET", URL, nil)
+	res, err := client.Do(req)
+	//res, err := client.Get(URL)
+	if err != nil {
+		CheckErr(err)
+		return entity.Petient{}, err
+	}
+	userdata := entity.Petient{}
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		CheckErr(err)
+		return entity.Petient{}, err
+	}
+	err = json.Unmarshal(body, &userdata)
+	if err != nil {
+		CheckErr(err)
+		return entity.Petient{}, err
+	}
+	return userdata, nil
+}
 func FetchAdmins() ([]entity.Admin, error) {
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s", baseURL)
@@ -71,7 +94,8 @@ func FetchAdmins() ([]entity.Admin, error) {
 	return userdata, nil
 }
 
-func UpdateProfile(petient entity.Petient) {
+func UpdateProfile(petient *entity.Petient) {
+	fmt.Println("UpdateProfileMethod")
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s%d", baseURL, petient.ID)
 	output, err := json.MarshalIndent(petient, "", "\t\t")

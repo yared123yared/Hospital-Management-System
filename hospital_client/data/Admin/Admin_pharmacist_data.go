@@ -24,7 +24,6 @@ func GetPharmacist(id uint) (*entity.Pharmacist, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	presc := &entity.Pharmacist{}
 	body, err := ioutil.ReadAll(res.Body)
 

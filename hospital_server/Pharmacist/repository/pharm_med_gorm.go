@@ -2,10 +2,11 @@ package repository
 
 import (
 	"fmt"
-	"github.com/web1_group_project/hospital_server/Pharmacist copy"
-	"github.com/web1_group_project/hospital_server/entity"
 
 	"github.com/jinzhu/gorm"
+
+	"github.com/web1_group_project/hospital_server/Pharmacist"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 //MedicineGormRepo Implements the user.UserRepository interface

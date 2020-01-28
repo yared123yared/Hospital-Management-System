@@ -3,14 +3,14 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/web1_group_project/hospital_server/Pharmacist copy"
-	"github.com/web1_group_project/hospital_server/entity"
 	"log"
 	"net/http"
 	"strconv"
 
-
 	"github.com/julienschmidt/httprouter"
+
+	"github.com/web1_group_project/hospital_server/Pharmacist"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // PharmProfileHandler handles comment related http requests

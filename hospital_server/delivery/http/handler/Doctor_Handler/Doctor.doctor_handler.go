@@ -4,16 +4,16 @@ import (
 	"encoding/json"
 	"fmt"
 	_ "fmt"
-
-	"github.com/web1_group_project/hospital_server/Doctor"
-
-	//"github.com/yaredsolomon/webProgram1/hospital/request"
 	"net/http"
 	"strconv"
 
+	//"github.com/yaredsolomon/webProgram1/hospital/request"
 	//"github.com/betsegawlemma/restaurant-rest/comment"
 	"github.com/julienschmidt/httprouter"
 	//"github.com/yaredsolomon/webProgram1/hospital/request"
+
+	//"github.com/web1_group_project/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Doctor"
 )
 
 //"github.com/yaredsolomon/webProgram1/sathurday18/entity"
@@ -92,7 +92,57 @@ func (dah *DoctorAppointmentHandler) GetSingleAppointment(w http.ResponseWriter,
 	return
 }
 
+/*
 // PutAppointment handles PUT /v1/doctor/appointments/:id request
+func (dah *DoctorAppointmentHandler) PutDoctors(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+  fmt.Println(" I am at the put method")
+  id, err := strconv.Atoi(ps.ByName("id"))
+  fmt.Println(id)
+  if err != nil {
+    w.Header().Set("Content-Type", "application/json")
+    http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+    return
+  }
+
+  // appointment, errs := dah.appointmentService.Appointment(uint(id))
+  // fmt.Println()
+  // if len(errs) > 0 {
+  //   panic(errs)
+  // }
+  appointment:=&entity.Appointment{}
+  fmt.Println(" i have get single value")
+
+  l := r.ContentLength
+
+  body := make([]byte, l)
+
+  r.Body.Read(body)
+
+  json.Unmarshal(body, &appointment)
+
+  appointment, errs:= dah.appointmentService.AppUpdateAppointment(appointment)
+
+  if len(errs) > 0 {
+    w.Header().Set("Content-Type", "application/json")
+    http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+    return
+  }
+
+  output, err := json.MarshalIndent(appointment, "", "\t\t")
+
+  if err != nil {
+    w.Header().Set("Content-Type", "application/json")
+    http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+    return
+  }
+
+Yared2, [28.01.20 18:56]
+w.Header().Set("Content-Type", "application/json")
+  w.Write(output)
+  return
+}
+*/
+
 func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	fmt.Println(" I am at the put method")
 	id, err := strconv.Atoi(ps.ByName("id"))
@@ -103,13 +153,12 @@ func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *ht
 		return
 	}
 
-	appointment, errs := dah.appointmentService.Appointment(uint(id))
-
+	appointment, errs := dah.appointmentService.AppAppointment(uint(id))
+	fmt.Println()
 	if len(errs) > 0 {
-		w.Header().Set("Content-Type", "application/json")
-		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
-		return
+		panic(errs)
 	}
+	//appointment:=&entity.Appointment{}
 	fmt.Println(" i have get single value")
 
 	l := r.ContentLength
@@ -117,10 +166,10 @@ func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *ht
 	body := make([]byte, l)
 
 	r.Body.Read(body)
-
+	// doctor := &entity.Doctor{}
 	json.Unmarshal(body, &appointment)
 
-	appointment, errs = dah.appointmentService.UpdateAppointment(appointment)
+	appointment, errs = dah.appointmentService.AppUpdateAppointment(appointment)
 
 	if len(errs) > 0 {
 		w.Header().Set("Content-Type", "application/json")
@@ -129,6 +178,53 @@ func (dah *DoctorAppointmentHandler) PutAppointment(w http.ResponseWriter, r *ht
 	}
 
 	output, err := json.MarshalIndent(appointment, "", "\t\t")
+
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(output)
+	return
+}
+
+func (dah *DoctorAppointmentHandler) PutPrescription(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	fmt.Println(" I am at the put method")
+	id, err := strconv.Atoi(ps.ByName("id"))
+	fmt.Println(id)
+	if err != nil {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	prescription, errs := dah.appointmentService.Prescribtion(uint(id))
+	fmt.Println()
+	if len(errs) > 0 {
+		panic(errs)
+	}
+	//appointment:=&entity.Appointment{}
+	fmt.Println(" i have get single value")
+
+	l := r.ContentLength
+
+	body := make([]byte, l)
+
+	r.Body.Read(body)
+	// doctor := &entity.Doctor{}
+	json.Unmarshal(body, &prescription)
+
+	prescription, errs = dah.appointmentService.UpdatePrescription(prescription)
+
+	if len(errs) > 0 {
+		w.Header().Set("Content-Type", "application/json")
+		http.Error(w, http.StatusText(http.StatusNotFound), http.StatusNotFound)
+		return
+	}
+
+	output, err := json.MarshalIndent(prescription, "", "\t\t")
 
 	if err != nil {
 		w.Header().Set("Content-Type", "application/json")

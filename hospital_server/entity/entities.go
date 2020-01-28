@@ -4,8 +4,7 @@ import (
 	"time"
 )
 
-// Category represents Food Menu Category
-type Profile struct {
+type User struct {
 	ID       uint
 	FullName string `gorm:"type:varchar(255);not null;unique"`
 	// UserName      string `gorm:"type:varchar(255);not null"`
@@ -19,16 +18,18 @@ type Profile struct {
 	BirthDate   time.Time
 	Description string
 }
+
+// Role repesents application user roles
 type Role struct {
-	ID       uint
-	RoleName string
+	ID    uint
+	Name  string `gorm:"type:varchar(255)"`
+	Users []User
 }
 type Doctor struct {
-	ID         uint    `gorm:"not null"`
-	Profile    Profile `gorm:"ForeignKey:ID"`
+	ID uint `gorm:"not null"`
 	Uuid       uint
+	User       User   `gorm:"ForeignKey:Uuid"`
 	Department string `gorm:"type:varchar(255);not null"`
-
 	//DoctorHistory []DoctorHistory
 	//PetientHistory []PetientHistory
 	Prescription []Prescription `gorm:"ForeignKey:DoctorId"`
@@ -44,9 +45,9 @@ type Appointment struct {
 	Date        time.Time
 }
 type Petient struct {
-	ID      uint `gorm:"not null"`
-	Uuid    uint
-	Profile Profile `gorm:"ForeignKey:Uuid"`
+	ID   uint `gorm:"not null"`
+	Uuid uint
+	User User `gorm:"ForeignKey:Uuid"`
 
 	BloodGroup   string `gorm:"type:varchar(255);not null"`
 	Age          int
@@ -58,21 +59,21 @@ type Petient struct {
 type Pharmacist struct {
 	ID           uint
 	Uuid         uint
-	Profile      Profile
+	User         User           `gorm:"ForeignKey:Uuid"`
 	Medicine     []Medicine     `gorm:"ForeignKey:AddedBy"`
 	Prescription []Prescription `gorm:"ForeignKey:PhrmacistId"`
 }
 type Laboratorist struct {
 	ID        uint
 	Uuid      uint
-	Profile   Profile
+	User      User        `gorm:"ForeignKey:Uuid"`
 	Diagnosis []Diagnosis `gorm:"ForeignKey:LaboratoristId"`
 }
 
 type Admin struct {
-	ID      uint
-	Uuid    uint
-	Profile Profile `gorm:"ForeignKey:Uuid"`
+	ID   uint
+	Uuid uint
+	User User `gorm:"ForeignKey:Uuid"`
 	// Appointment []Appointment `gorm:"many2many:admin_appointment"`
 	Request []Request `gorm:"ForeignKey:AdminId"`
 }
@@ -123,4 +124,34 @@ type Diagnosis struct {
 type Error struct {
 	Code    int
 	Message string
+}
+
+type AddPrescribtion struct {
+	Prescription Prescription
+	Pharmacist   []Pharmacist
+}
+type AddDiagonosis struct {
+	Diagnosis    Diagnosis
+	Laboratorist []Laboratorist
+}
+type DoctorsList struct {
+	User   Petient
+	Doctor []Doctor
+}
+type NewRequest struct {
+	UserID  int
+	Doctors []Doctor
+	Admins  []Admin
+}
+type Dash struct {
+	Annual_one  int
+	Monthly_one int
+	Annual_two  int
+	Monthly_two int
+}
+type Session struct {
+	ID         uint
+	UUID       string `gorm:"type:varchar(255);not null"`
+	Expires    int64  `gorm:"type:varchar(255);not null"`
+	SigningKey []byte `gorm:"type:varchar(255);not null"`
 }

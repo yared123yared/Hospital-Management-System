@@ -2,7 +2,9 @@ package PetientRepository
 
 import (
 	"fmt"
+
 	"github.com/jinzhu/gorm"
+
 	"github.com/web1_group_project/hospital_server/entity"
 	"github.com/web1_group_project/hospital_server/petient"
 )
@@ -20,7 +22,7 @@ func NewPetientGormRepo(db *gorm.DB) petient.PetientRepository {
 // Petients return all petients from the database
 func (petientRepo *PetientGormRepo) Petients() ([]entity.Petient, []error) {
 	petients := []entity.Petient{}
-	errs := petientRepo.conn.Debug().Preload("Profile").Preload("Prescription").Preload("Request").Preload("Appointment").Preload("Diagnosis").Find(&petients).GetErrors()
+	errs := petientRepo.conn.Debug().Preload("User").Preload("Prescription").Preload("Request").Preload("Appointment").Preload("Diagnosis").Find(&petients).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -30,7 +32,7 @@ func (petientRepo *PetientGormRepo) Petients() ([]entity.Petient, []error) {
 // Petient retrieves a petient by its id from the database
 func (petientRepo *PetientGormRepo) Petient(id uint) (*entity.Petient, []error) {
 	petient := entity.Petient{}
-	errs := petientRepo.conn.Debug().Preload("Profile").Preload("Prescription").Preload("Request").Preload("Appointment").Preload("Diagnosis").Find(&petient, id).GetErrors()
+	errs := petientRepo.conn.Debug().Preload("User").Preload("Prescription").Preload("Request").Preload("Appointment").Preload("Diagnosis").Find(&petient, id).GetErrors()
 	fmt.Println(petient)
 
 	if len(errs) > 0 {
@@ -38,7 +40,16 @@ func (petientRepo *PetientGormRepo) Petient(id uint) (*entity.Petient, []error) 
 	}
 	return &petient, errs
 }
+func (petientRepo *PetientGormRepo) Petient2(uuid uint) (*entity.Petient, []error) {
+	petient := entity.Petient{}
+	errs := petientRepo.conn.Debug().Preload("User").Preload("Prescription").Preload("Request").Preload("Appointment").Preload("Diagnosis").Find(&petient, "uuid=?", uuid).GetErrors()
+	fmt.Println(petient)
 
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return &petient, errs
+}
 // UpdatePetient updates a given petient in the database
 func (petientRepo *PetientGormRepo) UpdatePetient(petient *entity.Petient) (*entity.Petient, []error) {
 	usr := petient

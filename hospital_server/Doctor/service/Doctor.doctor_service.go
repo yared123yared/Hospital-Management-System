@@ -3,8 +3,8 @@ package service
 import (
 	//"github.com/yaredsolomon/webProgram1/hospital/entity"
 	//"github.com/yaredsolomon/webProgram1/hospital/request"
-
 	//"github.com/yaredsolomon/webProgram1/hospital/request"
+
 	"github.com/web1_group_project/hospital_server/Doctor"
 	"github.com/web1_group_project/hospital_server/entity"
 )
@@ -36,10 +36,40 @@ func (as *AppointmentService) Appointment(id uint) (*entity.Doctor, []error) {
 	}
 	return apt, errs
 }
+func (as *AppointmentService) AppAppointment(id uint) (*entity.Appointment, []error) {
+	apt, errs := as.appointRepo.AppAppointment(id)
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return apt, errs
+}
+func (as *AppointmentService) Prescribtion(id uint) (*entity.Prescription, []error) {
+
+	apt, errs := as.appointRepo.Prescribtion(id)
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return apt, errs
+}
 
 // UpdateAppointment updates  a given application appointment
 func (as *AppointmentService) UpdateAppointment(appointment *entity.Doctor) (*entity.Doctor, []error) {
 	apt, errs := as.appointRepo.UpdateAppointment(appointment)
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return apt, errs
+}
+func (as *AppointmentService) AppUpdateAppointment(appointment *entity.Appointment) (*entity.Appointment, []error) {
+	apt, errs := as.appointRepo.AppUpdateAppointment(appointment)
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return apt, errs
+}
+func (as *AppointmentService) UpdatePrescription(prescription *entity.Prescription) (*entity.Prescription, []error) {
+
+	apt, errs := as.appointRepo.UpdatePrescription(prescription)
 	if len(errs) > 0 {
 		return nil, errs
 	}

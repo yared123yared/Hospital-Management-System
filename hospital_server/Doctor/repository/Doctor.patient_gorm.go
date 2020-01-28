@@ -2,7 +2,9 @@ package repository
 
 import (
 	"fmt"
+
 	"github.com/jinzhu/gorm"
+
 	"github.com/web1_group_project/hospital_server/Doctor"
 	"github.com/web1_group_project/hospital_server/entity"
 )
@@ -20,7 +22,7 @@ func NewPatientGormRepo(db *gorm.DB) Doctor.PatientRepository {
 // Patientes return all users from the database
 func (patientRepo *PatientGormRepo) Patientes() ([]entity.Petient, []error) {
 	patients := []entity.Petient{}
-	errs := patientRepo.conn.Preload("Profile").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Find(&patients).GetErrors()
+	errs := patientRepo.conn.Preload("User").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").Find(&patients).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -30,7 +32,7 @@ func (patientRepo *PatientGormRepo) Patientes() ([]entity.Petient, []error) {
 // Patient retrieves a Patient by its id from the database
 func (patientRepo *PatientGormRepo) Patient(id uint) (*entity.Petient, []error) {
 	patient := entity.Petient{}
-	errs := patientRepo.conn.Preload("Profile").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").First(&patient, id).GetErrors()
+	errs := patientRepo.conn.Preload("User").Preload("Prescription").Preload("Diagnosis").Preload("Appointment").First(&patient, id).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -78,11 +80,11 @@ func (patientRepo *PatientGormRepo) StorePatient(patient *entity.Petient) (*enti
 	return pst, errs
 }
 
-func (patientRepo *PatientGormRepo) Profile(id uint) (*entity.Profile, []error) {
-	profile := entity.Profile{}
-	errs := patientRepo.conn.First(&profile, id).GetErrors()
+func (patientRepo *PatientGormRepo) Profile(id uint) (*entity.User, []error) {
+	user := entity.User{}
+	errs := patientRepo.conn.First(&user, id).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
-	return &profile, errs
+	return &user, errs
 }

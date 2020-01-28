@@ -60,7 +60,7 @@ func (ach *AdminTempHandler) PharmacistNewTempHandler(w http.ResponseWriter, r *
 		med.User.Phone = r.FormValue("phone")
 		med.User.Address = r.FormValue("address")
 		med.User.Sex = r.FormValue("sex")
-		med.User.RoleId = 3
+		med.User.RoleId = 4
 		med.User.Description = r.FormValue("description")
 		// med.Uuid = med.Profile.ID
 		// med.ID = med.Profile.IDimage

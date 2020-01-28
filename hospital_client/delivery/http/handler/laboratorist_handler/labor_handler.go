@@ -8,12 +8,12 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/fasikawkn/web1_group_project/hospital_server/session"
+	//"github.com/fasikawkn/web1_group_project/hospital_server/session"
 	laborData "github.com/web1_group_project/hospital_client/data/laboratorist"
 	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var sesion uint = session.GetLaborSession()
+//var sesion uint = session.GetLaborSession()
 
 // LaborProfHandler handles category handler admin requests
 type LaborProfHandler struct {
@@ -26,8 +26,8 @@ func NewLaborTempHandler(T *template.Template) *LaborProfHandler {
 }
 func (ach *LaborProfHandler) LaborDashHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Dashboard")
-	num := laborData.GetDiagsNumber(sesion)
-	num2 := laborData.GetPrescsNumber(sesion)
+	num := laborData.GetDiagsNumber(1)
+	num2 := laborData.GetPrescsNumber(1)
 	var num3 int = num / 12
 	var num4 int = num2 / 12
 	dash := entity.Dash{
@@ -49,7 +49,7 @@ func (ach *LaborProfHandler) LaborDiagnosisHandler(w http.ResponseWriter, r *htt
 
 func (ach *LaborProfHandler) LaborProfileHandler(w http.ResponseWriter, r *http.Request) {
 	log.Println("labor handelr profile")
-	labratorist, _ := laborData.GetLaboratorist(sesion)
+	labratorist, _ := laborData.GetLaboratorist(1)
 	ach.tmpl.ExecuteTemplate(w, "labor.prof.layout", labratorist)
 }
 
@@ -77,24 +77,24 @@ func (ach *LaborProfHandler) LaborProfileUpdateHandler(w http.ResponseWriter, r 
 		pharms.Diagnosis = laboratorist.Diagnosis
 		pharms.Uuid = laboratorist.Uuid
 
-		pharms.Profile.Role = laboratorist.Profile.Role
+	//	pharms.User.Role = laboratorist.User.Role
 
 		stt, _ := strconv.ParseUint(r.FormValue("id"), 10, 64)
-		pharms.Profile.ID = uint(stt)
-		pharms.Profile.FullName = r.FormValue("fullname")
-		pharms.Profile.Phone = r.FormValue("phone")
-		pharms.Profile.Address = r.FormValue("address")
+		pharms.User.ID = uint(stt)
+		pharms.User.FullName = r.FormValue("fullname")
+		pharms.User.Phone = r.FormValue("phone")
+		pharms.User.Address = r.FormValue("address")
 		if r.FormValue("image") == "" {
-			pharms.Profile.Image = r.FormValue("image2")
+			pharms.User.Image = r.FormValue("image2")
 		} else {
-			pharms.Profile.Image = r.FormValue("image")
+			pharms.User.Image = r.FormValue("image")
 
 		}
-		pharms.Profile.Sex = r.FormValue("sex")
-		pharms.Profile.Email = r.FormValue("email")
-		pharms.Profile.BirthDate = time.Now()
+		pharms.User.Sex = r.FormValue("sex")
+		pharms.User.Email = r.FormValue("email")
+		pharms.User.BirthDate = time.Now()
 		fmt.Println(r.FormValue("birthdate"))
-		pharms.Profile.Description = r.FormValue("description")
+		pharms.User.Description = r.FormValue("description")
 
 		laborData.PutLaboratorist(&pharms)
 
@@ -129,7 +129,7 @@ func (ach *LaborProfHandler) LaborDiagnosisUpdateHandler(w http.ResponseWriter, 
 		pharms.PatientName = diagns.PatientName
 		pharms.PatientId = diagns.PatientId
 		pharms.DoctorId = diagns.DoctorId
-		pharms.LaboratoristId = sesion
+		pharms.LaboratoristId = 1
 		pharms.DiagonosesDate = time.Now()
 		pharms.Description = r.FormValue("description")
 		pharms.Reponse = r.FormValue("response")

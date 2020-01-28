@@ -1,7 +1,10 @@
 package PetientRepository
 
 import (
+	"time"
+
 	"github.com/jinzhu/gorm"
+
 	"github.com/web1_group_project/hospital_server/entity"
 	"github.com/web1_group_project/hospital_server/petient"
 )
@@ -63,9 +66,55 @@ func (requestRepo *RequestGormRepo) DeleteRequest(id uint) (*entity.Request, []e
 // StoreRequest stores a new request into the database
 func (requestRepo *RequestGormRepo) StoreRequest(request *entity.Request) (*entity.Request, []error) {
 	usr := request
-	errs := requestRepo.conn.Create(usr).GetErrors()
-	if len(errs) > 0 {
-		return nil, errs
-	}
-	return usr, errs
+  errs := requestRepo.conn.Create(usr).GetErrors()
+  if len(errs) > 0 {
+    return nil, errs
+  }
+  appointment:=entity.Appointment{
+    ID:          0,
+    PatientId:   usr.PatientId,
+    PatientName: usr.PatientName,
+    DoctorId:    usr.DoctorId,
+    Date:        time.Time{},
+  }
+
+  errs = requestRepo.conn.Create(appointment).GetErrors()
+  if len(errs) > 0 {
+    return nil, errs
+  }
+
+  presc:=entity.Prescription{
+    ID:             0,
+    PatientId:      usr.PatientId,
+    PatientName:    usr.PatientName,
+    DoctorId:       usr.DoctorId,
+    PhrmacistId:    usr.ApprovedBy,
+    PrescribedDate: time.Time{},
+    MedicineName:   "",
+    Description:    "",
+    GivenStatus:    "",
+    GivenDate:      time.Time{},
+  }
+
+  errs = requestRepo.conn.Create(presc).GetErrors()
+  if len(errs) > 0 {
+    return nil, errs
+  }
+
+  diagnosis:=entity.Diagnosis{
+    ID:             0,
+    PatientId:      usr.PatientId,
+    PatientName:    usr.PatientName,
+    DoctorId:       usr.DoctorId,
+    LaboratoristId: usr.ApprovedBy,
+    Description:    "",
+    DiagonosesDate: time.Time{},
+    Reponse:        "",
+    ResponseDate:   time.Time{},
+  }
+  errs = requestRepo.conn.Create(diagnosis).GetErrors()
+  if len(errs) > 0 {
+    return nil, errs
+  }
+  return usr, errs
 }

@@ -1,149 +1,272 @@
+
 package Patient_Handler
 
 import (
-	"fmt"
-	data "github.com/getach1/web1/web1_group_project_old_new/hospital_client/data/Patient"
-	"github.com/getach1/web1/web1_group_project_old_new/hospital_client/entity"
+  //"context"
+  "fmt"
+  "html/template"
+  "io"
+  "mime/multipart"
+  "net/http"
+  "net/url"
+  "os"
+  "path/filepath"
+  //"strconv"
+  "time"
 
-	"html/template"
-	"net/http"
-	"strconv"
-	"time"
+  //"golang.org/x/crypto/bcrypt"
+
+  petient_data "github.com/web1_group_project/hospital_client/data/Patient"
+  "github.com/web1_group_project/hospital_client/delivery/http/handler"
+  "github.com/web1_group_project/hospital_client/entity"
+  "github.com/web1_group_project/hospital_client/form"
+  "github.com/web1_group_project/hospital_client/rtoken"
 )
 
 type AdminPatientHandler struct {
-	tmpl *template.Template
+  tmpl           *template.Template
+  UserHandler   *handler.UserHandler
+  LogedInPatient *entity.Petient 
+  csrfSignKey    []byte
 }
 
-func NewPatientHandler(T *template.Template) *AdminPatientHandler {
-	return &AdminPatientHandler{tmpl: T}
+type contextKey string
+var ctxPatientSessionKey=contextKey("sign_in_patient_session")
+
+func (ph *AdminPatientHandler) getPetient(){
+	
+	fmt.Println("i am about to fech data")
+	
+	patient,err:= petient_data.FetchPetient2(ph.UserHandler.LoggedInUser.ID)
+	if err!=nil{
+		panic(err)
+	}
+	
+	ph.LogedInPatient=&patient
+	return 
+
+	
 }
+func NewPatientHandler(T *template.Template,userHandler *handler.UserHandler,csKey []byte) *AdminPatientHandler {
+  return &AdminPatientHandler{
+    tmpl:           T,
+    UserHandler:userHandler,
+    csrfSignKey:    csKey,
+  }
+ 
+}
+
+func (ph *AdminPatientHandler) checkAdmin(rs int) bool {
+    if  rs==1 {
+      return true
+    }
+  return false
+}
+
 func (ph *AdminPatientHandler) Profile(w http.ResponseWriter, _ *http.Request) {
-	//petient:=Petient{1 ,"Getachew","Tebikew","prescription.png","Addis Ababa","xy@z.com","+1113444",time.Now()}
-	petient := entity.Petient{}
-	var err error
-	petient, err = data.FetchPetient(1)
-	data.CheckErr(err)
-	err = ph.tmpl.ExecuteTemplate(w, "patient.view.profile", petient)
-	data.CheckErr(err)
+
+  petient:=*ph.LogedInPatient
+  fmt.Println(petient)
+  err:= ph.tmpl.ExecuteTemplate(w, "patient.view.profile", petient)
+  petient_data.CheckErr(err)
 }
 
-func (ph *AdminPatientHandler) Doctors(w http.ResponseWriter, _ *http.Request) {
-	doctors := []entity.Doctor{}
-	doctors,err:= data.FetchDoctors()
-	data.CheckErr(err)
-	user,err:=data.FetchPetient(2)
-	doctList:=entity.DoctorsList{
-		User:  user,
-		Doctors: doctors,
-	}
-	err = ph.tmpl.ExecuteTemplate(w, "patient.view.doctor", doctList)
-	data.CheckErr(err)
+
+func (ph *AdminPatientHandler) Doctors(w http.ResponseWriter, r *http.Request) {
+  var doctors []entity.Doctor
+  doctors,err:= petient_data.FetchDoctors()
+  petient_data.CheckErr(err)
+  doctList:=struct{
+    User entity.Petient
+    Doctors []entity.Doctor
+  }{
+    User:*ph.LogedInPatient,
+    Doctors: doctors,
+  }
+  err = ph.tmpl.ExecuteTemplate(w, "patient.view.doctor", doctList)
+  petient_data.CheckErr(err)
 }
+
 func (ph *AdminPatientHandler) Appointment(w http.ResponseWriter, _ *http.Request) {
-	petient := entity.Petient{}
-	petient, _ = data.FetchPetient(1)
-	err := ph.tmpl.ExecuteTemplate(w, "patient.view.appointment", petient)
-	data.CheckErr(err)
+	fmt.Println("i am about to fech data")
+	
+	patient,err:= petient_data.FetchPetient2(ph.UserHandler.LoggedInUser.ID)
+	fmt.Println(patient)
+	if err!=nil{
+		panic(err)
+	}
+	
+	ph.LogedInPatient=&patient
+	
+    petient:=*ph.LogedInPatient
+  err = ph.tmpl.ExecuteTemplate(w, "patient.view.appointment", petient)
+  petient_data.CheckErr(err)
 }
+
 func (ph *AdminPatientHandler) Prescription(w http.ResponseWriter, _ *http.Request) {
-	petient := entity.Petient{}
-	petient, _ = data.FetchPetient(1)
-	err := ph.tmpl.ExecuteTemplate(w, "patient.view.prescription", petient)
-	fmt.Println(petient.Appointment)
-	data.CheckErr(err)
+    petient:=*ph.LogedInPatient
+  err := ph.tmpl.ExecuteTemplate(w, "patient.view.prescription", petient)
+ // fmt.Println(petient.Appointment)
+  petient_data.CheckErr(err)
 }
 
-func (ph *AdminPatientHandler) Request(w http.ResponseWriter, r *http.Request) {
-	petient := entity.Petient{}
-	petient, _ = data.FetchPetient(1)
-	err := ph.tmpl.ExecuteTemplate(w, "patient.view.request", petient)
-	data.CheckErr(err)
-}
-func (ph *AdminPatientHandler) NewRequest(w http.ResponseWriter, r *http.Request) {
-	doctor := []entity.Doctor{}
-	doctor, _ = data.FetchDoctors()
-	admin := []entity.Admin{}
-	admin,_= data.FetchAdmins()
-	req:=entity.NewRequest{
-		UserID:  2,
-		Doctors: doctor,
-		Admins:  admin,
-	}
-	err := ph.tmpl.ExecuteTemplate(w, "patient.new.request", req)
-	data.CheckErr(err)
-}
-func (ph *AdminPatientHandler) SendRequest(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		idRaw := r.URL.Query().Get("id")
-		fmt.Println("hello")
-		id, err := strconv.Atoi(idRaw)
-		data.CheckErr(err)
-		user := entity.Petient{}
-		user, err = data.FetchPetient(id)
-		data.CheckErr(err)
-		user, _ = data.FetchPetient(id)
-		err = ph.tmpl.ExecuteTemplate(w, "patient.view.request", user)
-		data.CheckErr(err)
-	} else if r.Method == http.MethodPost {
-		user := entity.Petient{}
-		id, _ := strconv.Atoi(r.FormValue("id"))
-		var err error
-		user, err = data.FetchPetient(id)
-		data.CheckErr(err)
-		docid,err:=strconv.Atoi(r.FormValue("doctor_id"))
-		data.CheckErr(err)
-		adid,err:=strconv.Atoi(r.FormValue("admin_id"))
-		data.CheckErr(err)
-		request := entity.Request{
-			ID:            0,
-			DoctorId: uint(docid),
-			PatientId:     uint(user.ID),
-			PatientName: user.Profile.FullName,
-			ApproveStatus: "waiting",
-			ApprovedBy:    uint(adid),
-		}
-		user.Request = append(user.Request, request)
-		fmt.Println("POST: request sent")
-		fmt.Println(request)
+func (ph *AdminPatientHandler) Request(w http.ResponseWriter, _ *http.Request) {
+	petient:=*ph.LogedInPatient
 
-		data.UpdateProfile(user)
-
-		fmt.Println(user)
-		http.Redirect(w, r, "/request", http.StatusSeeOther)
-
-	} else {
-		fmt.Println("Not sent")
-		http.Redirect(w, r, "/request/new", http.StatusSeeOther)
-	}
+  err := ph.tmpl.ExecuteTemplate(w, "patient.view.request", petient)
+  petient_data.CheckErr(err)
 }
+
+func (ph *AdminPatientHandler) NewRequest(w http.ResponseWriter, _ *http.Request) {
+  fmt.Println("new request method")
+  token, err := rtoken.CSRFToken(ph.csrfSignKey)
+  if err != nil {
+    http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+  }
+  var doctor []entity.Doctor
+  doctor, _ = petient_data.FetchDoctors()
+  var admin []entity.Admin
+  admin,_= petient_data.FetchAdmins()
+  user:=*ph.LogedInPatient
+  req:=struct{
+    CSRF string
+    UserID int
+    Doctors []entity.Doctor
+    Admins []entity.Admin
+  }{
+    CSRF:token,
+    UserID: int(user.ID) ,
+    Doctors: doctor,
+    Admins:  admin,
+  }
+  err = ph.tmpl.ExecuteTemplate(w, "patient.new.request", req)
+  petient_data.CheckErr(err)
+}
+
+// func (ph *AdminPatientHandler) SendRequest(w http.ResponseWriter, r *http.Request) {
+// 	petient:=*ph.UserHandler.LoggedInUser
+
+//   if r.Method == http.MethodGet {
+//     err := ph.tmpl.ExecuteTemplate(w, "patient.view.request", petient)
+//     petient_data.CheckErr(err)
+//   } else if r.Method == http.MethodPost {
+//     user:=*ph.UserHandler.LoggedInUser
+//     docid,err:=strconv.Atoi(r.FormValue("doctor_id"))
+//     petient_data.CheckErr(err)
+//     adid,err:=strconv.Atoi(r.FormValue("admin_id"))
+//     petient_data.CheckErr(err)
+//     request := entity.Request{
+//       ID:            0,
+//       DoctorId: uint(docid),
+//       PatientId:     uint(user.ID),
+//       PatientName: user.FullName,
+//       ApproveStatus: "waiting",
+//       ApprovedBy:    uint(adid),
+//     }
+//    // user.Request = append(user.Request, request)
+//     petient_data.UpdateProfile(user)
+//     http.Redirect(w, r, "/request", http.StatusSeeOther)
+//   } else {
+//     fmt.Println("Not sent")
+//     http.Redirect(w, r, "/request_new", http.StatusSeeOther)
+//   }
+// }
+
+
+
 func (ph *AdminPatientHandler) Update(w http.ResponseWriter, r *http.Request) {
-	if r.Method == http.MethodGet {
-		idRaw := r.URL.Query().Get("id")
-		id, err := strconv.Atoi(idRaw)
-		data.CheckErr(err)
-		user, err := data.FetchPetient(id)
-		data.CheckErr(err)
-		err = ph.tmpl.ExecuteTemplate(w, "patient.view.profile.update", user)
-		data.CheckErr(err)
-	} else if r.Method == http.MethodPost {
-		user := entity.Petient{}
-		id, _ := strconv.Atoi(r.FormValue("id"))
-		var err error
-		user, err = data.FetchPetient(id)
-		data.CheckErr(err)
-		fmt.Println(user.ID, user.Profile.FullName, "post")
-		user.Profile.FullName = r.FormValue("full_name")
-		user.Profile.Address = r.FormValue("address")
-		user.Profile.Email = r.FormValue("email")
-		user.Profile.Phone = r.FormValue("phone")
-		user.Profile.BirthDate, _ = time.Parse(time.RFC3339, r.FormValue("birth_date"))
-		fmt.Println(user.Profile.BirthDate)
-		data.UpdateProfile(user)
-		fmt.Println("Updated")
-		http.Redirect(w, r, "/profile", http.StatusSeeOther)
-	} else {
-		fmt.Println("Not Updated")
-		http.Redirect(w, r, "/profile/update", http.StatusSeeOther)
+  fmt.Println("thise is the petient calsspatient/profile/updatessssssssssssssssssssssssssssssssssssssssssssssssssssss")
+  token, err := rtoken.CSRFToken(ph.csrfSignKey)
+  if err != nil {
+    http.Error(w, http.StatusText(http.StatusInternalServerError), http.StatusInternalServerError)
+  }
+  if r.Method == http.MethodGet {
+    patient:=*ph.LogedInPatient
+    values := url.Values{}
+    values.Add("full_name", patient.User.FullName)
+    values.Add("email", patient.User.Email)
+    values.Add("phone", patient.User.Phone)
+    values.Add("image", patient.User.Image)
+    values.Add("password", patient.User.Password)
+    values.Add("sex", patient.User.Sex)
+    upPatient := struct {
+      CSRF string
+      Values   url.Values
+      VErrors  form.ValidationErrors
+      Patient entity.Petient
+    }{
+      CSRF:token,
+      Values:   values,
+      VErrors:  form.ValidationErrors{},
+      Patient: patient,
+    }
+    err = ph.tmpl.ExecuteTemplate(w, "patient.view.profile.update", upPatient)
+    return
+  }
+  if r.Method == http.MethodPost {
+    fmt.Println("patient update method")
+    // Parse the form data
+    err := r.ParseForm()
+    if err != nil {
+      http.Error(w, http.StatusText(http.StatusBadRequest), http.StatusBadRequest)
+      return
+    }
+    // Validate the form contents
+    updatePatientForm := form.Input{Values: r.PostForm, VErrors: form.ValidationErrors{}}
+    updatePatientForm.Required("full_name", "email","phone","description","image","birth_date")
+    updatePatientForm.MinLength("description", 10)
+    updatePatientForm.MatchesPattern("email",form.EmailRX)
+    updatePatientForm.MatchesPattern("phone",form.PhoneRX)
+    // updatePatientForm.MatchesPattern("full_name",form.NameRX)
+    // updatePatientForm.MatchesPattern("address",form.AddressRX)
+    updatePatientForm.CSRF=token
+    // If there are any errors, redisplay the signup form.
+    fmt.Println(updatePatientForm.Values)
+    fmt.Println(updatePatientForm.VErrors)
+    
+    if !updatePatientForm.Valid() {
+      ph.tmpl.ExecuteTemplate(w, "patient.view.profile.update", updatePatientForm)
+      return
 	}
+	petient:=*ph.LogedInPatient
+
+    user:=&petient
+
+    fmt.Println(user.ID, user.User.FullName, "post")
+    user.User.FullName = r.FormValue("full_name")
+    user.User.Address = r.FormValue("address")
+    user.User.Email = r.FormValue("email")
+    user.User.Phone = r.FormValue("phone")
+    user.User.Address=r.FormValue("address")
+    user.User.BirthDate, _ = time.Parse(time.RFC3339, r.FormValue("birth_date"))
+    user.User.Image=r.FormValue("image")
+    user.User.Description=r.FormValue("description")
+    mf, fh, err := r.FormFile("image")
+    if err == nil {
+      user.User.Image = fh.Filename
+      err = writeFile(&mf, user.User.Image)
+    }
+    if mf != nil {
+      defer mf.Close()
+    }
+    petient_data.UpdateProfile(user)
+    *ph.LogedInPatient=*user
+    http.Redirect(w, r, "/patient/profile", http.StatusSeeOther)
+    return
+  }
+}
+
+func writeFile(mf *multipart.File, fname string) error {
+  wd, err := os.Getwd()
+  if err != nil {
+    return err
+  }
+  path := filepath.Join(wd, "../ui", "assets", "img", fname)
+  image, err := os.Create(path)
+  if err != nil {
+    return err
+  }
+  defer image.Close()
+  io.Copy(image, *mf)
+  return nil
 }

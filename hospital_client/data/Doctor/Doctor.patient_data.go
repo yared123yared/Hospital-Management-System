@@ -1,15 +1,16 @@
-package Doctor_data
+package Doctor
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/web1_group_project/hospital_client/entity"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var baseURL = "http://localhost:1885/v1/admin/users/"
+var baseURL = "http://localhost:8180/v1/admin/patients/"
 
 // User represents User data
 //type User struct {
@@ -99,6 +100,9 @@ func DeleteUser(id int) error {
 	}
 	fmt.Println("no error")
 	_, err = client.Do(req)
+	if(err!=nil){
+		panic(err)
+	}
 	////res, err := client.Get(URL)
 
 	//userdata := &entity.Petient{}

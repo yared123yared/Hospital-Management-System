@@ -24,9 +24,17 @@ func (us *PetientService) Petients() ([]entity.Petient, []error) {
 	return usrs, errs
 }
 
+
 // Petient retrieves an application petient by its id
 func (us *PetientService) Petient(id uint) (*entity.Petient, []error) {
 	usr, errs := us.petientRepo.Petient(id)
+	if len(errs) > 0 {
+		return nil, errs
+	}
+	return usr, errs
+}
+func (us *PetientService) Petient2(id uint) (*entity.Petient, []error) {
+	usr, errs := us.petientRepo.Petient2(id)
 	if len(errs) > 0 {
 		return nil, errs
 	}

@@ -17,7 +17,7 @@ import (
 
 var baseURLProfile = "http://localhost:8182/admin/profiles"
 
-func GetProfile(id uint) (*entity.Profile, error) {
+func GetProfile(id uint) (*entity.User, error) {
 	fmt.Println("Enteritn")
 	client := &http.Client{}
 	URL := fmt.Sprintf("%s%d", baseURLProfile, id)
@@ -28,7 +28,7 @@ func GetProfile(id uint) (*entity.Profile, error) {
 		return nil, err
 	}
 
-	presc := &entity.Profile{}
+	presc := &entity.User{}
 	body, err := ioutil.ReadAll(res.Body)
 
 	if err != nil {
@@ -41,7 +41,7 @@ func GetProfile(id uint) (*entity.Profile, error) {
 	fmt.Println("pres", presc)
 	return presc, nil
 }
-func PostProfile(presc *entity.Profile) {
+func PostProfile(presc *entity.User) {
 	client := &http.Client{}
 
 	json, err := json.Marshal(presc)

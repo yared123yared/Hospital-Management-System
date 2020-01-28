@@ -3,6 +3,7 @@ package main
 import (
 	"html/template"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/web1_group_project/hospital_client/delivery/http/handler"
@@ -34,12 +35,12 @@ var tmpl_patient = template.Must(template.ParseGlob("../ui/template/petient/*"))
 
 func main() {
 	fs := http.FileServer(http.Dir("../ui/assets/"))
-	http.Handle("/assets/", http.StripPrefix("/assets/", fs))
+	http.Handle("/assets/", http.StripPrefix(strings.TrimRight("/assets/", "/"), fs))
 
 	// <<<<<<<<<<<<<<<<<<<<<<<LOGIN>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	csrfSignKey := []byte(rtoken.GenerateRandomID(32))
 	sess := configSess()
-	mux := http.NewServeMux()
+	//mux := http.NewServeMux()
 	uh := handler.NewUserHandler(tmpl, sess, csrfSignKey)
 	http.HandleFunc("/login", uh.Login)
 	http.Handle("/logout", uh.Authenticated(http.HandlerFunc(uh.Logout)))
@@ -56,12 +57,11 @@ func main() {
 	//Doctor appointment path regiseration
 	//doctorAppointmentHandler := Doctor_Handler.NewappointmentHandler(tmpl_doctor, uh, csrfSignKey)
 	http.Handle("/doctor/appointment", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.Appointment))))
-	http.Handle("/doctor/appointment/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.AddNewAppointment))))
+	http.Handle("pharmacy/doctor/appointmentNew", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.AddNewAppointment))))
 	//
 	// Doctor prescribtion path registeration
-	doctorPrescribtionHandler := Doctor_Handler.NewprescribtionHandler(tmpl_doctor)
-	http.Handle("/doctor/prescribtion", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorPrescribtionHandler.Prescribtions))))
-	http.Handle("/doctor/prescribtion/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorPrescribtionHandler.AddNewPrescribtions))))
+	http.Handle("/doctor/prescribtion", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.Prescribtions))))
+	http.Handle("/doctor/prescribtionNew", uh.Authenticated(uh.Authorized(http.HandlerFunc(doctorHandler.AddNewPrescribtions))))
 	//
 	// doctor diagonosis path registeration
 	doctorDiagonosisHandler := Doctor_Handler.NewdiagonosisHandler(tmpl_doctor)
@@ -78,7 +78,7 @@ func main() {
 	http.Handle("/patient/request", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Request))))
 	http.Handle("/patient/request/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.NewRequest))))
 	//mux.Handle("/patient/request/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.SendRequest))))
-	mux.Handle("/patient/profile/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Update))))
+	http.Handle("/patient/profile/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(patientHandler.Update))))
 	//
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<PHARMACIST>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//patientHandler := Patient_Handler.NewPatientHandler(tmpl_patient,uh,csrfSignKey)
@@ -101,7 +101,6 @@ func main() {
 	http.Handle("/pharmacist/prescription", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Prescription))))
 	http.Handle("/pharmacist/prescription/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.PrescriptionUpdate))))
 	http.Handle("/pharmacist/prescription/delete", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.DeletePrescription))))
-
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LABORATORIST>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//laboratoristHandler := laboratorist_handler.NewLaborTempHandler(temple2)
 	//Laboratorist dashboard
@@ -128,7 +127,7 @@ func main() {
 	http.Handle("/admin/laboratorists", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.LaboratoristTempHandler))))
 	http.Handle("/admin/laboratorists/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(adminHandler.LaboratoristNewTempHandler))))
 
-	http.ListenAndServe(":8185", nil)
+	http.ListenAndServe(":8287", nil)
 
 }
 func configSess() *entity.Session {

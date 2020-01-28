@@ -2,13 +2,14 @@ package Doctor_Handler
 
 import (
 	"fmt"
-	"github.com/web1_group_project/hospital_client/data"
-	Doctor_data "github.com/web1_group_project/hospital_client/data/Doctor"
-	"github.com/web1_group_project/hospital_client/entity"
 	"html/template"
 	"net/http"
 	"strconv"
 	_ "time"
+
+	"github.com/web1_group_project/hospital_client/data"
+	Doctor_data "github.com/web1_group_project/hospital_client/data/Doctor"
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
 // MenuHandler handles menu related requests
@@ -84,7 +85,7 @@ func (mh *diagonosisHandler) AddNewDiagonosis(w http.ResponseWriter, r *http.Req
 		diagonosis2 := GetModifiedDiagonosis(doctor.Diagnosis, diagonosis1, uint(id))
 
 		doctor.Diagnosis = diagonosis2
-		err = Doctor_data.UpdateDoctor(doctor, 1)
+		// err = Doctor_data.UpdateDoctor(doctor, 1)
 		if err != nil {
 			panic(err)
 		}

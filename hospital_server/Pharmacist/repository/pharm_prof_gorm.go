@@ -1,9 +1,9 @@
 package repository
 
 import (
-
 	"github.com/jinzhu/gorm"
-	"github.com/web1_group_project/hospital_server/Pharmacist copy"
+
+	"github.com/web1_group_project/hospital_server/Pharmacist"
 	"github.com/web1_group_project/hospital_server/entity"
 )
 
@@ -19,7 +19,7 @@ func NewPharmacistProfileGormRepo(db *gorm.DB) Pharmacist.PharmacistProfileRepos
 
 func (p PharmacistProfileGormRepo) Profile(id uint) (*entity.Pharmacist, []error) {
 	prec := entity.Pharmacist{}
-	errs := p.conn.Preload("Profile").Preload("Medicine").Preload("Prescription").First(&prec, id).GetErrors()
+	errs := p.conn.Preload("User").Preload("Medicine").Preload("Prescription").First(&prec, "uuid=?", id).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}
@@ -29,7 +29,7 @@ func (p PharmacistProfileGormRepo) Profile(id uint) (*entity.Pharmacist, []error
 func (p PharmacistProfileGormRepo) Profiles() ([]entity.Pharmacist, []error) {
 
 	prec := []entity.Pharmacist{}
-	errs := p.conn.Preload("Profile").Preload("Medicine").Preload("Prescription").Find(&prec).GetErrors()
+	errs := p.conn.Preload("User").Preload("Medicine").Preload("Prescription").Find(&prec).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs
 	}

@@ -12,10 +12,10 @@
             <!-- DataTales Example -->
             <div class="card shadow mb-4 bg-light">
                 {{with .}}
-                    {{with .Profile}}
+                    {{with .User}}
                         <div style="margin-top: 20px;margin-bottom: 30px;" class="fluid-container row mt-10">
                             <div class="col mt-10">
-                                <img style="width: 200px;height: 300px;margin-top: 20px;" class="rounded img-thumbnail mx-auto d-block mb-10 " src="../assets/img/{{.Image}}" />
+                                <img style="width: 200px;height: 300px;margin-top: 20px;" class="rounded img-thumbnail mx-auto d-block mb-10 " src="../../assets/img/{{.Image}}" />
                             </div>
                             <div class="col mt-20 mb-10">
                                 <div class="p-4">
@@ -48,7 +48,7 @@
                 {{end}}
 
 
-                <div>    <a type="submit" href="/profile/update?id={{.ID}}" class="btn mt-10 text-white  col-5 width-25 btn-primary">Update Profile</a>
+                <div>    <a type="submit" href="/patient/profile/update?id={{.ID}}" class="btn mt-10 text-white  col-5 width-25 btn-primary">Update Profile</a>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">

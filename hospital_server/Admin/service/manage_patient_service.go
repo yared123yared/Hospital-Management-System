@@ -1,8 +1,8 @@
 package service
 
 import (
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/Admin"
-	"github.com/fasikawkn/web1_group_project-1/hospital_server/entity"
+	"github.com/web1_group_project/hospital_server/Admin"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // ManagePatientsService implements Admin.ManagePatientsService interface

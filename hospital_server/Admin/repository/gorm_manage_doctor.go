@@ -69,7 +69,7 @@ func (mdRepo *ManageDoctorsRepository) DeleteDoctor(id uint) (*entity.Doctor, []
 // StoreDoctor stores a given doctor in the database
 func (mdRepo *ManageDoctorsRepository) StoreDoctor(user *entity.Doctor) (*entity.Doctor, []error) {
 	doc := user
-
+	fmt.Println("Doctros is ", doc)
 	errs := mdRepo.conn.Create(doc).GetErrors()
 	if len(errs) > 0 {
 		return nil, errs

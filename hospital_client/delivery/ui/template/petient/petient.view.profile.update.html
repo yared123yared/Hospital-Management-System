@@ -6,91 +6,105 @@
 {{define "patient.view.profile.update.content"}}
     <div class="container-fluid">
         <h1 class="h3 mb-2 text-gray-800">Profile update</h1>
-
         <!-- DataTales Example -->
         <div class="card shadow mb-4 bg-light">
             <div>
             </div>
-
-            {{with .}}
-            {{with .Profile}}
-            <form action="/profile/update" method="POST" >
+            <form action="/patient/profile/update" method="POST" >
                 <div class="container row" style="margin:20px;">
-                    <input type="hidden" name="id" id="id" value="{{.ID}}">
-                    <div class="col">
-                        <img src="../assets/img/{{.Image}}" style="width: 200px;height: 300px; margin: 30px;" alt="img not found">
-                        <input class="mb-20" name = "image" id= "image" type="file" value="{{if .Image}}{{.Image}}{{end}}"/>
+                    <input type="hidden" name="_csrf" value="{{.CSRF}}" />
+
+                    <div class="col-auto">
+                        
+                        <img src='../assets/img/{{.Values.Get "image"}}' style="width: 400px;height: 400px; margin: 30px; border: #1a1a1a;display: block" alt="img not found">
+                        {{with .VErrors.Get "image"}}
+                            <label class="text-danger">{{.}}</label>
+                        {{end}}
+                        <input class="mb-20" name = "image" id= "image" type="file" value='{{if .Values.Get "image"}}{{.Values.Get "image"}}{{end}}'/>
+{{/*                        <input class="mb-20" name = "image" id= "image" type="hidden" value="{{if .Values.Get 'image'}}{{.Values.Get 'image'}}{{end}}"/>*/}}
                     </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Full Name</label>
-                            <div class="col-md-6 inputGroupContainer">
+                    <div class="col-auto">
+                        <div class="form-group col-12">
+                            <label class=" control-label">Full Name</label>
+                            {{with .VErrors.Get "full_name"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
+                            <div class=" inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input  name="fullname" id="fullname" placeholder="fullname" class="form-control "  type="text" value="{{if .FullName}}{{.FullName}}{{end}}">
+                                    <input  name="full_name" id="full_name" required autofocus autocomplete="off" placeholder="full name" class="form-control "  type="text" value="{{if .Values.Get "full_name"}}{{.Values.Get "full_name"}}{{end}}">
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Birth Date</label>
+                            {{with .VErrors.Get "birth_date"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
 
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input  name="birth_date" id="birth_date" placeholder="birthDate" class="form-control "  required  autocomplete="off" type="date" value="{{if .Values.Get "birth_date"}}{{.Values.Get "birth_date"}}{{end}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Phone</label>
+                            {{with .VErrors.Get "phone"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input  name="phone" id="phone" placeholder="Phone" class="form-control"  required  autocomplete="off" type="text" value="{{if .Values.Get "phone"}}{{.Values.Get "phone"}}{{end}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Email</label>
+                            {{with .VErrors.Get "email"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input  name="email" placeholder="email" class="form-control" required  autocomplete="off" type="text" value="{{if .Values.Get "email"}}{{.Values.Get "email"}}{{end}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Sex</label>
+                            {{with .VErrors.Get "sex"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
+                            <div class="inputGroupContainer">
+                                <div class="input-group">
+                                    <input  name="sex" id="sex" placeholder="eg. Male" class="form-control" required  autocomplete="off" type="text" value="{{if .Values.Get "sex"}}{{.Values.Get "sex"}}{{end}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group col-12">
+                            <label class="control-label">Address</label>
+                            {{with .VErrors.Get "address"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
 
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Birth Date</label>
-                            <div class="col-md-6 inputGroupContainer">
+                            <div class="inputGroupContainer">
                                 <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input  name="birthdate" id="birthdate" placeholder="birthDate" class="form-control "  type="date" value="{{if .BirthDate}}{{.BirthDate}}{{end}}">
+                                    <input  name="address" id="address" placeholder="eg.Addis ababa,Ethiopia" class="form-control" required  autocomplete="off"  type="text" value="{{if .Values.Get "address"}}{{.Values.Get "address"}}{{end}}">
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Phone</label>
-                            <div class="col-md-6  inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input  name="phone" id="phone" placeholder="Phone" class="form-control"  type="text" value="{{if .Phone}}{{.Phone}}{{end}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Email</label>
-                            <div class="col-md-6 inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input  name="email" placeholder="email" class="form-control"  type="text" value="{{if .Email}}{{.Email}}{{end}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Sex</label>
-                            <div class="col-md-6  inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input  name="sex" id="sex" placeholder="eg. Male" class="form-control"  type="text" value="{{if.Sex}}{{.Sex}}{{end}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Address</label>
-                            <div class="col-md-6  inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <input  name="address" id="address" placeholder="eg.Addis ababa,Ethiopia" class="form-control"  type="text" value="{{if .Address}}{{.Address}}{{end}}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label">Description</label>
-                            <div class="col-md-6  inputGroupContainer">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                                    <textarea  name="description" id="description" placeholder="" class="form-control"  type="text" value="{{if .Description}}{{.Description}}{{end}}"></textarea>
+                        <div class="form-group col-12">
+                            <label class="control-label">Description</label>
+                            {{with .VErrors.Get "description"}}
+                                <label class="text-danger">{{.}}</label>
+                            {{end}}
+                            <div class="inputGroupContainer">
+                                <div class="input-group col-12">
+                                    <textarea  name="description" id="description" placeholder="" class="form-control" required  autocomplete="off" type="text" value="{{if .Values.Get "description"}}{{.Values.Get "description"}}{{end}}"></textarea>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                {{end}}
-                {{end}}
                 <button type="submit" class="btn  col-5 width-25 btn-primary">Update Profile</button>
             </form>
         </div>

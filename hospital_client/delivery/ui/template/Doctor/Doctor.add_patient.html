@@ -156,20 +156,7 @@
                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                   </div>
                 </a>
-                {{range .}}
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">.notification</span>
-                  </div>
-                </a>
-
-                {{end}}
+               
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
@@ -202,19 +189,7 @@
                     <div class="small text-gray-500">Emily Fowler · 58m</div>
                   </div>
                 </a>
-                {{range.}}
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">.</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                {{end}}
-
+             
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>
             </li>
@@ -278,7 +253,7 @@
               <div style="width: 18%;">
                 <a class=" container  nav-link  bg-primary text-light" href="/doctor/patientNew" style="width: auto; margin-right: 5%;">Add Patients</a>
 
-              </div>
+              </div>doctor
 
 
 
@@ -286,9 +261,10 @@
             </div>
             <div class="card-body">
               <div class="container">
-
-                <form class="well form-horizontal" action="/doctor/patientNew" method="post"  id="contact_form" enctype="multipart/form-data">
-">
+                {{ .CSRF }}
+                <form class="well form-horizontal" action="/doctor/patientNew" method="POST"  id="contact_form" enctype="multipart/form-data">
+                 
+                  <input type="hidden" name="_csrf" id="_csrf" value="{{ .CSRF }}" />
                   <fieldset>
 
                     <!-- Form Name -->

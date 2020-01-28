@@ -1,7 +1,7 @@
 package service
 
 import (
-	"github.com/web1_group_project/hospital_server/Pharmacist copy"
+	"github.com/web1_group_project/hospital_server/Pharmacist"
 	"github.com/web1_group_project/hospital_server/entity"
 )
 

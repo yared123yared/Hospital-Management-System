@@ -50,10 +50,22 @@ type ManageAppointmetRepository interface {
 }
 
 // ManageProfileRepository specifies application Profile related database operations
-type ManageProfileRepository interface {
-	Profiles() ([]entity.Profile, []error)
-	Profile(id uint) (*entity.Profile, []error)
-	UpdateProfile(user *entity.Profile) (*entity.Profile, []error)
-	DeleteProfile(id uint) (*entity.Profile, []error)
-	StoreProfile(user *entity.Profile) (*entity.Profile, []error)
+// type ManageProfileRepository interface {
+// 	Profiles() ([]entity.Profile, []error)
+// 	Profile(id uint) (*entity.Profile, []error)
+// 	UpdateProfile(user *entity.Profile) (*entity.Profile, []error)
+// 	DeleteProfile(id uint) (*entity.Profile, []error)
+// 	StoreProfile(user *entity.Profile) (*entity.Profile, []error)
+// }
+//ManageProfileRepository
+type UserRepository interface {
+	Users() ([]entity.User, []error)
+	User(id uint) (*entity.User, []error)
+	UserByEmail(email string) (*entity.User, []error)
+	UpdateUser(user *entity.User) (*entity.User, []error)
+	DeleteUser(id uint) (*entity.User, []error)
+	StoreUser(user *entity.User) (*entity.User, []error)
+	PhoneExists(phone string) bool
+	EmailExists(email string) bool
+	UserRoles(*entity.User) ([]entity.Role, []error)
 }

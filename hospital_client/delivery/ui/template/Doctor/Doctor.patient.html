@@ -14,11 +14,11 @@
   <!-- Custom fonts for this template -->
   <!-- Custom styles for this template -->
 
-  <link rel="stylesheet" href="../assets/css/all.min.css">
+  <link rel="stylesheet" href="../../assets/css/all.min.css">
 
   <!-- Custom styles for this template-->
-  <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
-  <link href="../assets/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
+  <link href="../../assets/css/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
 
 
 
@@ -149,20 +149,7 @@
                     <span class="font-weight-bold">A new monthly report is ready to download!</span>
                   </div>
                 </a>
-                {{range .}}
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                    <div class="mr-3">
-                      <div class="icon-circle bg-primary">
-                        <i class="fas fa-file-alt text-white"></i>
-                      </div>
-                    </div>
-                    <div>
-                      <div class="small text-gray-500">December 12, 2019</div>
-                      <span class="font-weight-bold">.notification</span>
-                    </div>
-                  </a>
-                  
-                {{end}}
+                
                 <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
               </div>
             </li>
@@ -178,35 +165,13 @@
               <!-- Dropdow <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
   Custom styles for this template-->
-              <link href="../assets/css/sb-admin-2.min.css" rel="stylesheet">
+              <link href="../../assets/css/sb-admin-2.min.css" rel="stylesheet">
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                 aria-labelledby="messagesDropdown">
                 <h6 class="dropdown-header">
                   Message Center
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/fn_BT9fwg_E/60x60" alt="">
-                    <div class="status-indicator bg-success"></div>
-                  </div>
-                  <div class="font-weight-bold">
-                    <div class="text-truncate">Hi there! I am wondering if you can help me with a problem I've been
-                      having.</div>
-                    <div class="small text-gray-500">Emily Fowler · 58m</div>
-                  </div>
-                </a>
-                {{range.}}
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="dropdown-list-image mr-3">
-                    <img class="rounded-circle" src="https://source.unsplash.com/AU4VPcFN4LE/60x60" alt="">
-                    <div class="status-indicator"></div>
-                  </div>
-                  <div>
-                    <div class="text-truncate">.</div>
-                    <div class="small text-gray-500">Jae Chun · 1d</div>
-                  </div>
-                </a>
-                {{end}}
+                
                 
                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
               </div>            </li>
@@ -218,7 +183,7 @@
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Doctor Panel</span>
-                <img class="img-profile rounded-circle" src="../assets/img/Female-Doctor-Transparent-Image.png">
+                <img class="img-profile rounded-circle" src=".../../assets/img/Female-Doctor-Transparent-Image.png">
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -279,7 +244,11 @@
               </div>
                  <div style="width: 18%;">
                     <a class=" container  nav-link  bg-primary text-light" href="/doctor/patientNew" style="width: auto; margin-right: 5%;">Add Patients</a>
-           
+                    <a class="dropdown-item d-flex align-items-center" href="#">
+                      
+                    
+                    </a>
+                   
                  </div>
                   
                     
@@ -318,24 +287,24 @@
                   {{range .}}
                     <tr>
                         <td>{{.ID}}</td>
-                        <td>{{.Profile.FullName}}</td>
-                        <td>{{.Profile.Email}}</td>
-                        <td>{{.Profile.Password}}</td>
-                        <td>{{.Profile.Address}}</td>
-                        <td>{{.Profile.Phone}} </td>
-                        <td>{{.Profile.Sex}}</td>
-                        <td>{{.Profile.BirthDate}}</td>
-                        <td>.Age</td>
-                        <td>.BloodGroup</td>
-                        <td>{{.Profile.Description}}</td>
-                       <td> <img src="/assets/img/{{.Profile.Image}}" width="70rem" height="70rem" /> </td>
+                        <td>{{.User.FullName}}</td>assets
+                        <td>{{.User.Email}}</td>
+                        <td>{{.User.Password}}</td>
+                        <td>{{.User.Address}}</td>
+                        <td>{{.User.Phone}} </td>
+                        <td>{{.User.Sex}}</td>
+                        <td>{{.User.BirthDate}}</td>
+                        <td>{{.Age}}</td>
+                        <td>{{.BloodGroup}}</td>
+                        <td>{{.User.Description}}</td>
+                       <td> <img src="../../assets/img/{{.User.Image}}" width="70rem" height="70rem" /> </td>
 
                         <td>
                            
                           <a href="/doctor/patientUpdate?id={{.ID}}" class="fas fa-edit"></a>
                               <span>
 
-                                  <a href="/doctor/patientDelete?id={{.ID}}" class="fas fa-trash-alt text-danger"></a>
+                                  <a href="/doctor/patient/delete?id={{.ID}}" class="fas fa-trash-alt text-danger"></a>
                               </span>
                         </td>
 
@@ -400,21 +369,21 @@
 
   <!-- Bootstrap core JavaScript-->
  <!-- Bootstrap core JavaScript-->
- <script src="../assets/jquery/jquery.min.js"></script>
- <script src="../assets/js/bootstrap.bundle.min.js.map"></script>
+ <script src="../../assets/jquery/jquery.min.js"></script>
+ <script src="../../assets/js/bootstrap.bundle.min.js.map"></script>
 
  <!-- Core plugin JavaScript-->
- <script src="../assets/jquery-easing/jquery.easing.min.js"></script>
+ <script src="..../assets/jquery-easing/jquery.easing.min.js"></script>
 
  <!-- Custom scripts for all pages-->
- <script src="../assets/js/sb-admin-2.min.js"></script>
+ <script src="../../assets/js/sb-admin-2.min.js"></script>
 
  <!-- Page level plugins -->
  <script src="vendor/chart.js/Chart.min.js"></script>
 
  <!-- Page level custom scripts -->
- <script src="js/demo/chart-area-demo.js"></script>
- <script src="js/demo/chart-pie-demo.js"></script>
+ <script src="../../assets/js/demo/chart-area-demo.js"></script>
+ <script src="../../assets/js/demo/chart-pie-demo.js"></script>
 
 
 

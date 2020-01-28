@@ -76,18 +76,6 @@ func main() {
 	//
 	//
 
-	//
-	petientRepo := PetientRepository.NewPetientGormRepo(dbconn)
-	petientServ := PetientService.NewPetientService(petientRepo)
-	PetientHandler := Patient_Handler.NewAdminPetientHandler(petientServ)
-
-	router.GET("/v1/admin/petients", PetientHandler.GetPetients)
-	router.GET("/v1/admin/petients/:id", PetientHandler.GetSinglePetient)
-	router.GET("/v1/admin/petients2/:id", PetientHandler.GetSinglePetient_uuid)
-	router.PUT("/v1/admin/petients/:id", PetientHandler.PutPetient)
-	router.POST("/v1/admin/petients", PetientHandler.PostPetient)
-	router.DELETE("/v1/admin/petients/:id", PetientHandler.DeletePetient)
-
 	//ADMIN DOCTORS
 	adminDoctorRepo := AdminRepository.NewManageDoctorsRepository(dbconn)
 	adminDoctorServ := AdminService.NewManageDoctorsService(adminDoctorRepo)
@@ -120,7 +108,18 @@ func main() {
 	router.PUT("/v1/admin/laboratorists/:id", adminLaborHnadler.UpdateLaboratorist)
 	router.POST("/v1/admin/laboratorists", adminLaborHnadler.AddLaboratorist)
 	router.DELETE("/v1/admin/laboratorists/:id", adminLaborHnadler.DeleteLaboratorist)
+	//
+	petientRepo := PetientRepository.NewPetientGormRepo(dbconn)
+	petientServ := PetientService.NewPetientService(petientRepo)
+	PetientHandler := Patient_Handler.NewAdminPetientHandler(petientServ)
 
+	router.GET("/v1/admin/petients", PetientHandler.GetPetients)
+	router.GET("/v1/admin/petients/:id", PetientHandler.GetSinglePetient)
+	router.GET("/v1/admin/petients2/:id", PetientHandler.GetSinglePetient_uuid)
+	router.PUT("/v1/admin/petients/:id", PetientHandler.PutPetient)
+	router.POST("/v1/admin/petients", PetientHandler.PostPetient)
+	router.DELETE("/v1/admin/petients/:id", PetientHandler.DeletePetient)
+	//
 	// patient request path registeration
 	petientRequestRepo := PetientRepository.NewRequestGormRepo(dbconn)
 	petientRequestServ := PetientService.NewRequestService(petientRequestRepo)
@@ -177,7 +176,7 @@ func main() {
 	router.GET("/v1/doctor/appointments/", doctorAppointmentHandler.GetAppointments)
 	router.PUT("/v1/doctor/appointments/:id", doctorAppointmentHandler.PutAppointment)
 	router.DELETE("/v1/doctor/appointments/:id", doctorAppointmentHandler.DeleteAppointment)
-	//
+	router.PUT("/v1/doctor/prescribtions/:id", doctorAppointmentHandler.PutPrescription)
 	// general information path regiseration
 	generalRepo := GeneralRepository.NewGeneralGormRepo(dbconn)
 	generalSrv := GeneralService.NewGeneralService(generalRepo)
@@ -243,7 +242,6 @@ func main() {
 	router.PUT("/v1/labor/diag/:id", laborDiagHandler.PutDiagnosis)
 	router.POST("/v1/labor/diag", laborDiagHandler.PostDiagnosis)
 	router.DELETE("/v1/labor/diag/:id", laborDiagHandler.DeleteDiagnosis)
-
 	//
 	http.ListenAndServe(":8180", router)
 

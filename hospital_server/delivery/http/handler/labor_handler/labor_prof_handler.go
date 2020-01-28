@@ -7,10 +7,10 @@ import (
 	"net/http"
 	"strconv"
 
-	"github.com/fasikawkn/web1_group_project/hospital_server/Laboratorist"
-
-	"github.com/fasikawkn/web1_group_project/hospital_server/entity"
 	"github.com/julienschmidt/httprouter"
+
+	"github.com/web1_group_project/hospital_server/Laboratorist"
+	"github.com/web1_group_project/hospital_server/entity"
 )
 
 // LaborProfileHandler handles comment related http requests
