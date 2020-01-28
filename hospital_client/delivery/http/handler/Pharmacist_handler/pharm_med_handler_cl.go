@@ -1,4 +1,4 @@
- package Pharmacist_handler
+package Pharmacist_handler
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ func (ach *PharmProfHandler) CatHandler(w http.ResponseWriter, r *http.Request) 
 }
 
 func (ach *PharmProfHandler) AddNewCat(w http.ResponseWriter, r *http.Request) {
-	var sesion=1
+	var sesion = 1
 	if r.Method == http.MethodPost {
 
 		med := entity.Medicine{}
@@ -46,7 +46,7 @@ func (ach *PharmProfHandler) AddNewCat(w http.ResponseWriter, r *http.Request) {
 }
 
 func (ach *PharmProfHandler) UpdateCat(w http.ResponseWriter, r *http.Request) {
-	var sesion = 1;
+	var sesion = 1
 	if r.Method == http.MethodGet {
 		idRaw := r.URL.Query().Get("id")
 		id, err := strconv.Atoi(idRaw)

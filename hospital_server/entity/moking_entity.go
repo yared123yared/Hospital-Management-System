@@ -3,7 +3,7 @@ package entity
 import "time"
 
 // ProfileMock mokes Profile
-var ProfileMock = User{
+var ProfileMock = Profile{
 	ID:          1,
 	FullName:    "Mock Name 01",
 	Password:    "password 01",
@@ -21,7 +21,7 @@ var ProfileMock = User{
 var PharmacistMock = Pharmacist{
 	ID:           1,
 	Uuid:         10,
-	User:         User{},
+	Profile:      Profile{},
 	Medicine:     []Medicine{},
 	Prescription: []Prescription{},
 }
@@ -52,14 +52,14 @@ var MedicineMock = Medicine{
 
 //RoleMock mocks Role
 var RoleMock = Role{
-	ID:    1,
-	Users: []User{},
+	ID:       1,
+	RoleName: "Mock Role 01",
 }
 
 //DoctorMock mocks Doctor
 var DoctorMock = Doctor{
 	ID:           1,
-	User:         User{},
+	Profile:      Profile{},
 	Uuid:         1,
 	Department:   "Mock Department 01",
 	Prescription: []Prescription{},
@@ -72,7 +72,7 @@ var DoctorMock = Doctor{
 var LaboratoristMock = Laboratorist{
 	ID:        1,
 	Uuid:      0,
-	User:      User{},
+	Profile:   Profile{},
 	Diagnosis: []Diagnosis{},
 }
 
@@ -91,7 +91,7 @@ var DiagnosisMock = Diagnosis{
 var PetientMock = Petient{
 	ID:           1,
 	Uuid:         10,
-	User:         User{},
+	Profile:      Profile{},
 	BloodGroup:   "Mock Patient 01",
 	Age:          1,
 	Prescription: []Prescription{},
@@ -118,6 +118,6 @@ var RequestMock = Request{
 var AdminMock = Admin{
 	ID:      1,
 	Uuid:    1,
-	User:    User{},
+	Profile: Profile{},
 	Request: []Request{},
 }

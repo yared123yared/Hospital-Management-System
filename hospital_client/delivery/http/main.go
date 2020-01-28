@@ -85,22 +85,23 @@ func main() {
 
 	pharmacisthandler := Pharmacist_handler.NewPharmTempHandler(temple, uh, csrfSignKey)
 	//Pharmacist Dashboard
-	http.Handle("/pharmacist", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Index))))
-	http.Handle("/pharmacist/dashboard", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Dashboard))))
+	http.HandleFunc("/pharmacist", pharmacisthandler.Index)
+	http.HandleFunc("/pharmacist/dashboard", pharmacisthandler.Dashboard)
 	//
 	//Pharmacist Medicine
-	http.Handle("/pharmacist/medicine", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.CatHandler))))
-	http.Handle("/pharmacist/medicine/new", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.AddNewCat))))
-	http.Handle("/pharmacist/medicine/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.UpdateCat))))
-	http.Handle("/pharmacist/medicine/delete", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.DleteMedicine))))
+	http.HandleFunc("/pharmacist/medicine", pharmacisthandler.CatHandler)
+	http.HandleFunc("/pharmacist/medicine/new", pharmacisthandler.AddNewCat)
+	http.HandleFunc("/pharmacist/medicine/update", pharmacisthandler.UpdateCat)
+	http.HandleFunc("/pharmacist/medicine/delete", pharmacisthandler.DleteMedicine)
 
 	//Pharmacist profile
-	http.Handle("/pharmacist/profile", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.ProHandler))))
-	http.Handle("/pharmacist/profile/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.PharmProfileUpdate))))
+	http.HandleFunc("/pharmacist/profile", pharmacisthandler.ProHandler)
+	http.HandleFunc("/pharmacist/profile/update", pharmacisthandler.PharmProfileUpdate)
 	//Pharmacist prescription
-	http.Handle("/pharmacist/prescription", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.Prescription))))
-	http.Handle("/pharmacist/prescription/update", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.PrescriptionUpdate))))
-	http.Handle("/pharmacist/prescription/delete", uh.Authenticated(uh.Authorized(http.HandlerFunc(pharmacisthandler.DeletePrescription))))
+	http.HandleFunc("/pharmacist/prescription", pharmacisthandler.Prescription)
+	http.HandleFunc("/pharmacist/prescription/update", pharmacisthandler.PrescriptionUpdate)
+	http.HandleFunc("/pharmacist/prescription/delete", pharmacisthandler.DeletePrescription)
+
 	// <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<LABORATORIST>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 	//laboratoristHandler := laboratorist_handler.NewLaborTempHandler(temple2)
 	//Laboratorist dashboard

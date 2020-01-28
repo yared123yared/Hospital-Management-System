@@ -3,11 +3,12 @@ package Patient_Handler
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
+	"strconv"
+
 	"github.com/julienschmidt/httprouter"
 	"github.com/web1_group_project/hospital_server/entity"
 	"github.com/web1_group_project/hospital_server/petient"
-	"net/http"
-	"strconv"
 )
 
 // PetientRequestHandler handles request related http requests

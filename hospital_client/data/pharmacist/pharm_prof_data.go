@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/web1_group_project/hospital_client/entity"
 	"io"
 	"io/ioutil"
 	"log"
@@ -13,9 +12,11 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+
+	"github.com/web1_group_project/hospital_client/entity"
 )
 
-var baseURLProf = "http://localhost:8182/v1/pharm/profile/"
+var baseURLProf = "http://localhost:8180/v1/pharm/profile/"
 
 //GetPharmacist returns pharmacist
 func GetPharmacist(id uint) (*entity.Pharmacist, error) {

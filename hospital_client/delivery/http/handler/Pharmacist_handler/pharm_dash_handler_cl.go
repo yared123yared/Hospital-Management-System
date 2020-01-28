@@ -31,11 +31,11 @@ func NewPharmTempHandler(T *template.Template, userHandler *handler.UserHandler,
 
 func (ach *PharmProfHandler) Index(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("i am about to fech data")
-	var id uint = ach.UserHandler.LoggedInUser.ID
+	var id uint = 33
 
 	pharmacist, err := Pharmacist_data.GetPharmacist(id)
-
-	fmt.Println(ach.UserHandler.LoggedInUser.ID)
+	fmt.Println(id)
+	// fmt.Println(ach.UserHandler.LoggedInUser.ID)
 	if err != nil {
 		panic(err)
 	}
