@@ -17,6 +17,9 @@ var tmpl_patient = template.Must(template.ParseGlob("../ui/template/petient/*.ht
 //var tmpl_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"))
 var tmpl_pharmacist = template.Must(template.ParseGlob("../ui/template/pharmacist/*.html"))
 
+
+
+
 //var tmpl_laboratorsit = template.Must(template.ParseGlob("../ui/template/laboratorist/*.html"))
 var tmpl = template.Must(template.ParseGlob("../ui/template/*.html"))
 var templ_admin = template.Must(template.ParseGlob("../ui/template/Admin/*.html"))
